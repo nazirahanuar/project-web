@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="adminFormat.css">
+</head>
+<style>
+  body {
+    background: url("image/adminbg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+<body class="admin">
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item active">HOME</a>
+      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+    </div>
+
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" /></a>
+    </div>
+
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.html" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="#" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <div class="header">
+      <h1>WELCOME, ADMIN! 🔥</h1>
+      <button class="logout-btn" onclick="handleLogOut()">LOG OUT</button>
+    </div>
+
+    <div class="summary-todo-wrapper">
+      <!-- Summary -->
+      <div class="summary-box">
+        <h2>SUMMARY</h2>
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-number" id="pendingRequests">1</div>
+            <div class="stat-label">Pending<br>Requests</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="completedRequests">0</div>
+            <div class="stat-label">Completed<br>Requests</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- To-Do -->
+      <div class="todo-box">
+        <h2>TO-DO LIST</h2>
+        <div class="todo-row">
+          <input type="text" id="todoInput" placeholder="Add a new task..." />
+          <button class="done-btn" onclick="addTodo()">ADD</button>
+        </div>
+        <ul id="todoList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("pendingRequests").textContent = "1";
+
+    function handleDone() {
+      const confirmed = confirm("Are you done creating an order\nand schedule for this request?");
+      if (confirmed) {
+        const card = document.getElementById("requestCard");
+        if (card) card.remove();
+        const pending = document.getElementById("pendingRequests");
+        let count = parseInt(pending.textContent);
+        if (!isNaN(count) && count > 0) {
+          pending.textContent = count - 1;
+        }
+      }
+    }
+
+     function addTodo() {
+      const input = document.getElementById("todoInput");
+      const list = document.getElementById("todoList");
+      const value = input.value.trim();
+      if (value === "") return;
+
+      const li = document.createElement("li");
+      const wrapper = document.createElement("div");
+      wrapper.className = "todo-item";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.addEventListener("change", () => {
+        wrapper.style.textDecoration = checkbox.checked ? "line-through" : "none";
+      });
+
+      wrapper.appendChild(checkbox);
+      wrapper.appendChild(document.createTextNode(value));
+      li.appendChild(wrapper);
+      list.appendChild(li);
+
+      input.value = "";
+    }
+
+    function handleLogOut() {
+      const confirmLogOut = confirm("Are you sure you want to log out?");
+    }
+  </script>
+</body>
+</html>
