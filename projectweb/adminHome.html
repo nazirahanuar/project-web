@@ -55,16 +55,6 @@
           </div>
         </div>
       </div>
-
-      <!-- To-Do -->
-      <div class="todo-box">
-        <h2>TO-DO LIST</h2>
-        <div class="todo-row">
-          <input type="text" id="todoInput" placeholder="Add a new task..." />
-          <button class="done-btn" onclick="addTodo()">ADD</button>
-        </div>
-        <ul id="todoList"></ul>
-      </div>
     </div>
   </div>
 
@@ -82,30 +72,6 @@
           pending.textContent = count - 1;
         }
       }
-    }
-
-     function addTodo() {
-      const input = document.getElementById("todoInput");
-      const list = document.getElementById("todoList");
-      const value = input.value.trim();
-      if (value === "") return;
-
-      const li = document.createElement("li");
-      const wrapper = document.createElement("div");
-      wrapper.className = "todo-item";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.addEventListener("change", () => {
-        wrapper.style.textDecoration = checkbox.checked ? "line-through" : "none";
-      });
-
-      wrapper.appendChild(checkbox);
-      wrapper.appendChild(document.createTextNode(value));
-      li.appendChild(wrapper);
-      list.appendChild(li);
-
-      input.value = "";
     }
 
     function handleLogOut() {
