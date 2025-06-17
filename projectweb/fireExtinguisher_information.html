@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fire Extinguisher Information</title>
+  <link rel="stylesheet" href="adminFormat.css" />
+</head>
+<body class="admin">
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+    </div>
+
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.html" class="nav-item active">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="#" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+  <section class="fire-extinguisher-form-section">
+    <h2 class="title">CREATE AND VIEW FIRE EXTINGUISHER</h2>
+    <p class="note">Add and view the fire extinguishers.</p>
+
+    <div class="form-card">
+      <h2>ADD FIRE EXTINGUISHER</h2>
+      <form id="extinguisherForm">
+        <div class="form-row">
+          <div class="input-group">
+            <label>Serial No.</label>
+            <input type="text" id="serial" required />
+          </div>
+
+          <div class="input-group">
+            <label>Type</label>
+            <input type="text" id="type" required />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Expiration Date</label>
+          <input type="date" id="date" required />
+        </div>
+
+        <button type="submit" class="submit-btn">ADD</button>
+      </form>
+    </div>
+  </section>
+
+  <hr>
+  <h2 class="title">FIRE EXTINGUISHER INFORMATION</h2>
+  <section class="fire-extinguisher-table-section">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search" />
+      <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
+    </div>
+
+    <table id="extinguisherTable">
+      <thead>
+        <tr>
+          <th>Serial No.</th>
+          <th>Type</th>
+          <th>Expiration Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows appear here -->
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    const form = document.getElementById("extinguisherForm");
+    const tableBody = document.querySelector("#extinguisherTable tbody");
+    const searchInput = document.getElementById("searchInput");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const serial = document.getElementById("serial").value.trim();
+      const type = document.getElementById("type").value.trim();
+      const date = document.getElementById("date").value;
+
+      if (serial && type && date) {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${serial}</td>
+          <td>${type}</td>
+          <td>${formatDate(date)}</td>
+          <td><button class="delete-btn">DELETE</button></td>
+        `;
+
+        row.querySelector(".delete-btn").addEventListener("click", function () {
+          const confirmDelete = confirm("Are you sure you want to delete this row?");
+          if (confirmDelete) {
+            row.remove();
+            alert("Row has been deleted successfully.");
+          }
+        });
+
+        tableBody.appendChild(row);
+        form.reset();
+
+        alert("New fire extinguisher information created successfully.");
+      }
+    });
+
+    function formatDate(dateString) {
+      const [year, month, day] = dateString.split("-");
+      return `${day}/${month}/${year}`;
+    }
+
+    function filterTable() {
+      const filter = searchInput.value.toLowerCase();
+      const rows = tableBody.querySelectorAll("tr");
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        const match = filter === "" || Array.from(cells).some(cell =>
+          cell.textContent.toLowerCase().includes(filter)
+        );
+        row.style.display = match ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>

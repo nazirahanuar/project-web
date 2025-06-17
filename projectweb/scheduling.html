@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scheduling</title>
+  <link rel="stylesheet" href="adminFormat.css" />
+</head>
+<body class="admin">
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item active">SCHEDULING</a>
+    </div>
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.html" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="#" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+  <section class="schedule-form-section">
+    <h2 class="title">CREATE SCHEDULE</h2>
+    <p class="note">Create schedules for our committed staffs and customers to view.</p>
+    
+    <form id="scheduleForm" class="schedule-form black-box">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="staffId">Staff ID</label>
+          <input type="text" id="staffId" required />
+        </div>
+
+        <div class="form-group">
+          <label for="orderId">Order ID</label>
+          <input type="text" id="orderId" required />
+        </div>
+
+        <div class="form-group">
+          <label for="scheduleDate">Schedule Date</label>
+          <input type="date" id="scheduleDate" required />
+        </div>
+
+        <div class="form-group">
+          <label for="serviceId">Service ID</label>
+          <select id="serviceId" required>
+          <option value="">-- Select Service --</option>
+          <option value="MNT981">MNT981</option>
+          <option value="SEM225">SEM225</option>
+          </select>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="location">Location</label>
+          <textarea id="location" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="premiseId">Premise ID</label>
+          <select id="premiseId" required>
+          <option value="">-- Select Premise --</option>
+          <option value="P001">P001</option>
+          <option value="P002">P002</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="adminId">Admin ID</label>
+          <input type="text" id="adminId" required />
+        </div>
+      </div>
+
+      <div class="form-submit-center">
+        <button type="submit" class="btn-create">CREATE</button>
+      </div>
+    </form>
+  </section>
+
+  <hr>
+      <h2 class="title">SCHEDULE DETAILS</h2>
+      <p class="note">Click “DELETE” to delete the selected row.</p>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search" />
+        <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Staff ID</th>
+            <th>Order ID</th>
+            <th>Schedule Date</th>
+            <th>Location</th>
+            <th>Service ID</th>
+            <th>Premise ID</th>
+            <th>Admin ID</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleTableBody">
+          <!-- Dynamic rows go here -->
+        </tbody>
+      </table>
+
+  <script>
+    const scheduleForm = document.getElementById('scheduleForm');
+    const scheduleTableBody = document.getElementById('scheduleTableBody');
+    const searchInput = document.getElementById('searchInput');
+
+    scheduleForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const staffId = document.getElementById('staffId').value;
+      const orderId = document.getElementById('orderId').value;
+      const scheduleDate = document.getElementById('scheduleDate').value;
+      const location = document.getElementById('location').value;
+      const serviceId = document.getElementById('serviceId').value;
+      const premiseId = document.getElementById('premiseId').value;
+      const adminId = document.getElementById('adminId').value;
+
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${staffId}</td>
+        <td>${orderId}</td>
+        <td>${scheduleDate}</td>
+        <td>${location}</td>
+        <td>${serviceId}</td>
+        <td>${premiseId}</td>
+        <td>${adminId}</td>
+        <td><button class="btn-delete">DELETE</button></td>
+      `;
+
+      scheduleTableBody.appendChild(newRow);
+      scheduleForm.reset();
+    });
+
+    scheduleTableBody.addEventListener('click', function (e) {
+      if (e.target.classList.contains('btn-delete')) {
+        if (confirm('Are you sure you want to delete this schedule?')) {
+          e.target.closest('tr').remove();
+        }
+      }
+    });
+
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        filterTable();
+      }
+    });
+
+    function filterTable() {
+      const searchValue = searchInput.value.toLowerCase();
+      const rows = scheduleTableBody.querySelectorAll('tr');
+
+      rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchValue) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
