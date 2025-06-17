@@ -80,6 +80,7 @@ body.admin {
   font-size: 50px;
   font-weight: bold;
   font-family: "Inknut Antiqua", serif;
+  margin-left: 85px;
 }
 
 .logout-btn {
@@ -90,15 +91,6 @@ body.admin {
   color: white;
   font-weight: bold;
   cursor: pointer;
-}
-
-.summary-box {
-  background-color: rgba(170, 45, 47, 0.5);
-  padding: 80px;
-  border-radius: 15px;
-  text-align: center;
-  color: white;
-  max-width: 600px;
 }
 
 .summary-box h2 {
@@ -140,14 +132,6 @@ body.admin {
   line-height: 1.5;
 }
 
-.summary-todo-wrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  margin-top: 50px;
-  flex-wrap: wrap;
-}
-
 .summary-box {
   flex: 1;
   max-width: 600px;
@@ -155,58 +139,11 @@ body.admin {
   padding: 60px;
   border-radius: 15px;
   color: white;
-  margin-left: 50px;
   margin-bottom: 50px;
+  margin: 40px auto;
+  text-align: center;
 }
 
-.todo-box h2 {
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-
-.todo-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-#todoInput {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-}
-
-.todo-box .done-btn {
-  width: 20%;
-  background-color: black;
-  color: white;
-  border: none;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  border: none;
-  padding: 8px 8px;
-  font-size: 16px;
-  margin-right: 4px;
-}
-
-#todoList {
-  list-style: none;
-  padding-left: 0;
-}
-
-#todoList li {
-  margin-bottom: 8px;
-}
-
-/* Make each list item inline with checkbox and text */
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
 /*REQUEST MANAGEMENT*/
 .form-section {
