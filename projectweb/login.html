@@ -7,43 +7,27 @@
   <link rel="stylesheet" href="userFormat.css" />
 </head>
 <body>
-    <nav class="navbar">
+  <nav class="navbar">
     <div class="nav-center">
       <img src="image/logo.png" class="logo" alt="Logo" />
     </div>
-   </nav>
+  </nav>
 
-    <div class="user-box">
-      <h2>LOG IN</h2>
-      <form id="loginForm">
-        <label for="userID">ID</label>
-        <input type="text" id="userID" name="userID" required />
+  <div class="user-box">
+    <h2>LOG IN</h2>
+    <form id="loginForm" method="POST" action="login.php">
+      <label for="userID">ID</label>
+      <input type="text" id="userID" name="userID" required />
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
 
-        <button type="submit">LOG IN</button>
-      </form>
-      <p class="signup-text">
-        Does not have an account?
-        <a href="signup.html" id="signupLink">Sign Up</a>
-      </p>
-    </div>
+      <button type="submit">LOG IN</button>
+    </form>
+    <p class="signup-text">
+      Does not have an account?
+      <a href="signup.html" id="signupLink">Sign Up</a>
+    </p>
   </div>
-
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const userID = document.getElementById('userID').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      if (userID === '' || password === '') {
-        alert('Please fill in all required fields.');
-      } else {
-        alert('Logged in successfully (demo only)');
-      }
-    });
-  </script>
 </body>
 </html>
