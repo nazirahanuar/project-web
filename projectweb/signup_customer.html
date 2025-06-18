@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Sign Up</title>
+  <link rel="stylesheet" href="userFormat.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+  </nav>
+
+  <div class="user-box">
+    <h2>CUSTOMER SIGN UP</h2>
+    <form id="customerForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Customer ID</label>
+          <input type="text" name="customerID" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="firstName" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="lastName" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Gender</label>
+          <select name="gender" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>No. Tel</label>
+          <input type="tel" name="tel" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Create Password</label>
+          <input type="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label>Profile Picture</label>
+          <input type="file" name="profile" accept="image/*" />
+        </div>
+      </div>
+
+      <button type="submit">SIGN UP</button>
+      <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
+
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("customerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Customer account created successfully!");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
