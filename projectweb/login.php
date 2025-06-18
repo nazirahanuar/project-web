@@ -11,7 +11,7 @@ if (empty($userID) || empty($password)) {
 }
 
 $roleTables = [
-    'admin' => ['table' => 'admin', 'id_col' => 'admin_id', 'pass_col' => 'password', 'redirect' => 'adminHome.html'],
+    'admin' => ['table' => 'admin', 'id_col' => 'adminID', 'pass_col' => 'adminPassword', 'redirect' => 'adminHome.html'],
     'staff' => ['table' => 'staff', 'id_col' => 'staff_id', 'pass_col' => 'password', 'redirect' => 'staffHome.html'],
     'customer' => ['table' => 'customer', 'id_col' => 'customer_id', 'pass_col' => 'password', 'redirect' => 'customerHome.html']
 ];
