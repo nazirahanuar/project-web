@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Your Role</title>
+  <link rel="stylesheet" href="userFormat.css" />
+</head>
+<body>
+    <nav class="navbar">
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+   </nav>
+
+   <div class="user-box">
+      <h2>CHOOSE YOUR ROLE</h2>
+      <button onclick="chooseRole('admin')">ADMIN</button>
+      <button onclick="chooseRole('staff')">STAFF</button>
+      <button onclick="chooseRole('customer')">CUSTOMER</button>
+
+      <p class="signup-text">
+        Already have an account? <a href="login.html">Log In</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function chooseRole(role) {
+      if (role === 'admin') {
+        window.location.href = 'signup_admin.html';
+      } else if (role === 'staff') {
+        window.location.href = 'signup_staff.html';
+      } else if (role === 'customer') {
+        window.location.href = 'signup_customer.html';
+      }
+    }
+  </script>
+</body>
+</html>
