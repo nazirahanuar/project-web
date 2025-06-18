@@ -309,9 +309,15 @@ body.customer {
 }
 
 .back-note {
-  font-size: 10px;
-  color: red;
-  margin-top: 15px;
+  display: block;
+  margin-top: 20px;
   text-align: left;
-  padding-left: 10px;
+  font-size: 14px;
+  color: #8a0202;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.back-note:hover {
+  text-decoration: underline;
 }
