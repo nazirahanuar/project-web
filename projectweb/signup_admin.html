@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Sign Up</title>
+  <link rel="stylesheet" href="format.css" />
+</head>
+<body>
+    <nav class="navbar">
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+   </nav>
+
+  <div class="user-box">
+    <h2>SIGN UP</h2>
+    <form id="adminForm">
+      <label>Admin ID</label>
+      <input type="text" id="adminID" required />
+
+      <label>Create Password</label>
+      <input type="password" id="adminPassword" required />
+
+      <button type="submit">SIGN UP</button>
+    </form>
+      <p class="signup-text">
+        Already have an account? <a href="login.html">Log In</a>
+      </p>
+  </div>
+  <p class="side-note">
+    *NOTE: Admin ID must start with <strong>"AD"</strong>.
+  </p>
+</div>
+
+<script>
+  document.getElementById("adminForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Admin account created successfully!");
+    window.location.href = "login.html";
+  });
+</script>
+</body>
+</html>
