@@ -1,5 +1,7 @@
 <?php
 include 'connect.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adminID = trim($_POST['adminID']);
@@ -26,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Hash password and insert into DB
     $adminPassword = password_hash($adminPasswordRaw, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO admin (adminID, adminPassword) VALUES (?, ?)";
@@ -64,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <input type="text" name="adminID" id="adminID" required placeholder="e.g. AD12345" />
 
       <label for="adminPassword">Create Password</label>
-      <input type="password" name="adminPassword" id="adminPassword" required />
+      <input type="password" name="adminPassword" id="adminPassword" required placeholder="Min 6 characters" />
 
       <button type="submit">SIGN UP</button>
     </form>
