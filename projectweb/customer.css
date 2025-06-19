@@ -609,3 +609,55 @@ textarea {
 .submit-btn:hover {
   background-color: darkred;
 }
+
+/* Customer Profile Section*/
+
+.profile-container {
+  max-width: 500px;
+  background-color: #aa2d2f;
+  padding: 40px 30px;
+  margin: 60px auto;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.profile-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.profile-image-box {
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+}
+
+.profile-table {
+  width: 100%;
+  margin: 0 auto 30px;
+  background-color: white;
+  color: black;
+  border-collapse: collapse;
+}
+
+.profile-table th,
+.profile-table td {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.profile-table th {
+  background-color: #eee;
+  font-weight: bold;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Profile</title>
+  <link rel="stylesheet" href="customer.css"/>
+</head>
+<body class="customer">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="customerHome.html" class="nav-item">HOME</a>
+      <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
+      <a href="requestService.html" class="nav-item">REQUEST<br>SERVICE</a>
+    </div>
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
+      <a href="custProfile.html" class="nav-item active">PROFILE</a>
+    </div>
+  </nav>
+
+  <!-- Profile Container -->
+  <div class="profile-container">
+    <h2 class="profile-heading">MY PROFILE</h2>
+    
+    <div class="profile-image-box">
+      <img src="uploads/profile.jpg" alt="Profile Picture" class="profile-image" />
+    </div>
+
+    <table class="profile-table">
+      <tr><th>Customer ID</th><td>CUST123</td></tr>
+      <tr><th>Name</th><td>Jennie Kim</td></tr>
+      <tr><th>Email</th><td>jennie.k@example.com</td></tr>
+      <tr><th>Gender</th><td>Female</td></tr>
+      <tr><th>Phone</th><td>012-3456789</td></tr>
+    </table>
+
+    <button class="logout-btn">LOG OUT</button>
+  </div>
+
+</body>
+</html>
