@@ -440,41 +440,111 @@ textarea {
 }
 
 /* Customer MY SCHEDULE section */
-.sec-title {
-  text-align: center;
-  color: black;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 40px 0 20px 0;
+.schedule-box {
+  background-color: #aa2d2f;
+  padding: 40px 20px;
+  color: white;
+  margin: 40px auto;
+  max-width: 1100px;
+  border-radius: 10px;
 }
 
-.table-wrapper {
-  overflow-x: auto;
-  margin: 20px auto;
-  width: 90%;
+.section-heading {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.order-id {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.highlighted {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background-color: white;
+  color: black;
+  margin-bottom: 10px;
 }
 
 .schedule-table th,
 .schedule-table td {
-  padding: 12px;
   border: 1px solid black;
+  padding: 12px;
   text-align: center;
-  color: black;
 }
 
-.schedule-table th {
-  background-color: #f7f7f7;
+.note-small {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* reference section */
+.reference-section {
+  background-color: #aa2d2f;
+  color: white;
+  padding: 40px 30px;
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 1100px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sec-heading {
+  text-align: center;
+  font-size: 24px;
   font-weight: bold;
+  margin-bottom: 30px;
 }
 
-.schedule-table tr:hover {
-  background-color: #f1f1f1;
+.reference-grids {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.subheading {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.reference-table {
+  width: 100%;
+  max-width: 500px;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+  margin: 0 auto;
+}
+
+.reference-table th,
+.reference-table td {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.reference-table th {
+  background-color: #eee;
+  font-weight: bold;
 }
 
 
