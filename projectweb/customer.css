@@ -438,3 +438,214 @@ textarea {
   background-color: #eee;
   font-weight: bold;
 }
+
+/* Customer MY SCHEDULE section */
+.schedule-section {
+  max-width: 1100px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.main-schedule-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: black;
+  text-transform: uppercase;
+}
+
+.order-id-box {
+  background-color: black;
+  padding: 20px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.order-id-box input {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.schedule-table-box {
+  background-color: #aa2d2f;
+  padding: 30px 20px;
+  border-radius: 0 0 8px 8px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid black;
+  padding: 12px;
+  text-align: center;
+}
+
+.profile-note {
+  margin-top: 15px;
+  font-style: italic;
+  font-size: 14px;
+  color: #333;
+}
+/* reference section */
+.reference-section {
+  background-color: #aa2d2f;
+  color: white;
+  padding: 40px 30px;
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 1100px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sec-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.reference-grids {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.subheading {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.reference-table {
+  width: 100%;
+  max-width: 500px;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+  margin: 0 auto;
+}
+
+.reference-table th,
+.reference-table td {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.reference-table th {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+
+/* customer profile section*/ 
+
+.profile-section {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #aa2d2f;
+  margin-bottom: 10px;
+}
+
+.edit-profile-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  background-color: #aa2d2f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.edit-profile-btn:hover {
+  background-color: #8a1f21;
+}
+
+.profile-details {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.profile-details p {
+  font-size: 16px;
+  color: black;
+  margin: 6px 0;
+}
+
+/* customer order */
+
+.order-section {
+  max-width: 600px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.order-box {
+  background-color: #aa2d2f;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.order-box p {
+  margin: 8px 0;
+}
+
+.schedule-note {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.schedule-note a {
+  color: #aa2d2f;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.schedule-note a:hover {
+  text-decoration: underline;
+}

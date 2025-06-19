@@ -6,7 +6,7 @@
     <title>Request Service</title>
     <link rel="stylesheet" href="customer.css">
 </head>
-<body id="top" class="customer">
+< id="top" class="customer">
   <nav class="navbar">
     <div class="nav-left">
       <a href="customerHome.html" class="nav-item">HOME</a>
@@ -18,9 +18,84 @@
     </div>
     <div class="nav-right">
       <a href="mySchedule.html" class="nav-item active">MY SCHEDULE</a>
-      <a href="custProfile.html" class="nav-item">PROFILE</a>
+      <a href="custProfile.php" class="nav-item">PROFILE</a>
     </div>
   </nav>
-    
+ <!-- My Schedule Section -->
+  <section class="schedule-section">
+    <h1 class="main-schedule-title">MY SCHEDULE</h1> <!-- 🔹 This is the title you're asking about -->
+
+    <div class="order-id-box">
+      <p class="order-label">Your Order ID: <input type="text" value="OR965" readonly></p>
+    </div>
+
+    <div class="schedule-table-box">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Staff ID</th>
+            <th>Order ID</th>
+            <th>Schedule Date</th>
+            <th>Location</th>
+            <th>Service ID</th>
+            <th>Premise ID</th>
+            <th>Admin ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>C2RY9265</td>
+            <td>OR965</td>
+            <td>10/06/2025</td>
+            <td>Universiti Teknikal Malaysia Melaka (UTeM), Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</td>
+            <td>MNT0981</td>
+            <td>SCH632</td>
+            <td>A2RY002</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="profile-note">Don’t know your Order ID? Go to <strong>PROFILE</strong></p>
+  </section>
+  <!-- Reference Section -->
+  <section class="reference-section">
+    <h2 class="sec-heading">[ FOR REFERENCE ]</h2>
+
+    <div class="reference-grids">
+      <div>
+        <h3 class="subheading">PREMISE DETAILS</h3>
+        <table class="reference-table">
+          <thead>
+            <tr>
+              <th>Premise ID</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>SCH632</td><td>School/Institution</td></tr>
+            <tr><td>HME520</td><td>Home</td></tr>
+            <tr><td>ORG785</td><td>Organization/Office</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h3 class="subheading">SERVICE DETAILS</h3>
+        <table class="reference-table">
+          <thead>
+            <tr>
+              <th>Service ID</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>MNT0981</td><td>Maintenance</td></tr>
+            <tr><td>INS854</td><td>Installation</td></tr>
+            <tr><td>SEM632</td><td>Seminar/Training Booking</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
