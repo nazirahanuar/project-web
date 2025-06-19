@@ -25,50 +25,54 @@
   <h1 class="sec-title">REQUEST SERVICE</h1>
 
   <div class="request-form">
-    <form>
+    <form action="submit_request.php" method="POST">
       <div class="form-row">
         <div class="form-group">
           <label for="customerId">Customer ID</label>
-          <input type="text" id="customerId">
+          <input type="text" id="customerId" name="customerId">
         </div>
         <div class="form-group">
-          <label for="serviceId">Service ID</label>
-          <input type="text" id="serviceId">
+          <label for="premiseId">Premise ID</label>
+          <select id="serviceId" name="serviceId">
+            <option value="">Select</option>
+            <option value="MNT0981">MNT0981</option>
+            <option value="INS854">INS854</option>
+            <option value="SEM632">SEM632</option>
+          </select>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="premiseId">Premise ID</label>
-          <select id="premiseId">
+          <select id="premiseId" name="premiseId">
             <option value="">Select</option>
+            <option value="SCH632">SCH632</option>
+            <option value="HME520">HME520</option>
+            <option value="ORG785">ORG785</option>
           </select>
         </div>
         <div class="form-group">
           <label for="preferredDate">Preferred Date</label>
-          <select id="preferredDate">
-            <option value="">Select</option>
-          </select>
+          <input type="date" id="preferredDate" name="preferredDate">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="quantity">Quantity of Fire Extinguisher</label>
-          <select id="quantity">
-            <option value="0">0</option>
-          </select>
+          <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
         </div>
       </div>
 
       <div class="form-group">
         <label for="location">Location</label>
-        <input type="text" id="location">
+        <input type="text" id="location" name="location">
       </div>
 
       <div class="form-group">
         <label for="notes">Additional Notes</label>
-        <textarea id="notes"></textarea>
+        <textarea id="notes" name="notes"></textarea>
       </div>
 
       <button type="submit" class="submit-btn">SUBMIT</button>
@@ -110,5 +114,25 @@
       </tbody>
     </table>
   </section>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (e) {
+      const customerId = document.getElementById("customerId").value.trim();
+      const serviceId = document.getElementById("serviceId").value.trim();
+      const premiseId = document.getElementById("premiseId").value;
+      const preferredDate = document.getElementById("preferredDate").value;
+      const location = document.getElementById("location").value.trim();
+      const quantity = document.getElementById("quantity").value;
+
+      if (!customerId || !serviceId || !premiseId || !preferredDate || !location || quantity < 1) {
+        alert("Please fill in all required fields. Quantity must be at least 1.");
+        e.preventDefault();
+      }
+    });
+  });
+</script>
 </body>
 </html>
