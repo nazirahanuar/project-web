@@ -2,7 +2,7 @@
 session_start();
 include 'connect.php';
 
-// Ensure the user is logged in and is a customer
+// Check if the logged-in user is a customer
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
   header("Location: login.php");
   exit();
@@ -10,14 +10,14 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
 
 $customerID = $_SESSION['userID'];
 
-// Fetch customer details
+// Get customer info
 $stmt = $conn->prepare("SELECT * FROM customer WHERE customerID = ?");
 $stmt->bind_param("s", $customerID);
 $stmt->execute();
-$userResult = $stmt->get_result();
-$user = $userResult->fetch_assoc();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 
-// Fetch most recent order (optional)
+// Get latest order (if any)
 $orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
 $order = $orderResult->fetch_assoc();
 ?>
@@ -31,7 +31,7 @@ $order = $orderResult->fetch_assoc();
 </head>
 <body class="customer">
 
-  <!-- NAVIGATION -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
       <a href="customerHome.html" class="nav-item">HOME</a>
@@ -47,7 +47,7 @@ $order = $orderResult->fetch_assoc();
     </div>
   </nav>
 
-  <!-- PROFILE SECTION -->
+  <!-- Profile -->
   <div class="profile-section">
     <h2 class="profile-title">YOUR PROFILE</h2>
     <div class="profile-card">
@@ -65,7 +65,7 @@ $order = $orderResult->fetch_assoc();
     </div>
   </div>
 
-  <!-- ORDER SECTION -->
+  <!-- Order -->
   <div class="order-section">
     <h2 class="profile-title">YOUR ORDER</h2>
     <div class="order-box">
@@ -74,9 +74,9 @@ $order = $orderResult->fetch_assoc();
         <p><strong>Serial No.:</strong> <?= htmlspecialchars($order['serialNo'] ?? '-') ?></p>
         <p><strong>Customer ID:</strong> <?= htmlspecialchars($order['customerID']) ?></p>
         <p><strong>Quantity of Fire Extinguisher:</strong> <?= htmlspecialchars($order['quantity']) ?></p>
-        <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['notes']) ?: '-' ?></p>
+        <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['notes'] ?? '-') ?></p>
       <?php else: ?>
-        <p>No recent orders found.</p>
+        <p>No orders found.</p>
       <?php endif; ?>
     </div>
     <p class="schedule-note">Ready to track your schedule? Go to <a href="mySchedule.html"><strong>MY SCHEDULE</strong></a></p>
