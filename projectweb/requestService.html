@@ -22,5 +22,93 @@
     </div>
   </nav>
     
+  <h1 class="sec-title">REQUEST SERVICE</h1>
+
+  <div class="request-form">
+    <form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="customerId">Customer ID</label>
+          <input type="text" id="customerId">
+        </div>
+        <div class="form-group">
+          <label for="serviceId">Service ID</label>
+          <input type="text" id="serviceId">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="premiseId">Premise ID</label>
+          <select id="premiseId">
+            <option value="">Select</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="preferredDate">Preferred Date</label>
+          <select id="preferredDate">
+            <option value="">Select</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="quantity">Quantity of Fire Extinguisher</label>
+          <select id="quantity">
+            <option value="0">0</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location">
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">SUBMIT</button>
+    </form>
+  </div>
+
+  <p class="note">*Note: We will assign the fire extinguishers based on the suitability of the premises. Please specify the types of fire extinguishers you require in the ‘Additional Notes’ section.</p>
+
+  <section class="reference-section">
+    <h2 class="sec-heading">[ FOR REFERENCE ]</h2>
+
+    <h3 class="subheading">PREMISE DETAILS</h3>
+    <table class="reference-table">
+      <thead>
+        <tr>
+          <th>Premise ID</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>SCH632</td><td>School/Institution</td></tr>
+        <tr><td>HME520</td><td>Home</td></tr>
+        <tr><td>ORG785</td><td>Organization/Office</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="subheading">SERVICE DETAILS</h3>
+    <table class="reference-table">
+      <thead>
+        <tr>
+          <th>Service ID</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>MNT0981</td><td>Maintenance</td></tr>
+        <tr><td>INS854</td><td>Installation</td></tr>
+        <tr><td>SEM632</td><td>Seminar/Training Booking</td></tr>
+      </tbody>
+    </table>
+  </section>
 </body>
 </html>

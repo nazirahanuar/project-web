@@ -321,3 +321,117 @@ body.customer {
 .back-note:hover {
   text-decoration: underline;
 }
+
+.request-form {
+  background-color: black;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 20px auto;
+  color: white;
+}
+
+.request-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit-btn {
+  width: 120px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  align-self: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: darkred;
+}
+
+.note {
+  font-size: 14px;
+  font-style: italic;
+  color: #333;
+  margin: 15px auto;
+  max-width: 900px;
+  padding: 0 10px;
+}
+
+.reference-section {
+  background-color: #aa2d2f;
+  color: white;
+  padding: 30px 20px;
+  margin-top: 40px;
+  border-radius: 10px;
+}
+
+.sec-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.subheading {
+  font-size: 20px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.reference-table {
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+}
+
+.reference-table th,
+.reference-table td {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.reference-table th {
+  background-color: #eee;
+  font-weight: bold;
+}
