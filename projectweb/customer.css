@@ -446,10 +446,12 @@ textarea {
   text-align: center;
 }
 
-.section-title {
-  font-size: 26px;
+.main-schedule-title {
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  color: black;
+  text-transform: uppercase;
 }
 
 .order-id-box {
@@ -465,10 +467,11 @@ textarea {
   background-color: white;
   color: black;
   border: none;
-  padding: 5px 10px;
+  padding: 6px 12px;
   font-weight: bold;
   border-radius: 4px;
   margin-left: 10px;
+  font-size: 16px;
 }
 
 .schedule-table-box {
@@ -482,7 +485,6 @@ textarea {
   border-collapse: collapse;
   background-color: white;
   color: black;
-  margin-top: 0;
 }
 
 .schedule-table th,
@@ -498,7 +500,6 @@ textarea {
   font-size: 14px;
   color: #333;
 }
-
 /* reference section */
 .reference-section {
   background-color: #aa2d2f;
