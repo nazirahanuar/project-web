@@ -438,3 +438,99 @@ textarea {
   background-color: #eee;
   font-weight: bold;
 }
+
+/* Customer MY SCHEDULE section */
+.sec-title {
+  text-align: center;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 40px 0 20px 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 12px;
+  border: 1px solid black;
+  text-align: center;
+  color: black;
+}
+
+.schedule-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+.schedule-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* customer profile section*/
+.request-form {
+  background-color: black;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 40px auto;
+  color: white;
+}
+
+.request-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+}
+
+.submit-btn {
+  width: 150px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  align-self: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: darkred;
+}
