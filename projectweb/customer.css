@@ -553,111 +553,99 @@ textarea {
 }
 
 
-/* customer profile section*/
-.request-form {
-  background-color: black;
-  padding: 30px;
-  border-radius: 10px;
-  max-width: 900px;
-  margin: 40px auto;
-  color: white;
+/* customer profile section*/ 
+
+.profile-section {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
 }
 
-.request-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.form-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
+.profile-title {
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+  color: black;
 }
 
-.form-group input {
-  padding: 10px;
-  border-radius: 5px;
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #aa2d2f;
+  margin-bottom: 10px;
+}
+
+.edit-profile-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  background-color: #aa2d2f;
+  color: white;
   border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.edit-profile-btn:hover {
+  background-color: #8a1f21;
+}
+
+.profile-details {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.profile-details p {
+  font-size: 16px;
+  color: black;
+  margin: 6px 0;
+}
+
+/* customer order */
+
+.order-section {
+  max-width: 600px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.order-box {
+  background-color: #aa2d2f;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.order-box p {
+  margin: 8px 0;
+}
+
+.schedule-note {
+  margin-top: 10px;
   font-size: 14px;
 }
 
-.submit-btn {
-  width: 150px;
-  padding: 10px;
-  background-color: red;
-  color: white;
+.schedule-note a {
+  color: #aa2d2f;
+  text-decoration: none;
   font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  align-self: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.submit-btn:hover {
-  background-color: darkred;
-}
-
-/* Customer Profile Section*/
-
-.profile-container {
-  max-width: 500px;
-  background-color: #aa2d2f;
-  padding: 40px 30px;
-  margin: 60px auto;
-  border-radius: 10px;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-.profile-heading {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.profile-image-box {
-  margin-bottom: 30px;
-}
-
-.profile-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid white;
-}
-
-.profile-table {
-  width: 100%;
-  margin: 0 auto 30px;
-  background-color: white;
-  color: black;
-  border-collapse: collapse;
-}
-
-.profile-table th,
-.profile-table td {
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  text-align: center;
-}
-
-.profile-table th {
-  background-color: #eee;
-  font-weight: bold;
+.schedule-note a:hover {
+  text-decoration: underline;
 }
