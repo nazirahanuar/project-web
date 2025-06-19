@@ -47,7 +47,7 @@ $order = $orderResult->fetch_assoc();
     </div>
   </nav>
 
-  <!-- Profile -->
+  <!-- Profile Section -->
   <div class="profile-section">
     <h2 class="profile-title">YOUR PROFILE</h2>
     <div class="profile-card">
@@ -65,7 +65,7 @@ $order = $orderResult->fetch_assoc();
     </div>
   </div>
 
-  <!-- Order -->
+  <!-- Order Section -->
   <div class="order-section">
     <h2 class="profile-title">YOUR ORDER</h2>
     <div class="order-box">
