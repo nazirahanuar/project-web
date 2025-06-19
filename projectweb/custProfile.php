@@ -2,19 +2,24 @@
 session_start();
 include 'connect.php';
 
-// If not logged in, redirect to login
+// Ensure the user is logged in and is a customer
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
   header("Location: login.php");
   exit();
 }
 
 $customerID = $_SESSION['userID'];
-$query = $conn->prepare("SELECT * FROM customer WHERE customerID = ?");
-$query->bind_param("s", $customerID);
-$query->execute();
-$result = $query->get_result();
-$user = $result->fetch_assoc();
 
+// Fetch customer details
+$stmt = $conn->prepare("SELECT * FROM customer WHERE customerID = ?");
+$stmt->bind_param("s", $customerID);
+$stmt->execute();
+$userResult = $stmt->get_result();
+$user = $userResult->fetch_assoc();
+
+// Fetch most recent order (optional)
+$orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
+$order = $orderResult->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,17 +69,14 @@ $user = $result->fetch_assoc();
   <div class="order-section">
     <h2 class="profile-title">YOUR ORDER</h2>
     <div class="order-box">
-      <?php
-        $orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
-        if ($order = $orderResult->fetch_assoc()):
-      ?>
+      <?php if ($order): ?>
         <p><strong>Order ID:</strong> <?= htmlspecialchars($order['orderID']) ?></p>
         <p><strong>Serial No.:</strong> <?= htmlspecialchars($order['serialNo'] ?? '-') ?></p>
         <p><strong>Customer ID:</strong> <?= htmlspecialchars($order['customerID']) ?></p>
         <p><strong>Quantity of Fire Extinguisher:</strong> <?= htmlspecialchars($order['quantity']) ?></p>
-        <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['notes']) ?></p>
+        <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['notes']) ?: '-' ?></p>
       <?php else: ?>
-        <p>No orders found.</p>
+        <p>No recent orders found.</p>
       <?php endif; ?>
     </div>
     <p class="schedule-note">Ready to track your schedule? Go to <a href="mySchedule.html"><strong>MY SCHEDULE</strong></a></p>
