@@ -18,7 +18,7 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 // Get latest order (if any)
-$orderResult = $conn->query("SELECT * FROM customer_order WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
+$orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
 $order = $orderResult->fetch_assoc();
 
 $nameParts = explode(' ', $user['customerName'], 2);
