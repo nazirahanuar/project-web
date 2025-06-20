@@ -54,7 +54,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
         Access expert fire safety tips, request services in seconds and track your service
         schedule—all from one easy-to-use platform.
       </p>
-      <button class="logout-btn">LOG OUT</button>
+      <a href="logout.php" class="logout-btn">LOG OUT</a>
     </div>
 </body>
 </html>
