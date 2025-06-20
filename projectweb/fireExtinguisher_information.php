@@ -55,7 +55,7 @@ $extinguishers = $conn->query("SELECT * FROM fire_extinguisher");
     </div>
     <div class="nav-right">
       <a href="fireExtinguisher_information.php" class="nav-item active">FIRE EXTINGUISHER<br>INFORMATION</a>
-      <a href="information_management.html" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+      <a href="information_management.php" class="nav-item">INFORMATION<br>MANAGEMENT</a>
     </div>
   </nav>
 
