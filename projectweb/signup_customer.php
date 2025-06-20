@@ -6,12 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $firstName = trim($_POST['firstName']);
     $lastName = trim($_POST['lastName']);
+    $customerName = $firstName . ' ' . $lastName;
     $gender = $_POST['gender'];
     $tel = trim($_POST['tel']);
     $passwordRaw = trim($_POST['password']);
 
     // Basic validations
-    if (empty($customerID) || empty($email) || empty($firstName) || empty($lastName) || empty($gender) || empty($tel) || empty($passwordRaw)) {
+    if (empty($customerID) || empty($email) || empty($customerName) || empty($gender) || empty($tel) || empty($passwordRaw)) {
         echo "<script>alert('Please fill in all required fields.'); window.location.href='signup_customer.php';</script>";
         exit();
     }
@@ -47,8 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $hashedPassword = password_hash($passwordRaw, PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO customer (customerID, firstName, lastName, Gender, NoTel, Email, profilePic, customerPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssisss", $customerID, $firstName, $lastName, $gender, $tel, $email, $profilePicPath, $hashedPassword);
+    $stmt = $conn->prepare("INSERT INTO customer (customerID, customerName, Gender, noTel, Email, profilePic, customerPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $customerID, $customerName, $gender, $tel, $email, $profilePicPath, $hashedPassword);
+
 
     if ($stmt->execute()) {
         echo "<script>alert('Customer account created successfully!'); window.location.href='login.php';</script>";

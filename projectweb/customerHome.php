@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Redirect to login if not logged in or not a customer
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
+    header("Location: login.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +47,7 @@
     </nav>
 
     <div class="header">
-      <p class="greeting">Hi, Jennie Kim.</p>
+      <p class="greeting">Hi, <?php echo htmlspecialchars($_SESSION['userID']); ?>.</p>
       <h1>WELCOME TO CENT2RY FIRE<br/>EXTINGUISHER SERVICES SYSTEM!</h1>
       <p class="subtext">
         Stay safe and compliant with our all-in-one Fire Extinguisher Services System. 
