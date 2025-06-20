@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Information Management</title>
+  <link rel="stylesheet" href="adminFormat.css" />
+</head>
+<body class="admin">
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+    </div>
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.php" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="information_management.html" class="nav-item active">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+  <h2 class="title">INFORMATION MANAGEMENT</h2>
+  <p class="note">Manage other informations.</p>
+
+  <!-- PREMISE DETAILS SECTION (Black Box) -->
+  <div class="form-card black-box">
+    <h2>PREMISE DETAILS</h2>
+    <form method="POST" id="premiseForm" onsubmit="addPremise(event)">
+      <div class="form-row">
+        <div class="input-group">
+          <label>Premise ID</label>
+          <input type="text" name="premiseId" id="premiseId" required />
+        </div>
+        <div class="input-group">
+          <label>Type</label>
+          <input type="text" name="premiseType" id="premiseType" required />
+        </div>
+      </div>
+      <button type="submit" class="submit-btn">ADD</button>
+    </form>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search" />
+      <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
+    </div>
+
+    <table id="premiseTable" style="margin-top: 20px;">
+      <thead>
+        <tr>
+          <th>Premise ID</th>
+          <th>Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <hr>
+  <div class="form-card red-box">
+    <h2>SERVICE DETAILS</h2>
+    <form method="POST" id="serviceForm" onsubmit="addService(event)">
+      <div class="form-row">
+        <div class="input-group">
+          <label>Service ID</label>
+          <input type="text" name="serviceId" id="serviceId" required />
+        </div>
+        <div class="input-group">
+          <label>Type</label>
+          <input type="text" name="serviceType" id="serviceType" required />
+        </div>
+      </div>
+      <button type="submit" class="submit-btn">ADD</button>
+    </form>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search" />
+      <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
+    </div>
+
+    <table id="serviceTable" style="margin-top: 20px;">
+      <thead>
+        <tr>
+          <th>Service ID</th>
+          <th>Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- EMBEDDED JAVASCRIPT -->
+  <script>
+    function addPremise(event) {
+      event.preventDefault();
+      const id = document.getElementById("premiseId").value.trim();
+      const type = document.getElementById("premiseType").value.trim();
+      if (!id || !type) return;
+
+      const table = document.getElementById("premiseTable").getElementsByTagName("tbody")[0];
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${id}</td>
+        <td>${type}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">DELETE</button></td>
+      `;
+      document.getElementById("premiseForm").reset();
+    }
+
+    function addService(event) {
+      event.preventDefault();
+      const id = document.getElementById("serviceId").value.trim();
+      const type = document.getElementById("serviceType").value.trim();
+      if (!id || !type) return;
+
+      const table = document.getElementById("serviceTable").getElementsByTagName("tbody")[0];
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${id}</td>
+        <td>${type}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">DELETE</button></td>
+      `;
+      document.getElementById("serviceForm").reset();
+    }
+
+    function deleteRow(button) {
+      button.closest("tr").remove();
+    }
+
+    function searchTable(tableId, inputId) {
+      const input = document.getElementById(inputId).value.toLowerCase();
+      const rows = document.getElementById(tableId).getElementsByTagName("tbody")[0].rows;
+      for (let row of rows) {
+        const cells = row.getElementsByTagName("td");
+        let match = false;
+        for (let cell of cells) {
+          if (cell.textContent.toLowerCase().includes(input)) {
+            match = true;
+            break;
+          }
+        }
+        row.style.display = match ? "" : "none";
+      }
+    }
+  </script>
+</body>
+</html>

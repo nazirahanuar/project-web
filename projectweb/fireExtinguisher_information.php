@@ -1,53 +1,40 @@
 <?php
 include 'connect.php';
 
-// Handle new submission
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Delete action
+  // Delete extinguisher
   if (isset($_POST['delete_serial'])) {
     $deleteSerial = $_POST['delete_serial'];
-    $deleteStmt = $conn->prepare("DELETE FROM fire_extinguisher WHERE serialNo = ?");
-    $deleteStmt->bind_param("s", $deleteSerial);
-    if ($deleteStmt->execute()) {
-      echo "<script>alert('Fire extinguisher deleted successfully.');</script>";
-    } else {
-      echo "<script>alert('Error deleting record.');</script>";
-    }
+    $stmt = $conn->prepare("DELETE FROM fire_extinguisher WHERE serialNo = ?");
+    $stmt->bind_param("s", $deleteSerial);
+    $stmt->execute();
   }
 
-  // Add action
+  // Add extinguisher
   elseif (isset($_POST['serial'], $_POST['type'], $_POST['date'])) {
-    $serialNo = trim($_POST['serial']);
+    $serial = trim($_POST['serial']);
     $type = trim($_POST['type']);
     $date = $_POST['date'];
 
-    if (!empty($serialNo) && !empty($type) && !empty($date)) {
+    if (!empty($serial) && !empty($type) && !empty($date)) {
       $check = $conn->prepare("SELECT serialNo FROM fire_extinguisher WHERE serialNo = ?");
-      $check->bind_param("s", $serialNo);
+      $check->bind_param("s", $serial);
       $check->execute();
       $result = $check->get_result();
 
-      if ($result->num_rows > 0) {
-        echo "<script>alert('Serial No. already exists!');</script>";
-      } else {
+      if ($result->num_rows === 0) {
         $stmt = $conn->prepare("INSERT INTO fire_extinguisher (serialNo, fireextinguisherType, expiredDate) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $serialNo, $type, $date);
-        if ($stmt->execute()) {
-          echo "<script>alert('Fire extinguisher added successfully.');</script>";
-        } else {
-          echo "<script>alert('Error adding record.');</script>";
-        }
+        $stmt->bind_param("sss", $serial, $type, $date);
+        $stmt->execute();
       }
-    } else {
-      echo "<script>alert('Please fill in all fields.');</script>";
     }
   }
 }
 
-// Fetch all extinguisher data
+// Fetch data
 $extinguishers = $conn->query("SELECT * FROM fire_extinguisher");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,14 +48,14 @@ $extinguishers = $conn->query("SELECT * FROM fire_extinguisher");
     <div class="nav-left">
       <a href="adminHome.html" class="nav-item">HOME</a>
       <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
-      <a href="scheduling.php" class="nav-item">SCHEDULING</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
     </div>
     <div class="nav-center">
       <img src="image/logo.png" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
       <a href="fireExtinguisher_information.php" class="nav-item active">FIRE EXTINGUISHER<br>INFORMATION</a>
-      <a href="#" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+      <a href="information_management.html" class="nav-item">INFORMATION<br>MANAGEMENT</a>
     </div>
   </nav>
 
