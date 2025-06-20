@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Service</title>
-    <link rel="stylesheet" href="customer.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Service</title>
+  <link rel="stylesheet" href="customer.css">
 </head>
 <body id="top" class="customer">
 
@@ -20,7 +20,7 @@
     </div>
     <div class="nav-right">
       <a href="mySchedule.html" class="nav-item active">MY SCHEDULE</a>
-      <a href="custProfile.php" class="nav-item">PROFILE</a>
+      <a href="custProfile.php#profile" class="nav-item">PROFILE</a>
     </div>
   </nav>
 
@@ -29,10 +29,16 @@
     <h1 class="main-schedule-title">MY SCHEDULE</h1>
 
     <div class="order-id-box">
-      <p class="order-label">Your Order ID: <input type="text" value="OR965" readonly></p>
+      <p class="order-label">
+        Your Order ID: 
+        <input type="text" id="orderID" name="orderID" placeholder="Enter Order ID" oninput="checkOrderID()">
+      </p>
     </div>
 
-    <div class="schedule-table-box">
+    <!-- Error message moved here -->
+    <p id="errorMsg" style="color: red; font-weight: bold; margin-left: 10px;"></p>
+
+    <div class="schedule-table-box" id="scheduleBox" style="display: none;">
       <table class="schedule-table">
         <thead>
           <tr>
@@ -58,9 +64,10 @@
         </tbody>
       </table>
     </div>
+
     <p class="profile-note">
       Don't know your Order ID? Go to 
-      <a href="custProfile.php" style="font-weight: bold; text-decoration: none; color: inherit;">
+      <a href="custProfile.php#profile" style="font-weight: bold; text-decoration: none; color: inherit;">
         PROFILE
       </a>
     </p>
@@ -106,6 +113,27 @@
       </div>
     </div>
   </section>
+
+  <!-- JavaScript for real-time checking -->
+  <script>
+    function checkOrderID() {
+      const inputID = document.getElementById("orderID").value.trim().toUpperCase();
+      const validID = "OR965"; // Add more 
+      const errorMsg = document.getElementById("errorMsg");
+      const scheduleBox = document.getElementById("scheduleBox");
+
+      if (inputID === "") {
+        errorMsg.textContent = "";
+        scheduleBox.style.display = "none";
+      } else if (inputID !== validID) {
+        errorMsg.textContent = "Order ID does not exist.";
+        scheduleBox.style.display = "none";
+      } else {
+        errorMsg.textContent = "";
+        scheduleBox.style.display = "block";
+      }
+    }
+  </script>
 
 </body>
 </html>

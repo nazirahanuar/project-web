@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'table' => 'customer',
             'id_col' => 'customerID',
             'pass_col' => 'customerPassword',
-            'redirect' => 'customerHome.html'
+            'redirect' => 'customerHome.php'
         ]
     ];
 
