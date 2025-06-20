@@ -20,6 +20,10 @@ $user = $result->fetch_assoc();
 // Get latest order (if any)
 $orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
 $order = $orderResult->fetch_assoc();
+
+$nameParts = explode(' ', $user['customerName'], 2);
+$firstName = $nameParts[0];
+$lastName = isset($nameParts[1]) ? $nameParts[1] : '';
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +38,7 @@ $order = $orderResult->fetch_assoc();
   <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
-      <a href="customerHome.html" class="nav-item">HOME</a>
+      <a href="customerHome.php" class="nav-item">HOME</a>
       <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
       <a href="requestService.html" class="nav-item">REQUEST<br>SERVICE</a>
     </div>
@@ -57,11 +61,8 @@ $order = $orderResult->fetch_assoc();
 
         <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
 
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" value="<?= htmlspecialchars($user['firstName']) ?>" required>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" value="<?= htmlspecialchars($user['lastName']) ?>" required>
+        <label for="customerName">Name:</label>
+        <input type="text" id="customerName" name="customerName" value="<?= htmlspecialchars($user['customerName']) ?>" required>
 
         <label for="Gender">Gender:</label>
         <select id="Gender" name="Gender" required>
@@ -70,7 +71,7 @@ $order = $orderResult->fetch_assoc();
         </select>
 
         <label for="NoTel">No. Tel:</label>
-        <input type="text" id="NoTel" name="NoTel" value="<?= htmlspecialchars($user['NoTel']) ?>" required>
+        <input type="text" id="NoTel" name="NoTel" value="<?= htmlspecialchars($user['noTel']) ?>" required>
 
         <label for="Email">Email:</label>
         <input type="email" id="Email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" required>
@@ -89,10 +90,9 @@ $order = $orderResult->fetch_assoc();
         <a href="custProfile.php?edit=true" class="edit-profile-btn">Edit Profile</a>
         <hr/>
         <div class="profile-details">
-          <p><strong>First Name:</strong> <?= htmlspecialchars($user['firstName']) ?></p>
-          <p><strong>Last Name:</strong> <?= htmlspecialchars($user['lastName']) ?></p>
+          <p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
           <p><strong>Gender:</strong> <?= htmlspecialchars($user['Gender']) ?></p>
-          <p><strong>No. Tel:</strong> <?= htmlspecialchars($user['NoTel']) ?></p>
+          <p><strong>No. Tel:</strong> <?= htmlspecialchars($user['noTel']) ?></p>
           <p><strong>Email:</strong> <?= htmlspecialchars($user['Email']) ?></p>
         </div>
       </div>
