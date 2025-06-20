@@ -48,7 +48,7 @@ body {
   margin: 40px 0 20px;
 }
 
-/* ===== PROFILE CARD LAYOUT (like image) ===== */
+/* profile card layout */
 .profile-card {
   max-width: 750px;
   margin: 0 auto 40px;
@@ -79,6 +79,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   background-color: #ccc;
+  align-self: left;
 }
 
 .profile-header-right {
@@ -119,7 +120,7 @@ body {
   color: #333;
 }
 
-/* ==== ORDER BOX ==== */
+/* order box */
 .order-section {
   text-align: center;
 }
@@ -139,14 +140,14 @@ body {
   font-size: 15px;
 }
 
-/* ==== "Ready to track your schedule?" paragraph centered ==== */
+/* bottom message */
 .bottom-message {
   text-align: center;
   font-size: 14px;
   margin-top: 20px;
 }
 
-/* ==== EDIT FORM ==== */
+/*edit form*/
 .edit-form {
   max-width: 620px;
   margin: 0 auto 40px;
@@ -247,7 +248,7 @@ body {
   opacity: 0.9;
 }
 
-/* ==== RESPONSIVE ==== */
+/* responsive */
 @media screen and (max-width: 768px) {
   .profile-header {
     flex-direction: column;
