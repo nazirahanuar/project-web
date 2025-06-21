@@ -50,7 +50,7 @@ $order = $orderResult->fetch_assoc();
     <!-- edit profile section -->
 <section class="profile-section">
   <h2 class="sec-title">EDIT PROFILE</h2>
-  <form class="edit-form" action="updateProfile.php" method="POST" enctype="multipart/form-data">
+  <form class="edit-form" action="updateCustProfile.php" method="POST" enctype="multipart/form-data">
     
     <div class="edit-photo">
       <label for="profilePic">
