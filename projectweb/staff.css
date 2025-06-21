@@ -7,7 +7,7 @@ body.staff {
   font-family: "Segoe UI", sans-serif;
   color: white;
 }
-/* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -16,24 +16,28 @@ body.staff {
   padding: 10px 30px;
 }
 
-.nav-left .logo {
-  height: 60px;
-  width: auto;
-  border-radius: 50%;
-  background-color: white;
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-left {
+  justify-content: flex-start;
 }
 
 .nav-right {
-  display: flex;
-  gap: 20px;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .nav-item {
   color: white;
   text-decoration: none;
-  font-weight: bold;
   padding: 10px 15px;
-  transition: background 0.3s;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
 }
 
 .nav-item:hover,
@@ -42,18 +46,55 @@ body.staff {
   border-radius: 5px;
 }
 
-.logout-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 40px 0 0;
+.logo {
+  height: 60px;
+  width: auto;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.header {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.header h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: 'Georgia', serif;
+}
+
+.header .subtext {
+  font-size: 18px;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.header .schedule-btn {
+  padding: 14px 20px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.header .schedule-btn:hover {
+  background-color: #f2f2f2;
 }
 
 .logout-btn {
-  padding: 10px 15px;
+  margin-top: 10px;
+  padding: 10px 18px;
   background-color: #e53935;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -62,39 +103,6 @@ body.staff {
 
 .logout-btn:hover {
   background-color: #c62828;
-}
-
-/* HEADER SECTION */
-.header {
-  text-align: center;
-  padding: 140px 20px;
-}
-
-.header h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.header .subtext {
-  font-size: 20px;
-  font-style: italic;
-  margin-bottom: 30px;
-}
-
-.cta-btn {
-  background-color: white;
-  color: black;
-  padding: 15px 25px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 8px;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s;
-}
-
-.cta-btn:hover {
-  transform: scale(1.05);
 }
 
 /* STAFF PROFILE STYLES */
