@@ -2,73 +2,66 @@
 session_start();
 include 'connect.php';
 
-if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
-    header("Location: login.php");
-    exit();
-}
+$staffID = $_SESSION['userID'] ?? '';
 
-$staffID = $_SESSION['userID'];
-
+// Fetch staff info
 $stmt = $conn->prepare("SELECT * FROM staff WHERE staffID = ?");
 $stmt->bind_param("s", $staffID);
 $stmt->execute();
 $result = $stmt->get_result();
-$staff = $result->fetch_assoc();
+$data = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Edit Staff Profile</title>
-  <link rel="stylesheet" href="staff.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="editStaffProfile.css" />
 </head>
-<body class="staff">
-
-  <nav class="staff-edit-navbar">
-    <div class="staff-edit-nav-left">
-      <a href="staffHome.php" class="nav-item">HOME</a>
-      <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-    </div>
-    <div class="staff-edit-nav-center">
-      <img src="image/logo.png" class="logo" alt="Logo" />
-    </div>
-    <div class="staff-edit-nav-right">
-      <a href="staffProfile.php" class="nav-item active">PROFILE</a>
+<body>
+  <nav class="navbar">
+    <img src="image/logo.PNG" class="logo" alt="logo">
+    <div class="nav-links">
+      <a href="staffHome.html">HOME</a>
+      <a href="staffSchedule.html">SERVICE SCHEDULE</a>
+      <a href="staffProfile.php" class="active">PROFILE</a>
     </div>
   </nav>
 
-  <h2 class="title">EDIT PROFILE</h2>
+  <h1 class="title">EDIT PROFILE</h1>
+
   <div class="profile-card">
     <form action="updateStaffProfile.php" method="POST" enctype="multipart/form-data">
       <div class="profile-pic">
-        <label for="profilePic">
-          <?= $staff['profilePic'] ? '<img src="' . htmlspecialchars($staff['profilePic']) . '" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />' : 'Add<br>Picture' ?>
-        </label>
-        <input type="file" id="profilePic" name="profilePic" accept="image/*" hidden>
+        <label for="profilePic">Add<br>Profile<br>Picture</label>
+        <input type="file" name="profilePic" id="profilePic" hidden />
       </div>
 
-      <div class="staff-id">Staff ID: <?= htmlspecialchars($staff['staffID']) ?></div>
-      <input type="hidden" name="staffID" value="<?= htmlspecialchars($staff['staffID']) ?>">
+      <p class="staff-id"><em>Staff ID: <?php echo htmlspecialchars($data['staffID']); ?></em></p>
 
-      <label for="staffName">Name</label>
-      <input type="text" name="staffName" value="<?= htmlspecialchars($staff['staffName']) ?>" required>
+      <label>Staff Name:</label>
+      <input type="text" name="staffName" value="<?php echo htmlspecialchars($data['staffName']); ?>" required>
 
-      <label for="Gender">Gender</label>
+      <label>Gender:</label>
       <div class="gender-row">
-        <label><input type="radio" name="Gender" value="Male" <?= $staff['Gender'] === 'Male' ? 'checked' : '' ?>> Male</label>
-        <label><input type="radio" name="Gender" value="Female" <?= $staff['Gender'] === 'Female' ? 'checked' : '' ?>> Female</label>
+        <label><input type="radio" name="gender" value="Male" <?php if ($data['Gender'] === 'Male') echo 'checked'; ?>> Male</label>
+        <label><input type="radio" name="gender" value="Female" <?php if ($data['Gender'] === 'Female') echo 'checked'; ?>> Female</label>
       </div>
 
-      <label for="NoTel">No. Tel</label>
-      <input type="text" name="NoTel" value="<?= htmlspecialchars($staff['NoTel']) ?>" required>
+      <label>No. Tel:</label>
+      <input type="text" name="tel" value="<?php echo htmlspecialchars($data['noTel']); ?>" required>
 
-      <label for="Email">Email</label>
-      <input type="email" name="Email" value="<?= htmlspecialchars($staff['Email']) ?>" required>
+      <label>Email:</label>
+      <input type="email" name="email" value="<?php echo htmlspecialchars($data['Email']); ?>" required>
+
+      <label>Change Password:</label>
+      <input type="password" name="password" placeholder="Enter new password">
 
       <div class="btn-row">
-        <button type="submit">Save</button>
-        <button type="button" onclick="window.location.href='staffProfile.php'">Cancel</button>
+        <button type="button" onclick="window.location.href='staffProfile.php'">CANCEL</button>
+        <button type="submit">SAVE</button>
       </div>
     </form>
   </div>
