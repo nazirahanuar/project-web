@@ -1,41 +1,42 @@
 <?php
-include 'projectweb/connect.php';
+include 'connect.php';
 
-// Handle Add
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add"])) {
-  $serialNo = $_POST["serialNo"];
-  $type = $_POST["type"];
-  $expirationDate = $_POST["expirationDate"];
+// ADD NEW EXTINGUISHER
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add'])) {
+  $serialNo = $_POST['serialNo'];
+  $type = $_POST['fireExtinguisherType'];
+  $expiredDate = $_POST['expiredDate'];
 
-  // Check if serial number exists
-  $check = $conn->prepare("SELECT serialNo FROM fire_extinguisher WHERE serialNo = ?");
-  $check->bind_param("s", $serialNo);
-  $check->execute();
-  $result = $check->get_result();
+  if ($serialNo && $type && $expiredDate) {
+    $check = $conn->prepare("SELECT * FROM FIRE_EXTINGUISHER WHERE serialNo = ?");
+    $check->bind_param("s", $serialNo);
+    $check->execute();
+    $res = $check->get_result();
 
-  if ($result->num_rows > 0) {
-    echo "<script>alert('Serial number already exists in the database.');</script>";
-  } else {
-    $stmt = $conn->prepare("INSERT INTO fire_extinguisher (serialNo, fireExtinguisherType, expiredDate) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $serialNo, $type, $expirationDate);
-    if ($stmt->execute()) {
-      echo "<script>alert('Fire extinguisher added successfully.');</script>";
+    if ($res->num_rows > 0) {
+      echo "<script>alert('Serial number already exists.');</script>";
     } else {
-      echo "<script>alert('Failed to add extinguisher.');</script>";
+      $insert = $conn->prepare("INSERT INTO FIRE_EXTINGUISHER (serialNo, fireExtinguisherType, expiredDate) VALUES (?, ?, ?)");
+      $insert->bind_param("sss", $serialNo, $type, $expiredDate);
+      $insert->execute();
+      echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
     }
   }
 }
 
-// Handle Delete
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
-  $deleteSerial = $_POST["delete"];
-  $stmt = $conn->prepare("DELETE FROM fire_extinguisher WHERE serialNo = ?");
-  $stmt->bind_param("s", $deleteSerial);
-  if ($stmt->execute()) {
-    echo "<script>alert('Fire extinguisher deleted.');</script>";
-  }
+// DELETE EXTINGUISHER
+if (isset($_GET['delete'])) {
+  $deleteID = $_GET['delete'];
+  $delete = $conn->prepare("DELETE FROM FIRE_EXTINGUISHER WHERE serialNo = ?");
+  $delete->bind_param("s", $deleteID);
+  $delete->execute();
+  echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
 }
+
+// FETCH ALL EXTINGUISHERS
+$data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,15 +67,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
   <div class="extinguisher-container">
     <div class="form-container">
       <h2 class="sub-title">ADD FIRE EXTINGUISHER</h2>
-      <form method="POST">
+      <form method="POST" action="">
         <label>Serial No.</label>
         <input type="text" name="serialNo" required />
 
         <label>Fire Extinguisher Type</label>
-        <input type="text" name="type" required />
+        <input type="text" name="fireExtinguisherType" required />
 
         <label>Expiration Date</label>
-        <input type="date" name="expirationDate" required />
+        <input type="date" name="expiredDate" required />
 
         <button type="submit" name="add">ADD</button>
       </form>
@@ -98,22 +99,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
       </tr>
     </thead>
     <tbody id="fireExtinguisherTable">
-      <?php
-      $result = $conn->query("SELECT * FROM fire_extinguisher ORDER BY serialNo ASC");
-      while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['serialNo']}</td>
-                <td>{$row['fireExtinguisherType']}</td>
-                <td>{$row['expiredDate']}</td>
-                <td>
-                  <form method='POST' onsubmit='return confirm(\"Are you sure you want to delete this item?\")'>
-                    <input type='hidden' name='delete' value='{$row['serialNo']}' />
-                    <button type='submit' class='delete-btn'>DELETE</button>
-                  </form>
-                </td>
-              </tr>";
-      }
-      ?>
+      <?php while ($row = $data->fetch_assoc()): ?>
+        <tr>
+          <td><?= htmlspecialchars($row['serialNo']) ?></td>
+          <td><?= htmlspecialchars($row['fireExtinguisherType']) ?></td>
+          <td><?= htmlspecialchars($row['expiredDate']) ?></td>
+          <td>
+            <a href="?delete=<?= urlencode($row['serialNo']) ?>" onclick="return confirm('Delete this extinguisher?')">
+              <button class="delete-btn">DELETE</button>
+            </a>
+          </td>
+        </tr>
+      <?php endwhile; ?>
     </tbody>
   </table>
 
