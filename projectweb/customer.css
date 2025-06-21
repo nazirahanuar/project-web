@@ -551,3 +551,283 @@ textarea {
   background-color: #eee;
   font-weight: bold;
 }
+
+/*profile*/
+.profile-card {
+  max-width: 750px;
+  margin: 0 auto 40px;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: black;
+}
+
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+}
+
+.centered-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ccc;
+  align-self: left;
+}
+
+.profile-header-right {
+  text-align: right;
+}
+
+.profile-header-right p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.edit-btn {
+  margin-top: 15px;
+  background-color: #f4f4f4;
+  color: black;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #e0e0e0;
+}
+
+
+.profile-divider {
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0 15px;
+}
+
+.profile-info {
+  text-align: left;
+  margin-top: 15px;
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-info p {
+  margin: 6px 0;
+}
+
+.profile-info p strong {
+  font-weight: bold;
+}
+
+.customer-id {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: black;
+}
+
+.profile-section {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
+
+/* order box */
+.order-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.order-box {
+  background-color: #aa2d2f;
+  color: white;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 25px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.order-box p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+
+/* bottom message */
+.bottom-message {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.schedule-hint {
+  font-size: 14px;
+  margin-top: 15px;
+  font-style: italic;
+  color: #333;
+}
+
+.schedule-hint a {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+/*edit form*/
+.edit-form {
+  max-width: 620px;
+  margin: 0 auto 40px;
+  background: white;
+  padding: 30px 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.circle-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: block;
+  object-fit: cover;
+  margin: 0 auto 15px;
+}
+
+.edit-photo {
+  text-align: center;
+}
+
+.edit-form label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  color: #333;
+}
+
+.edit-form .form-group {
+  margin-bottom: 20px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="email"],
+.edit-form input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.edit-form input:focus {
+  border-color: #9d0e0e;
+  outline: none;
+}
+
+.radio-group {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.radio-group label {
+  font-weight: normal;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 10px 24px;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s ease;
+  border: none;
+}
+
+.cancel-btn {
+  background-color: #ddd;
+  color: #333;
+}
+
+.save-btn {
+  background-color: #9d0e0e;
+  color: white;
+}
+
+.cancel-btn:hover,
+.save-btn:hover,
+.edit-btn:hover {
+  opacity: 0.9;
+}
+
+.h2 {
+  align-self: left;
+  text-align: left;
+  margin-left: 0px;
+}
+
+.th-tittle {
+  text-align: left;
+}
+
+/* responsive */
+@media screen and (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-header-left,
+  .profile-header-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .edit-btn,
+  .cancel-btn,
+  .save-btn {
+    width: 100%;
+  }
+}
