@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Service</title>
-    <link rel="stylesheet" href="customer.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Service</title>
+  <link rel="stylesheet" href="customer.css">
 </head>
 <body id="top" class="customer">
+
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
-      <a href="customerHome.html" class="nav-item">HOME</a>
+      <a href="customerHome.php" class="nav-item">HOME</a>
       <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
       <a href="requestService.html" class="nav-item active">REQUEST<br>SERVICE</a>
     </div>
@@ -21,9 +23,10 @@
       <a href="custProfile.php" class="nav-item">PROFILE</a>
     </div>
   </nav>
-    
+
   <h1 class="sec-title">REQUEST SERVICE</h1>
 
+  <!-- Request Form -->
   <div class="request-form">
     <form action="submitRequest.php" method="POST">
       <div class="form-row">
@@ -32,24 +35,24 @@
           <input type="text" id="customerId" name="customerId" required>
         </div>
         <div class="form-group">
-          <label for="serviceId">Service ID</label>
-          <select id="serviceId" name="serviceId">
-            <option value="">Select</option>
-            <option value="MNT0981">MNT0981</option>
-            <option value="INS854">INS854</option>
-            <option value="SEM632">SEM632</option>
+          <label for="serviceId">Service Type</label>
+          <select id="serviceId" name="serviceId" required>
+            <option value="">Select Service</option>
+            <option value="MNT981">Maintenance</option>
+            <option value="INS854">Installation</option>
+            <option value="SEM632">Seminar/Training</option>
           </select>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="premiseId">Premise ID</label>
-          <select id="premiseId" name="premiseId">
-            <option value="">Select</option>
-            <option value="SCH632">SCH632</option>
-            <option value="HME520">HME520</option>
-            <option value="ORG785">ORG785</option>
+          <label for="premiseId">Premise Type</label>
+          <select id="premiseId" name="premiseId" required>
+            <option value="">Select Premise</option>
+            <option value="SCH632">School/Institution</option>
+            <option value="HME520">Home</option>
+            <option value="ORG785">Organization/Office</option>
           </select>
         </div>
         <div class="form-group">
@@ -61,7 +64,7 @@
       <div class="form-row">
         <div class="form-group">
           <label for="quantity">Quantity of Fire Extinguisher</label>
-          <input type="number" id="quantity" name="quantity" min="1" max="200" value="1">
+          <input type="number" id="quantity" name="quantity" min="1" max="200" value="1" required>
         </div>
       </div>
 
@@ -72,7 +75,7 @@
 
       <div class="form-group">
         <label for="notes">Additional Notes</label>
-        <textarea id="notes" name="notes"></textarea>
+        <textarea id="notes" name="notes" placeholder="e.g., ABC Fire Extinguisher"></textarea>
       </div>
 
       <button type="submit" class="submit-btn">SUBMIT</button>
@@ -81,16 +84,14 @@
 
   <p class="note">*Note: We will assign the fire extinguishers based on the suitability of the premises. Please specify the types of fire extinguishers you require in the ‘Additional Notes’ section.</p>
 
+  <!-- Reference Section -->
   <section class="reference-section">
     <h2 class="sec-heading">[ FOR REFERENCE ]</h2>
 
     <h3 class="subheading">PREMISE DETAILS</h3>
     <table class="reference-table">
       <thead>
-        <tr>
-          <th>Premise ID</th>
-          <th>Type</th>
-        </tr>
+        <tr><th>Premise ID</th><th>Type</th></tr>
       </thead>
       <tbody>
         <tr><td>SCH632</td><td>School/Institution</td></tr>
@@ -102,37 +103,15 @@
     <h3 class="subheading">SERVICE DETAILS</h3>
     <table class="reference-table">
       <thead>
-        <tr>
-          <th>Service ID</th>
-          <th>Type</th>
-        </tr>
+        <tr><th>Service ID</th><th>Type</th></tr>
       </thead>
       <tbody>
-        <tr><td>MNT0981</td><td>Maintenance</td></tr>
+        <tr><td>MNT981</td><td>Maintenance</td></tr>
         <tr><td>INS854</td><td>Installation</td></tr>
         <tr><td>SEM632</td><td>Seminar/Training Booking</td></tr>
       </tbody>
     </table>
   </section>
 
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
-
-    form.addEventListener("submit", function (e) {
-      const customerId = document.getElementById("customerId").value.trim();
-      const serviceId = document.getElementById("serviceId").value.trim();
-      const premiseId = document.getElementById("premiseId").value;
-      const preferredDate = document.getElementById("preferredDate").value;
-      const location = document.getElementById("location").value.trim();
-      const quantity = document.getElementById("quantity").value;
-
-      if (!customerId || !serviceId || !premiseId || !preferredDate || !location || quantity < 1) {
-        alert("Please fill in all required fields. Quantity must be at least 1.");
-        e.preventDefault();
-      }
-    });
-  });
-</script>
 </body>
 </html>
