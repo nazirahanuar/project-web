@@ -85,7 +85,7 @@ $services = $conn->query("SELECT * FROM service");
 <body>
 
   <div class="card-box premise-box">
-    <h2>Premise Details</h2>
+    <h2  class="title">Premise Details</h2>
     <?php if ($premiseError) echo "<p class='error'>$premiseError</p>"; ?>
     <?php if ($premiseSuccess) echo "<p class='success'>$premiseSuccess</p>"; ?>
     <form method="POST">

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Management</title>
+  <link rel="stylesheet" href="adminFormat.css" />
+</head>
+<body class="admin">
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="request_management.html" class="nav-item active">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+    </div>
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.php" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="information_management.php" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+  <div class="back-button-container">
+  <a href="request_management.html" class="back-button">⇤</a>
+ </div>
+  <div class="container">
+    <h2 class="title">ORDER DETAILS 📝</h2>
+    <table id="order-table" class="order-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer ID</th>
+          <th>Service ID</th>
+          <th>Premise ID</th>
+          <th>Quantity</th>
+          <th>Serial No.</th>
+          <th>Location</th>
+          <th>Preferred Date</th>
+          <th>Additional Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ORD12345</td>
+          <td>zarraminah05</td>
+          <td>MNT981</td>
+          <td>HME520</td>
+          <td>2</td>
+          <td>SN001-A1, SN002-B2</td>
+          <td>DT 698, Jalan Nuri 65, Taman Belimbing Nuri, 76100 Durian Tunggal, Melaka</td>
+          <td>26/06/2025</td>
+          <td>Two ABC Extinguishers.</td>
+          <td><button class="delete-btn">DELETE</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const table = document.getElementById("order-table");
+
+      table.addEventListener("click", function (e) {
+        if (e.target && e.target.classList.contains("delete-btn")) {
+          const row = e.target.closest("tr");
+          row.remove();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
