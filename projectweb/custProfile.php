@@ -61,37 +61,30 @@ $order = $orderResult->fetch_assoc();
 
     <div class="edit-center-header">
       <p class="customer-id">Customer ID: <strong><?= htmlspecialchars($user['customerID']) ?></strong></p>
-      <p class="customer-id" style="text-align: left; "></p> 
-      
     </div>
 
     <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
 
-    <div class="edit-row">
+  
       <label>Name:</label>
       <input type="text" name="customerName" value="<?= htmlspecialchars($user['customerName']) ?>" required>
     </div>
 
-<div class="edit-row"> <label>Gender:</label>
-    <div class="radio-group">
-        <input type="radio" id="male" name="gender" value="male">
-        <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female">
-        <label for="female">Female</label>
+      <label>Gender:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="Gender" value="Male" <?= $user['Gender'] === 'Male' ? 'checked' : '' ?>> Male</label>
+        <label><input type="radio" name="Gender" value="Female" <?= $user['Gender'] === 'Female' ? 'checked' : '' ?>> Female</label>
+      </div>
     </div>
-</div>
 
-    <div class="edit-row">
       <label>No. Tel:</label>
       <input type="text" name="NoTel" value="<?= htmlspecialchars($user['noTel']) ?>" required>
     </div>
 
-    <div class="edit-row">
       <label>Email:</label>
       <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" required>
     </div>
 
-    <div class="edit-row">
       <label>Change Password:</label>
       <input type="password" name="password" placeholder="Optional">
     </div>
@@ -129,7 +122,7 @@ $order = $orderResult->fetch_assoc();
 
         <div class="profile-info">
           <h2 class="th-title">CUSTOMER DETAILS:</h2>
-          <br><p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
+          <p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
           <p><strong>Gender:</strong> <?= htmlspecialchars($user['Gender']) ?></p>
           <p><strong>No. Tel:</strong> <?= htmlspecialchars($user['noTel']) ?></p>
           <p><strong>Email:</strong> <?= htmlspecialchars($user['Email']) ?></p>
