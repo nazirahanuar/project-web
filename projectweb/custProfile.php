@@ -48,42 +48,59 @@ $order = $orderResult->fetch_assoc();
 <main>
   <?php if (isset($_GET['edit']) && $_GET['edit'] === 'true'): ?>
     <!-- === EDIT PROFILE SECTION === -->
-    <section class="profile-section">
-      <h2 class="sec-title">EDIT PROFILE</h2>
-      <form class="edit-form" action="updateProfile.php" method="POST" enctype="multipart/form-data">
-        <div class="edit-photo">
-          <label for="profilePic">
-            <img src="<?= htmlspecialchars($user['profilePic'] ?? 'uploads/default.png') ?>" class="circle-pic" alt="Edit Profile Picture">
-          </label>
-          <input type="file" name="profilePic" id="profilePic" accept="image/*" hidden>
-        </div>
+<section class="profile-section">
+  <h2 class="sec-title">EDIT PROFILE</h2>
+  <form class="edit-form" action="updateProfile.php" method="POST" enctype="multipart/form-data">
+    
+    <div class="edit-photo">
+      <label for="profilePic">
+        <img src="<?= htmlspecialchars($user['profilePic'] ?? 'uploads/default.png') ?>" class="circle-pic" alt="Edit Profile Picture">
+      </label>
+      <input type="file" name="profilePic" id="profilePic" accept="image/*" hidden>
+    </div>
 
-        <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
+    <div class="edit-center-header">
+      <p class="customer-id">Customer ID: <strong><?= htmlspecialchars($user['customerID']) ?></strong></p>
+    </div>
 
-        <label>Name:</label>
-        <input type="text" name="customerName" value="<?= htmlspecialchars($user['customerName']) ?>" required>
+    <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
 
-        <label>Gender:</label>
-        <div class="radio-group">
-          <label><input type="radio" name="Gender" value="Male" <?= $user['Gender'] === 'Male' ? 'checked' : '' ?>> Male</label>
-          <label><input type="radio" name="Gender" value="Female" <?= $user['Gender'] === 'Female' ? 'checked' : '' ?>> Female</label>
-        </div>
+    <div class="edit-row">
+      <label>Name:</label>
+      <input type="text" name="customerName" value="<?= htmlspecialchars($user['customerName']) ?>" required>
+    </div>
 
-        <label>No. Tel:</label>
-        <input type="text" name="NoTel" value="<?= htmlspecialchars($user['noTel']) ?>" required>
+    <div class="edit-row">
+      <label>Gender:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="Gender" value="Male" <?= $user['Gender'] === 'Male' ? 'checked' : '' ?>> Male</label>
+        <label><input type="radio" name="Gender" value="Female" <?= $user['Gender'] === 'Female' ? 'checked' : '' ?>> Female</label>
+      </div>
+    </div>
 
-        <label>Email:</label>
-        <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" required>
+    <div class="edit-row">
+      <label>No. Tel:</label>
+      <input type="text" name="NoTel" value="<?= htmlspecialchars($user['noTel']) ?>" required>
+    </div>
 
-        <label>Change Password:</label>
-        <input type="password" name="password" placeholder="Optional">
+    <div class="edit-row">
+      <label>Email:</label>
+      <input type="email" name="Email" value="<?= htmlspecialchars($user['Email']) ?>" required>
+    </div>
 
-        <div class="button-row">
-          <a href="custProfile.php" class="cancel-btn">CANCEL</a>
-          <button type="submit" class="save-btn">SAVE</button>
-        </div>
-      </form>
-    </section>
+    <div class="edit-row">
+      <label>Change Password:</label>
+      <input type="password" name="password" placeholder="Optional">
+    </div>
+
+    <div class="button-row">
+      <a href="custProfile.php" class="cancel-btn">CANCEL</a>
+      <button type="submit" class="save-btn">SAVE</button>
+    </div>
+  </form>
+</section>
+
+
 
   <?php else: ?>
     <!-- === VIEW PROFILE SECTION === -->
