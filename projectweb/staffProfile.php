@@ -29,7 +29,7 @@ $staff = $result->fetch_assoc();
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-      <a href="staffHome.html" class="nav-item">HOME</a>
+      <a href="staffHome.php" class="nav-item">HOME</a>
       <a href="staffSchedule.html" class="nav-item">SERVICE SCHEDULE</a>
       <a href="staffProfile.php" class="nav-item active">PROFILE</a>
     </div>
