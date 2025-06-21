@@ -25,24 +25,28 @@ $staffName = $row['staffName'];
   <link rel="stylesheet" href="staff.css" />
 </head>
 <body class="staff">
+
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
-      <a href="staffHome.php" class="nav-item active">HOME</a>
-      <a href="staffSchedule.php" class="nav-item">SERVICE<br>SCHEDULE</a>
-    </div>
-    <div class="nav-center">
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
+
     <div class="nav-right">
-      <a href="staffProfile.php" class="nav-item">PROFILE</a>
+      <div class="nav-links">
+        <a href="staffHome.php" class="nav-item active">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item">PROFILE</a>
+      </div>
       <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
     </div>
   </nav>
 
+  <!-- Header Content -->
   <div class="header">
     <h1>HAPPY WORKING,<br><?php echo strtoupper($staffName); ?>!</h1>
     <p class="subtext">View your schedule today.</p>
-    <a href="staffSchedule.php" class="btn-schedule">GO TO SERVICE SCHEDULE</a>
+    <a href="staffSchedule.php" class="cta-btn">GO TO SERVICE SCHEDULE</a>
   </div>
 
   <script>

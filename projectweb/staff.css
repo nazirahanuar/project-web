@@ -1,3 +1,4 @@
+/* STAFF HOME STYLES */
 body.staff {
   background: url("image/staffbg.jpg") no-repeat center center fixed;
   background-size: cover;
@@ -10,7 +11,7 @@ body.staff {
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   background-color: #a52828;
   padding: 10px 30px;
 }
@@ -23,6 +24,13 @@ body.staff {
 }
 
 .nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.nav-links {
   display: flex;
   gap: 20px;
 }
@@ -39,12 +47,6 @@ body.staff {
 .nav-item.active {
   background-color: #7b1e1e;
   border-radius: 5px;
-}
-
-.logout-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 40px 0 0;
 }
 
 .logout-btn {
