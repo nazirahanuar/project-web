@@ -47,7 +47,7 @@ $order = $orderResult->fetch_assoc();
 
 <main>
   <?php if (isset($_GET['edit']) && $_GET['edit'] === 'true'): ?>
-    <!-- === EDIT PROFILE SECTION === -->
+    <!-- edit profile section -->
 <section class="profile-section">
   <h2 class="sec-title">EDIT PROFILE</h2>
   <form class="edit-form" action="updateProfile.php" method="POST" enctype="multipart/form-data">
@@ -106,7 +106,7 @@ $order = $orderResult->fetch_assoc();
 
 
   <?php else: ?>
-    <!-- === VIEW PROFILE SECTION === -->
+    <!-- view profile section -->
     <section class="profile-section">
       <h2 class="sec-title">YOUR PROFILE</h2>
       <div class="profile-card">
