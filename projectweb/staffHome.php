@@ -26,18 +26,20 @@ $staffName = $row['staffName'];
 </head>
 <body class="staff">
   <nav class="navbar">
-    <div class="nav-left">
-      <a href="staffHome.php" class="nav-item active">HOME</a>
-      <a href="staffSchedule.php" class="nav-item">SERVICE<br>SCHEDULE</a>
-    </div>
-    <div class="nav-center">
-      <img src="image/logo.PNG" class="logo" alt="Logo" />
-    </div>
-    <div class="nav-right">
-      <a href="staffProfile.php" class="nav-item">PROFILE</a>
-      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
-    </div>
-  </nav>
+  <div class="nav-left">
+    <img src="image/logo.PNG" class="logo" alt="Logo" />
+  </div>
+
+  <div class="nav-center">
+    <a href="staffHome.php" class="nav-item active">HOME</a>
+    <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+    <a href="staffProfile.php" class="nav-item">PROFILE</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
+  </div>
+</nav>
 
   <div class="header">
     <h1>HAPPY WORKING,<br><?php echo strtoupper($staffName); ?>!</h1>
