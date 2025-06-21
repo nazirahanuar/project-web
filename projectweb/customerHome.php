@@ -30,7 +30,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
 
     <nav class="navbar">
       <div class="nav-left">
-        <a href="customerHome.html" class="nav-item active">HOME</a>
+        <a href="customerHome.php" class="nav-item active">HOME</a>
         <a href="knowledgeHub.html" class="nav-item ">KNOWLEDGE<br>HUB</a>
         <a href="requestService.html" class="nav-item ">REQUEST<br>SERVICE</a>
       </div>
