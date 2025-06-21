@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Information Management</title>
+  <link rel="stylesheet" href="adminFormat.css" />
+</head>
+<body class="admin">
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+    </div>
+    <div class="nav-center">
+      <img src="image/logo.png" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="fireExtinguisher_information.php" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+      <a href="information_management.php" class="nav-item active">INFORMATION<br>MANAGEMENT</a>
+    </div>
+  </nav>
+
+<h2 class="title">VIEW AND CREATE PREMISE</h2>
+<div class="container">
+  <div class="create-premise">
+    <h3 class="sub-title">PREMISE DETAILS</h3>
+
+    <label>Premise ID</label>
+    <input type="text" id="premise-id" />
+
+    <label>Premise Type</label>
+    <input type="text" id="premise-type" />
+
+    <button id="add-premise-btn">ADD</button>
+
+    <table class="premise-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="premise-list">
+        <!-- Data rows will appear here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+<h2 class="title">VIEW AND CREATE SERVICE</h2>
+<div class="container">
+  <div class="create-service">
+    <h3 class="sub-title">SERVICE DETAILS</h3>
+
+    <label>Service ID</label>
+    <input type="text" id="service-id" />
+
+    <label>Service Type</label>
+    <input type="text" id="service-type" />
+
+    <button id="add-service-btn">ADD</button>
+
+    <table class="service-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="service-list">
+        <!-- Data rows will appear here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // Premise Logic
+  const premiseBtn = document.getElementById("add-premise-btn");
+  const premiseList = document.getElementById("premise-list");
+
+  premiseBtn.addEventListener("click", () => {
+    const id = document.getElementById("premise-id").value.trim();
+    const type = document.getElementById("premise-type").value.trim();
+    if (!id || !type) return;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${id}</td>
+      <td>${type}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    `;
+    premiseList.appendChild(row);
+    document.getElementById("premise-id").value = "";
+    document.getElementById("premise-type").value = "";
+  });
+
+  premiseList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+      e.target.closest("tr").remove();
+    }
+  });
+
+  // Service Logic
+  const serviceBtn = document.getElementById("add-service-btn");
+  const serviceList = document.getElementById("service-list");
+
+  serviceBtn.addEventListener("click", () => {
+    const id = document.getElementById("service-id").value.trim();
+    const type = document.getElementById("service-type").value.trim();
+    if (!id || !type) return;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${id}</td>
+      <td>${type}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    `;
+    serviceList.appendChild(row);
+    document.getElementById("service-id").value = "";
+    document.getElementById("service-type").value = "";
+  });
+
+  serviceList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+      e.target.closest("tr").remove();
+    }
+  });
+</script>

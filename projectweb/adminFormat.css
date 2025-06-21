@@ -204,6 +204,7 @@ textarea, input, select {
   margin-top: 8px;
   height: 30px;
   border-radius: 5px;
+  padding: 15px
 }
 
 textarea {
@@ -247,7 +248,49 @@ hr {
   border: none;
   height: 1px;
   background-color: white;
+}
 
+.order-table {
+  width:  100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  margin: 40px auto;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  vertical-align: top;
+}
+
+.order-table th {
+  background-color: #b30000;
+  color: white;
+}
+
+.back-button-container {
+  padding: 15px 20px;
+  margin-top: 40px;
+}
+
+.back-button {
+  text-decoration: none;
+  background-color:whitesmoke;
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: #b30000;
+  font-weight: bold;
+  font-size: 40px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+
+}
+
+.back-button:hover {
+  text-decoration: underline;
 }
 
 /*SCHEDULING*/
@@ -493,18 +536,61 @@ textarea {
 }
 
 /*INFORMATION MANAGEMENT*/
-.card-box {
-  padding: 25px;
-  margin: 30px auto;
+.create-premise {
+  background-color: black;
+  padding: 40px;
   border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  text-align: center;
+  width: 600px;
+  margin: 40px auto;
 }
 
-.premise-box {
-  background-color: #000000;
+.create-premise button {
+  padding: 8px 30px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 20px auto;
+}
+
+.create-service {
+  background-color: #aa2d2f;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  text-align: center;
+  width: 600px;
+  margin: 40px auto;
+}
+
+.create-service button {
+  padding: 8px 30px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 20px auto;
+}
+
+.create-premise delete-btn {
+  background-color: #ff2b2b;
   color: white;
+  font-weight: bold;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
 .service-box {
@@ -548,7 +634,6 @@ table {
   border-collapse: collapse;
   margin-top: 10px;
   background-color: white;
-  border-radius: 5px;
   overflow: hidden;
   font-size: 14px;
 }
@@ -571,19 +656,19 @@ table tr:last-child td {
 }
 
 .delete-btn {
-  background-color: #ff2b2b;
+  background-color: #b30000;
   color: white;
-  font-weight: bold;
   border: none;
   padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 4px;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .delete-btn:hover {
-  background-color: #cc0000;
+  background-color: #800000;
 }
+
 
 .error {
   color: #ff8080;
