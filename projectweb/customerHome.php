@@ -30,7 +30,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
 
     <nav class="navbar">
       <div class="nav-left">
-        <a href="customerHome.html" class="nav-item active">HOME</a>
+        <a href="customerHome.php" class="nav-item active">HOME</a>
         <a href="knowledgeHub.html" class="nav-item ">KNOWLEDGE<br>HUB</a>
         <a href="requestService.html" class="nav-item ">REQUEST<br>SERVICE</a>
       </div>
@@ -54,7 +54,15 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
         Access expert fire safety tips, request services in seconds and track your service
         schedule—all from one easy-to-use platform.
       </p>
-      <a href="logout.php" class="logout-btn">LOG OUT</a>
+      <button class="logout-btn" onclick="handleLogOut()">LOG OUT</button>
     </div>
+    <script>
+      function handleLogOut() {
+      const confirmLogOut = confirm("Are you sure you want to log out?");
+      if (confirmLogOut) {
+        window.location.href = "logout.php";
+      }
+    }
+    </script>
 </body>
 </html>
