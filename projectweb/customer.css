@@ -24,7 +24,7 @@ body.customer {
 
 .nav-left {
   display: flex;
-  gap: 70px;
+  gap: 100px;
 }
 
 .nav-right {
