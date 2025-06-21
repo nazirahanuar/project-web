@@ -793,6 +793,16 @@ textarea {
   opacity: 0.9;
 }
 
+.h2 {
+  align-self: left;
+  text-align: left;
+  margin-left: 0px;
+}
+
+.th-tittle {
+  text-align: left;
+}
+
 /* responsive */
 @media screen and (max-width: 768px) {
   .profile-header {

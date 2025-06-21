@@ -91,15 +91,15 @@ $order = $orderResult->fetch_assoc();
   <?php else: ?>
     <!-- === VIEW PROFILE SECTION (Customer Profile 1) === -->
     <section class="profile-section">
-      <h2 class="sec-title">YOUR PROFILE</h2>
+      <h2 class="sec-title"> YOUR PROFILE</h2>
       <div class="profile-card">
         <img src="<?= htmlspecialchars($user['profilePic'] ?? 'uploads/default.png') ?>" class="profile-pic" alt="Profile Picture">
         <p class="customer-id"><strong>Customer ID:</strong> <?= htmlspecialchars($user['customerID']) ?></p>
         <a href="custProfile.php?edit=true" class="edit-btn">Edit Profile</a>
         <hr>
         <div class="profile-info">
-          <h2 class="sec-title">CUSTOMER DETAILS:</h2>
-          <p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
+          <h2 class="th-title">CUSTOMER DETAILS:<strong></h2>
+          <br><p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
           <p><strong>Gender:</strong> <?= htmlspecialchars($user['Gender']) ?></p>
           <p><strong>No. Tel:</strong> <?= htmlspecialchars($user['noTel']) ?></p>
           <p><strong>Email:</strong> <?= htmlspecialchars($user['Email']) ?></p>
