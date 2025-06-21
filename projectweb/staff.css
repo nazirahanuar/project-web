@@ -41,7 +41,6 @@ body.staff {
   border-radius: 5px;
 }
 
-/* LOGOUT BUTTON UNDER NAV RIGHT */
 .logout-wrapper {
   display: flex;
   justify-content: flex-end;
