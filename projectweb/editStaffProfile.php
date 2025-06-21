@@ -2,17 +2,14 @@
 session_start();
 include 'connect.php';
 
-if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
-    header("Location: login.php");
-    exit();
-}
+$staffID = $_SESSION['userID'] ?? '';
 
-$staffID = $_SESSION['userID'];
+// Fetch staff info
 $stmt = $conn->prepare("SELECT * FROM staff WHERE staffID = ?");
 $stmt->bind_param("s", $staffID);
 $stmt->execute();
 $result = $stmt->get_result();
-$staff = $result->fetch_assoc();
+$data = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -20,39 +17,52 @@ $staff = $result->fetch_assoc();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Edit Staff Profile</title>
-  <link rel="stylesheet" href="staff.css" />
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="editStaffProfile.css" />
 </head>
-<body class="staff">
-  <h2 class="profile-title">EDIT PROFILE</h2>
+<body>
+  <nav class="navbar">
+    <img src="image/logo.PNG" class="logo" alt="logo">
+    <div class="nav-links">
+      <a href="staffHome.html">HOME</a>
+      <a href="staffSchedule.html">SERVICE SCHEDULE</a>
+      <a href="staffProfile.php" class="active">PROFILE</a>
+    </div>
+  </nav>
+
+  <h1 class="title">EDIT PROFILE</h1>
+
   <div class="profile-card">
-    <form action="updateStaffProfile.php" method="POST" enctype="multipart/form-data" class="edit-profile-form">
-      <input type="hidden" name="staffID" value="<?= $staff['staffID'] ?>">
+    <form action="updateStaffProfile.php" method="POST" enctype="multipart/form-data">
+      <div class="profile-pic">
+        <label for="profilePic">Add<br>Profile<br>Picture</label>
+        <input type="file" name="profilePic" id="profilePic" hidden />
+      </div>
 
-      <img src="<?= $staff['profilePic'] ? $staff['profilePic'] : 'image/default_profile.png' ?>" class="profile-pic" alt="Profile Picture" />
-      <label>Change Profile Picture:</label>
-      <input type="file" name="profilePic" accept="image/*"><br><br>
+      <p class="staff-id"><em>Staff ID: <?php echo htmlspecialchars($data['staffID']); ?></em></p>
 
-      <label for="staffName">Staff Name:</label>
-      <input type="text" id="staffName" name="staffName" value="<?= htmlspecialchars($staff['staffName']) ?>" required>
+      <label>Staff Name:</label>
+      <input type="text" name="staffName" value="<?php echo htmlspecialchars($data['staffName']); ?>" required>
 
-      <label for="Gender">Gender:</label>
-      <select id="Gender" name="Gender" required>
-        <option value="Male" <?= $staff['Gender'] === 'Male' ? 'selected' : '' ?>>Male</option>
-        <option value="Female" <?= $staff['Gender'] === 'Female' ? 'selected' : '' ?>>Female</option>
-      </select>
+      <label>Gender:</label>
+      <div class="gender-row">
+        <label><input type="radio" name="gender" value="Male" <?php if ($data['Gender'] === 'Male') echo 'checked'; ?>> Male</label>
+        <label><input type="radio" name="gender" value="Female" <?php if ($data['Gender'] === 'Female') echo 'checked'; ?>> Female</label>
+      </div>
 
-      <label for="noTel">No. Tel:</label>
-      <input type="text" id="noTel" name="noTel" value="<?= htmlspecialchars($staff['noTel']) ?>" required>
+      <label>No. Tel:</label>
+      <input type="text" name="tel" value="<?php echo htmlspecialchars($data['noTel']); ?>" required>
 
-      <label for="Email">Email:</label>
-      <input type="email" id="Email" name="Email" value="<?= htmlspecialchars($staff['Email']) ?>" required>
+      <label>Email:</label>
+      <input type="email" name="email" value="<?php echo htmlspecialchars($data['Email']); ?>" required>
 
-      <label for="password">New Password (leave blank to keep current):</label>
-      <input type="password" id="password" name="password">
+      <label>Change Password:</label>
+      <input type="password" name="password" placeholder="Enter new password">
 
-      <button type="submit" class="edit-btn">Save Changes</button>
-      <a href="staffProfile.php" class="cancel-btn">Cancel</a>
+      <div class="btn-row">
+        <button type="button" onclick="window.location.href='staffProfile.php'">CANCEL</button>
+        <button type="submit">SAVE</button>
+      </div>
     </form>
   </div>
 </body>
