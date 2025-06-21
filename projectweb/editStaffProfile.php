@@ -24,7 +24,7 @@ $data = $result->fetch_assoc();
   <nav class="navbar">
     <img src="image/logo.PNG" class="logo" alt="logo">
     <div class="nav-links">
-      <a href="staffHome.html">HOME</a>
+      <a href="staffHome.php">HOME</a>
       <a href="staffSchedule.html">SERVICE SCHEDULE</a>
       <a href="staffProfile.php" class="active">PROFILE</a>
     </div>
