@@ -896,7 +896,7 @@ textarea {
 
 .edit-row {
   display: flex;
-  align-items: center;
+  align-items: ;
   margin-bottom: 20px;
 }
 
@@ -923,8 +923,7 @@ textarea {
 }
 
 .radio-group {
-  display: flex;
-  gap: 20px;
+  gap: 0px;
 }
 
 .radio-group label {
