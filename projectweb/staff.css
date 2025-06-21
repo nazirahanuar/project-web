@@ -16,14 +16,24 @@ body.staff {
   padding: 10px 30px;
 }
 
-.nav-left,
-.nav-right {
+.nav-left {
   display: flex;
-  gap: 20px;
+  align-items: center;
 }
 
-.nav-left .nav-item,
-.nav-right .nav-item {
+.nav-left .logo {
+  height: 60px;
+  width: auto;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.nav-center {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-center .nav-item {
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -31,20 +41,16 @@ body.staff {
   transition: background 0.3s;
 }
 
-.nav-item:hover,
-.nav-item.active {
+.nav-center .nav-item:hover,
+.nav-center .nav-item.active {
   background-color: #7b1e1e;
   border-radius: 5px;
 }
 
-.nav-center .logo {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  background-color: white;
+.nav-right {
+  display: flex;
 }
 
-/* LOGOUT BUTTON */
 .logout-btn {
   padding: 10px 15px;
   background-color: #e53935;
@@ -61,7 +67,7 @@ body.staff {
   background-color: #c62828;
 }
 
-/* HEADER */
+/* HEADER SECTION */
 .header {
   text-align: center;
   padding: 140px 20px;
@@ -69,8 +75,8 @@ body.staff {
 
 .header h1 {
   font-size: 48px;
-  font-weight: bold;
   margin-bottom: 10px;
+  font-weight: bold;
   line-height: 1.2;
 }
 
