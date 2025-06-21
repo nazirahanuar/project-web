@@ -884,8 +884,10 @@ textarea {
   margin: 15px 0 30px;
 }
 
+
+
 .edit-form {
-  max-width: 600px;
+  max-width: 520px;
   margin: 0 auto 40px;
   background: white;
   padding: 30px 40px;
@@ -895,26 +897,32 @@ textarea {
 }
 
 .edit-row {
-  display: flex;
-  align-items: ;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center; 
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .edit-row label {
-  width: 160px;
-  font-weight: bold;
-  font-size: 14px;
+    width: 130px; 
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+    flex-shrink: 0; 
+    text-align: left; 
+    margin-right: 20px;
 }
 
 .edit-row input[type="text"],
 .edit-row input[type="email"],
 .edit-row input[type="password"] {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  background-color: #f9f9f9;
+    flex: 1; 
+    padding: 5px 5px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
 }
 
 .edit-row input:focus {
@@ -923,12 +931,29 @@ textarea {
 }
 
 .radio-group {
-  gap: 0px;
+    display: flex; 
+    align-items: center; 
+    flex: 1; 
+    gap: 15px; 
+    margin: 0;
+    padding: 0;
+}
+
+.radio-group input[type="radio"] {
+    margin: 0; 
+    width: 16px; 
+    height: 16px; 
+    vertical-align: middle; 
 }
 
 .radio-group label {
-  font-weight: normal;
-  font-size: 14px;
+    font-weight: normal; 
+    font-size: 14px; 
+    color: black; 
+    margin-right: 10px; 
+    margin-left: 0; 
+    width: auto;
+    flex-shrink: 1; 
 }
 
 .button-row {

@@ -70,13 +70,14 @@ $order = $orderResult->fetch_assoc();
       <input type="text" name="customerName" value="<?= htmlspecialchars($user['customerName']) ?>" required>
     </div>
 
-    <div class="edit-row">
-      <label>Gender:</label>
-      <div class="radio-group">
-        <label><input type="radio" name="Gender" value="Male" <?= $user['Gender'] === 'Male' ? 'checked' : '' ?>> Male</label>
-        <label><input type="radio" name="Gender" value="Female" <?= $user['Gender'] === 'Female' ? 'checked' : '' ?>> Female</label>
-      </div>
+<div class="edit-row"> <label>Gender:</label>
+    <div class="radio-group">
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
     </div>
+</div>
 
     <div class="edit-row">
       <label>No. Tel:</label>
