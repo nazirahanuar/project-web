@@ -20,7 +20,7 @@ $staff = $result->fetch_assoc();
 <head>
   <meta charset="UTF-8">
   <title>Staff Profile</title>
-  <link rel="stylesheet" href="staffProfile.css">
+  <link rel="stylesheet" href="staff.css">
 </head>
 <body class="staff">
 
