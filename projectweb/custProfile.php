@@ -61,6 +61,8 @@ $order = $orderResult->fetch_assoc();
 
     <div class="edit-center-header">
       <p class="customer-id">Customer ID: <strong><?= htmlspecialchars($user['customerID']) ?></strong></p>
+      <p class="customer-id" style="text-align: left; "></p> 
+      
     </div>
 
     <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
@@ -127,7 +129,7 @@ $order = $orderResult->fetch_assoc();
 
         <div class="profile-info">
           <h2 class="th-title">CUSTOMER DETAILS:</h2>
-          <p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
+          <br><p><strong>Name:</strong> <?= htmlspecialchars($user['customerName']) ?></p>
           <p><strong>Gender:</strong> <?= htmlspecialchars($user['Gender']) ?></p>
           <p><strong>No. Tel:</strong> <?= htmlspecialchars($user['noTel']) ?></p>
           <p><strong>Email:</strong> <?= htmlspecialchars($user['Email']) ?></p>

@@ -622,7 +622,6 @@ textarea {
 .profile-divider {
   height: 1px;
   background-color: #ccc;
-  margin: 10px 0 15px;
 }
 
 .profile-info {
@@ -727,7 +726,7 @@ textarea {
 .edit-form .customer-id {
   font-style: italic;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   margin-bottom: 25px;
   font-size: 15px;
 }
@@ -877,14 +876,12 @@ textarea {
   color: #555;
 }
 .edit-center-header {
-  display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
   margin: 15px 0 30px;
+  text-align: left;
 }
-
-
 
 .edit-form {
   max-width: 520px;
@@ -894,6 +891,9 @@ textarea {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .edit-row {
@@ -906,11 +906,11 @@ textarea {
 .edit-row label {
     width: 130px; 
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
     color: black;
     flex-shrink: 0; 
     text-align: left; 
-    margin-right: 20px;
+    margin-right: 25px;
 }
 
 .edit-row input[type="text"],
@@ -960,6 +960,7 @@ textarea {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  width: 100%;
 }
 
 .cancel-btn,
@@ -972,6 +973,8 @@ textarea {
   text-decoration: none;
   transition: 0.3s ease;
   border: none;
+  width:45%;
+  text-align: center;
 }
 
 .cancel-btn {
@@ -988,4 +991,3 @@ textarea {
 .save-btn:hover {
   opacity: 0.9;
 }
-
