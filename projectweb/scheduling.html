@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+32<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
   <nav class="navbar">
     <div class="nav-left">
       <a href="adminHome.html" class="nav-item">HOME</a>
-      <a href="request_management.html" class="nav-item">REQUEST<br>MANAGEMENT</a>
+      <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.html" class="nav-item active">SCHEDULING</a>
     </div>
     <div class="nav-center">
@@ -46,9 +46,9 @@
         <div class="form-group">
           <label for="serviceId">Service ID</label>
           <select id="serviceId" required>
-          <option value="">-- Select Service --</option>
-          <option value="MNT981">MNT981</option>
-          <option value="SEM225">SEM225</option>
+            <option value="">-- Select Service --</option>
+            <option value="MNT981">MNT981</option>
+            <option value="SEM225">SEM225</option>
           </select>
         </div>
 
@@ -60,9 +60,9 @@
         <div class="form-group">
           <label for="premiseId">Premise ID</label>
           <select id="premiseId" required>
-          <option value="">-- Select Premise --</option>
-          <option value="P001">P001</option>
-          <option value="P002">P002</option>
+            <option value="">-- Select Premise --</option>
+            <option value="P001">P001</option>
+            <option value="P002">P002</option>
           </select>
         </div>
 
@@ -79,32 +79,39 @@
   </section>
 
   <hr>
-      <h2 class="title">SCHEDULE DETAILS</h2>
-      <p class="note">Click “DELETE” to delete the selected row.</p>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search" />
-        <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
-      </div>
-    </div>
+  <h2 class="title">SCHEDULE DETAILS</h2>
+  <p class="note">Click “DELETE” to delete the selected row.</p>
 
-    <div class="table-wrapper">
-      <table class="schedule-table">
-        <thead>
-          <tr>
-            <th>Staff ID</th>
-            <th>Order ID</th>
-            <th>Schedule Date</th>
-            <th>Location</th>
-            <th>Service ID</th>
-            <th>Premise ID</th>
-            <th>Admin ID</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="scheduleTableBody">
-          <!-- Dynamic rows go here -->
-        </tbody>
-      </table>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search" />
+    <button class="search-icon" onclick="filterTable()" type="button">🔍</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Staff ID</th>
+          <th>Order ID</th>
+          <th>Schedule Date</th>
+          <th>Location</th>
+          <th>Service ID</th>
+          <th>Premise ID</th>
+          <th>Admin ID</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleTableBody">
+        <!-- Dynamic rows go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-submit-center" style="margin-top: 20px;">
+    <a href="order.php">
+      <button type="button" class="btn-create">SEE ORDER DETAILS</button>
+    </a>
+  </div>
 
   <script>
     const scheduleForm = document.getElementById('scheduleForm');

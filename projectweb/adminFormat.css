@@ -146,27 +146,114 @@ body.admin {
 
 
 /*REQUEST MANAGEMENT*/
+.container {
+  padding: 20px;
+}
 
+.create-order {
+  background-color: #aa2d2f;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  width: 600px;
+  margin: 40px auto;
+}
+
+.customer-request{
+  background-color: white;
+  color: black;
+  font-size: 20px;;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  width: 600px;
+  margin: 40px auto;
+}
+
+.title{
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: black;
+  margin-top: 20px;
+}
+
+.note {
+  margin-left: 20px;
+  font-style: italic;
+  font-size: 14px;
+  text-align: left;
+  color: black;
+  margin-top: 20px;
+}
+
+.sub-title{
+  font-size: 20px;
+  font-weight: bold;
+  color:#d9d9d9;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+textarea, input, select {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+textarea {
+  height: 60px;
+}
+
+.create-order button{
+  margin-top: 20px;
+  background-color: #000000;
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+}
+
+.customer-request button {
+  margin-top: 20px;
+  background-color: #ff2b2b;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+}
+
+#see-order-details {
+  display: block;
+  margin: 10px 0 20px;
+  color: #b30000;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: center;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: white;
+
+}
 
 /*SCHEDULING*/
 .schedule-form-section {
   padding: 30px 20px;
   background-color: #e5e5e5;
-}
-
-.title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.note {
-  text-align: center;
-  font-style: italic;
-  font-size: 13px;
-  color: #333;
-  margin-bottom: 20px;
 }
 
 .schedule-form.black-box {
@@ -280,7 +367,6 @@ textarea {
   background-color: #cc0000;
 }
 
-/* Search Bar */
 .search-bar {
   display: flex;
   justify-content: end;
@@ -318,7 +404,7 @@ textarea {
 }
 
 .form-card {
-  max-width: 600px;
+  max-width: 800px;
   margin: 40px auto;
   background-color:#aa2d2f;
   padding: 40px;

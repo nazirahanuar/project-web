@@ -59,10 +59,10 @@ $extinguishers = $conn->query("SELECT * FROM fire_extinguisher");
     </div>
   </nav>
 
-  <section class="fire-extinguisher-form-section">
-    <h2 class="title">CREATE AND VIEW FIRE EXTINGUISHER</h2>
-    <p class="note">Add and view the fire extinguishers.</p>
+  <h2 class="title">CREATE AND VIEW FIRE EXTINGUISHER</h2>
+  <p class="note">Add and view the fire extinguishers.</p>
 
+  <section class="fire-extinguisher-form-section">
     <div class="form-card">
       <h2>ADD FIRE EXTINGUISHER</h2>
       <form method="POST" id="extinguisherForm">
