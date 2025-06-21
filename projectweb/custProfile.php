@@ -98,7 +98,7 @@ $order = $orderResult->fetch_assoc();
 
           <!-- Centered Customer ID + Edit Button -->
           <div class="profile-header-right centered-info">
-             <p class="customer-id">Customer ID: <?= htmlspecialchars($user['customerID']) ?></p>
+             <h3 class="customer-id">Customer ID: <?= htmlspecialchars($user['customerID']) ?></h3>
              <a href="custProfile.php?edit=true" class="edit-btn">Edit Profile</a>
           </div>
        </div>
