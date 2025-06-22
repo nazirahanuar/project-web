@@ -36,13 +36,15 @@ if (!empty($password)) {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $sql = "UPDATE customer 
-            SET customerName = ?, Gender = ?, noTel = ?, Email = ?, password = ?, profilePic = IFNULL(?, profilePic)
+            SET customerName = ?, Gender = ?, noTel = ?, Email = ?, customerPassword = ?, 
+                profilePic = IFNULL(?, profilePic)
             WHERE customerID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssss", $customerName, $gender, $noTel, $email, $hashedPassword, $profilePicPath, $customerID);
 } else {
     $sql = "UPDATE customer 
-            SET customerName = ?, Gender = ?, noTel = ?, Email = ?, profilePic = IFNULL(?, profilePic)
+            SET customerName = ?, Gender = ?, noTel = ?, Email = ?, 
+                profilePic = IFNULL(?, profilePic)
             WHERE customerID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssss", $customerName, $gender, $noTel, $email, $profilePicPath, $customerID);

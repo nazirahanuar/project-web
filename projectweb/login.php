@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'table' => 'admin',
             'id_col' => 'adminID',
             'pass_col' => 'adminPassword',
-            'redirect' => 'adminHome.html'
+            'redirect' => 'adminHome.php'
         ],
         'staff' => [
             'table' => 'staff',

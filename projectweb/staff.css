@@ -6,7 +6,7 @@ body {
 
 /* ========== HOME PAGE ONLY ========== */
 body.staff-home {
-  background: url("image/staffbg.jpg") no-repeat center center fixed;
+  background: url("image/staffbg.jpeg") no-repeat center center fixed;
   background-size: cover;
   color: white;
 }
@@ -433,4 +433,19 @@ form input[type="password"] {
 .ref-box td {
   padding: 8px;
   border: 1px solid #ccc;
+}
+.done-btn {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.done-btn:hover {
+  background-color: #388e3c;
 }

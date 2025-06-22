@@ -59,7 +59,7 @@ $order = $orderResult->fetch_assoc();
 
                 <div class="edit-center-header">
                     <p class="customer-id">Customer ID: <strong><?= htmlspecialchars($user['customerID']) ?></strong></p>
-                    </div>
+                </div>
 
                 <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
 
@@ -90,7 +90,7 @@ $order = $orderResult->fetch_assoc();
 
                 <div class="edit-row">
                     <label>Change Password:</label>
-                    <input type="password" name="password" placeholder="Optional">
+                    <input type="password" name="password" placeholder="Leave blank to keep current password">
                 </div>
 
                 <div class="button-row">
