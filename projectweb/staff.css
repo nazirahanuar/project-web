@@ -11,7 +11,7 @@ body.staff-home {
   color: white;
 }
 
-/* Navbar */
+/* Navbar 
 .staff-home .navbar {
   background-color: #a52828;
   display: flex;
@@ -45,13 +45,13 @@ body.staff-home {
 
 .staff-home .nav-item:hover,
 .staff-home .nav-item.active {
-  background-color: #7b1e1e;
-}
+  background: #0000;
+}*/
 
 /* ✅ LOG OUT button placed OUTSIDE the navbar */
 .logout-outside {
   position: absolute;
-  top: 20px;
+  top: 100px;
   right: 30px;
   background-color: #e53935;
   color: white;

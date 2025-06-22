@@ -26,17 +26,17 @@ $staffName = $row['staffName'];
 <body class="staff-home">
 
   <nav class="navbar">
-  <div class="nav-left">
-    <img src="image/logo.PNG" class="logo" alt="Logo" />
-  </div>
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="staffHome.php" class="nav-item active">HOME</a>
-      <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-      <a href="staffProfile.php" class="nav-item">PROFILE</a>
+    <div class="nav-left">
+      <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
-  </div>
-</nav>
+    <div class="nav-right">
+      <div class="nav-menu">
+        <a href="staffHome.php" class="nav-item active">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item">PROFILE</a>
+      </div>
+    </div>
+  </nav>
 <button class="logout-btn logout-outside" onclick="handleLogout()">LOG OUT</button>
 
   <div class="header">
