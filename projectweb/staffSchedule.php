@@ -64,7 +64,7 @@ $serviceRef = $conn->query("SELECT * FROM service");
   </nav>
 
   <!-- Title -->
-  <div class="header">
+  <div class="header-service">
     <h1>SERVICE SCHEDULE</h1>
     <p><em>View your schedule and click “DONE” as a sign that you’ve completed your task.</em></p>
   </div>
