@@ -69,6 +69,17 @@ $serviceRef = $conn->query("SELECT * FROM service");
     <p><em>View your schedule and click “DONE” as a sign that you’ve completed your task.</em></p>
   </div>
 
+  <!-- Search Order Section -->
+<div class="search-bar-container">
+  <div class="search-label">
+    Search
+  </div>
+  <form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
+    <button type="submit" class="search-icon">🔍</button>
+  </form>
+</div>
+
   <!-- Schedule Table -->
   <div class="schedule-table">
     <table border="1">
@@ -96,17 +107,6 @@ $serviceRef = $conn->query("SELECT * FROM service");
       <?php endwhile; ?>
     </table>
   </div>
-
-<!-- Search Order Section -->
-<div class="search-bar-container">
-  <div class="search-label">
-    Search
-  </div>
-  <form method="GET" class="search-form">
-    <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-    <button type="submit" class="search-icon">🔍</button>
-  </form>
-</div>
 
   <?php if ($orderDetails): ?>
   <div class="order-details-box">
