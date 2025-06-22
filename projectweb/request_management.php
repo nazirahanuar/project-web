@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
     <div class="nav-left">
       <a href="adminHome.html" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item active">REQUEST<br>MANAGEMENT</a>
-      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+      <a href="scheduling.php" class="nav-item">SCHEDULING</a>
     </div>
     <div class="nav-center">
       <img src="image/logo.png" class="logo" alt="Logo" />
