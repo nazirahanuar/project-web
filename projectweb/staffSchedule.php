@@ -11,18 +11,20 @@ $staffID = $_SESSION['userID'];
 
 // Fetch assigned schedules
 $scheduleQuery = $conn->prepare("
-    SELECT s.*, o.orderID, o.customerID, o.totalAmount,
-           f.extinguisherID, f.type AS extinguisherType,
-           sv.serviceType, sv.serviceID, p.premiseID, p.premiseName, p.premiseLocation, p.premiseType,
+    SELECT s.scheduleDate, s.Location, s.orderID,
+           o.customerID, o.Quantity, o.Additional_Notes,
+           f.fireExtinguisherType, f.expiredDate, f.status,
+           sv.serviceType, p.premiseType,
            a.adminID
     FROM schedule s
+    JOIN orders o ON s.orderID = o.orderID
+    JOIN fire_extinguisher f ON o.serialNo = f.serialNo
     JOIN service sv ON s.serviceID = sv.serviceID
-    JOIN order o ON o.orderID = sv.serviceID
-    JOIN fire_extinguisher f ON f.extinguisherID = o.orderID
-    JOIN premise p ON p.premiseID = s.premiseID
-    JOIN admin a ON a.adminID = s.adminID
+    JOIN premise p ON s.premiseID = p.premiseID
+    JOIN admin a ON s.adminID = a.adminID
     WHERE s.staffID = ?
 ");
+
 $scheduleQuery->bind_param("s", $staffID);
 $scheduleQuery->execute();
 $schedules = $scheduleQuery->get_result();
