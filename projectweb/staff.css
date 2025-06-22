@@ -6,7 +6,7 @@ body {
 
 /* ========== HOME PAGE ONLY ========== */
 body.staff-home {
-  background: url("image/staffbg.jpg") no-repeat center center fixed;
+  background: url("image/staffbg.jpeg") no-repeat center center fixed;
   background-size: cover;
   color: white;
 }
