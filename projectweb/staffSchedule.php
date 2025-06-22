@@ -64,19 +64,16 @@ $serviceRef = $conn->query("SELECT * FROM service");
   </nav>
 
   <!-- Title -->
-  <div class="header">
+  <div class="header-service">
     <h1>SERVICE SCHEDULE</h1>
     <p><em>View your schedule and click “DONE” as a sign that you’ve completed your task.</em></p>
   </div>
 
   <!-- Search Order Section -->
-<div class="search-bar-container">
-  <div class="search-label">
-    Search
-  </div>
+<div class="search-section">
   <form method="GET" class="search-form">
+    <label class="search-label">Search</label>
     <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-    <button type="submit" class="search-icon">🔍</button>
   </form>
 </div>
 
