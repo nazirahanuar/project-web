@@ -11,7 +11,7 @@ $location      = $_POST['location'];
 $notes         = $_POST['notes'];
 
 // Basic validation
-if (empty($customerID) || empty($serviceID) || empty($premiseID) || empty($preferredDate) || empty($location) || $quantity < 1) {
+if (empty($customerID) || empty($serviceID) || empty($premiseID) || empty($preferredDate) || empty($location) || $quantity < 0) {
     echo "<script>alert('Please fill in all required fields correctly.'); window.history.back();</script>";
     exit;
 }

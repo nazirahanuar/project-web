@@ -1,6 +1,8 @@
 <?php
 include 'projectweb/connect.php';
 
+$successMessage = "";
+
 // Handle Create Schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $staffID = $_POST["staffID"];
@@ -11,19 +13,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $premiseID = $_POST["premiseID"];
   $adminID = $_POST["adminID"];
 
-  $stmt = $conn->prepare("INSERT INTO schedule (staffID, orderID, scheduleDate, Location, serviceID, premiseID, adminID) VALUES (?, ?, ?, ?, ?, ?, ?)");
-  $stmt->bind_param("sssssss", $staffID, $orderID, $scheduleDate, $location, $serviceID, $premiseID, $adminID);
-  $stmt->execute();
+  if ($staffID && $orderID && $scheduleDate && $location && $serviceID && $premiseID && $adminID) {
+    $stmt = $conn->prepare("INSERT INTO schedule (staffID, orderID, scheduleDate, Location, serviceID, premiseID, adminID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $staffID, $orderID, $scheduleDate, $location, $serviceID, $premiseID, $adminID);
+
+    if ($stmt->execute()) {
+      $successMessage = "Schedule created successfully.";
+    }
+  }
 }
 
-// Handle Delete
+// Handle Delete Schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])) {
-  $scheduleID = $_POST["delete_schedule_id"];
+  $deleteID = $_POST["delete_schedule_id"];
   $stmt = $conn->prepare("DELETE FROM schedule WHERE staffID = ?");
-  $stmt->bind_param("s", $scheduleID);
+  $stmt->bind_param("s", $deleteID);
   $stmt->execute();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
   <section class="schedule-form-section">
     <h2 class="title">CREATE SCHEDULE</h2>
     <p class="note">Create schedules for our committed staffs and customers to view.</p>
-    
+
+    <?php if (!empty($successMessage)) echo "<p style='color: lightgreen; text-align: center; font-weight: bold;'>$successMessage</p>"; ?>
+
     <form method="POST" class="schedule-form black-box">
       <div class="form-grid">
         <div class="form-group">
@@ -160,7 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
     function filterTable() {
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
       const rows = document.querySelectorAll('#scheduleTableBody tr');
-
       rows.forEach(row => {
         const rowText = row.textContent.toLowerCase();
         row.style.display = rowText.includes(searchValue) ? '' : 'none';
