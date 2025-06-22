@@ -21,7 +21,7 @@ $staff = $result->fetch_assoc();
   <title>Staff Profile</title>
   <link rel="stylesheet" href="staff.css">
 </head>
-<body class="staff">
+<body class="staff-profile">
 
   <nav class="navbar">
     <div class="nav-left">

@@ -17,7 +17,7 @@ $data = $result->fetch_assoc();
   <title>Edit Profile</title>
   <link rel="stylesheet" href="staff.css" />
 </head>
-<body class="staff">
+<body class="staff-edit">
 
   <nav class="navbar">
     <img src="image/logo.PNG" class="logo" alt="logo">

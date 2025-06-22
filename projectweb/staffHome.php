@@ -23,7 +23,7 @@ $staffName = $row['staffName'];
   <title>Staff Home</title>
   <link rel="stylesheet" href="staff.css" />
 </head>
-<body class="staff">
+<body class="staff-home">
 
   <nav class="navbar">
     <div class="nav-left">
