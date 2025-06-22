@@ -33,7 +33,7 @@ $order = $orderResult->fetch_assoc();
     <div class="nav-left">
         <a href="customerHome.php" class="nav-item">HOME</a>
         <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
-        <a href="requestService.html" class="nav-item">REQUEST<br>SERVICE</a>
+        <a href="requestService.php" class="nav-item">REQUEST<br>SERVICE</a>
     </div>
     <div class="nav-center">
         <img src="image/logo.png" class="logo" alt="Logo" />
@@ -59,7 +59,7 @@ $order = $orderResult->fetch_assoc();
 
                 <div class="edit-center-header">
                     <p class="customer-id">Customer ID: <strong><?= htmlspecialchars($user['customerID']) ?></strong></p>
-                    </div>
+                </div>
 
                 <input type="hidden" name="customerID" value="<?= htmlspecialchars($user['customerID']) ?>">
 
@@ -90,7 +90,7 @@ $order = $orderResult->fetch_assoc();
 
                 <div class="edit-row">
                     <label>Change Password:</label>
-                    <input type="password" name="password" placeholder="Optional">
+                    <input type="password" name="password" placeholder="Leave blank to keep current password">
                 </div>
 
                 <div class="button-row">

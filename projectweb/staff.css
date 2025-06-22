@@ -434,3 +434,18 @@ form input[type="password"] {
   padding: 8px;
   border: 1px solid #ccc;
 }
+.done-btn {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.done-btn:hover {
+  background-color: #388e3c;
+}
