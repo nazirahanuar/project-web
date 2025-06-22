@@ -1,5 +1,5 @@
 <?php
-include 'projectweb/connect.php';
+include 'connect.php';
 
 // Handle delete
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="adminHome.php" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item active">REQUEST<br>MANAGEMENT</a>
-      <a href="scheduling.html" class="nav-item">SCHEDULING</a>
+      <a href="scheduling.php" class="nav-item">SCHEDULING</a>
     </div>
     <div class="nav-center">
       <img src="image/logo.png" class="logo" alt="Logo" />

@@ -1,5 +1,25 @@
 <?php
-include 'projectweb/connect.php';
+include 'connect.php';
+
+$successMessage = "";
+
+// Fetch Premise IDs
+$premiseOptions = [];
+$premiseQuery = $conn->query("SELECT premiseID FROM premise");
+if ($premiseQuery) {
+  while ($row = $premiseQuery->fetch_assoc()) {
+    $premiseOptions[] = $row['premiseID'];
+  }
+}
+
+// Fetch Service IDs
+$serviceOptions = [];
+$serviceQuery = $conn->query("SELECT serviceID FROM service");
+if ($serviceQuery) {
+  while ($row = $serviceQuery->fetch_assoc()) {
+    $serviceOptions[] = $row['serviceID'];
+  }
+}
 
 // Handle Create Schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
@@ -11,19 +31,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $premiseID = $_POST["premiseID"];
   $adminID = $_POST["adminID"];
 
-  $stmt = $conn->prepare("INSERT INTO schedule (staffID, orderID, scheduleDate, Location, serviceID, premiseID, adminID) VALUES (?, ?, ?, ?, ?, ?, ?)");
-  $stmt->bind_param("sssssss", $staffID, $orderID, $scheduleDate, $location, $serviceID, $premiseID, $adminID);
-  $stmt->execute();
+  if ($staffID && $orderID && $scheduleDate && $location && $serviceID && $premiseID && $adminID) {
+    $stmt = $conn->prepare("INSERT INTO schedule (staffID, orderID, scheduleDate, Location, serviceID, premiseID, adminID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $staffID, $orderID, $scheduleDate, $location, $serviceID, $premiseID, $adminID);
+
+    if ($stmt->execute()) {
+      $successMessage = "Schedule created successfully.";
+    }
+  }
 }
 
-// Handle Delete
+// Handle Delete Schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])) {
-  $scheduleID = $_POST["delete_schedule_id"];
+  $deleteID = $_POST["delete_schedule_id"];
   $stmt = $conn->prepare("DELETE FROM schedule WHERE staffID = ?");
-  $stmt->bind_param("s", $scheduleID);
+  $stmt->bind_param("s", $deleteID);
   $stmt->execute();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,17 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Scheduling</title>
   <link rel="stylesheet" href="adminFormat.css" />
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
-  </style>
 </head>
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="adminHome.php" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.php" class="nav-item active">SCHEDULING</a>
     </div>
@@ -57,7 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
   <section class="schedule-form-section">
     <h2 class="title">CREATE SCHEDULE</h2>
     <p class="note">Create schedules for our committed staffs and customers to view.</p>
-    
+
+    <?php if (!empty($successMessage)) echo "<p style='color: lightgreen; text-align: center; font-weight: bold;'>$successMessage</p>"; ?>
+
     <form method="POST" class="schedule-form black-box">
       <div class="form-grid">
         <div class="form-group">
@@ -79,8 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
           <label for="serviceId">Service ID</label>
           <select name="serviceID" id="serviceId" required>
             <option value="">-- Select Service --</option>
-            <option value="MNT981">MNT981</option>
-            <option value="SEM225">SEM225</option>
+            <?php foreach ($serviceOptions as $sid): ?>
+              <option value="<?= htmlspecialchars($sid) ?>"><?= htmlspecialchars($sid) ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
 
@@ -93,8 +116,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
           <label for="premiseId">Premise ID</label>
           <select name="premiseID" id="premiseId" required>
             <option value="">-- Select Premise --</option>
-            <option value="P001">P001</option>
-            <option value="P002">P002</option>
+            <?php foreach ($premiseOptions as $pid): ?>
+              <option value="<?= htmlspecialchars($pid) ?>"><?= htmlspecialchars($pid) ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
 
@@ -166,7 +190,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
     function filterTable() {
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
       const rows = document.querySelectorAll('#scheduleTableBody tr');
-
       rows.forEach(row => {
         const rowText = row.textContent.toLowerCase();
         row.style.display = rowText.includes(searchValue) ? '' : 'none';

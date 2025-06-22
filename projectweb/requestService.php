@@ -82,7 +82,7 @@ $serviceResult = $conn->query($serviceQuery);
       <div class="form-row">
         <div class="form-group">
           <label for="quantity">Quantity of Fire Extinguisher</label>
-          <input type="number" id="quantity" name="quantity" min="1" max="200" value="1" required>
+          <input type="number" id="quantity" name="quantity" min="0" max="200" value="0" required>
         </div>
       </div>
 

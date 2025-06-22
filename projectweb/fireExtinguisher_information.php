@@ -48,7 +48,7 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="adminHome.php" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.php" class="nav-item">SCHEDULING</a>
     </div>
