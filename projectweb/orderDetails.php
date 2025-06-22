@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
   $stmt = $conn->prepare("DELETE FROM orders WHERE orderID = ?");
   $stmt->bind_param("s", $orderID);
   $stmt->execute();
-  echo "<script>alert('Order deleted successfully.');</script>";
+  echo "<script>alert('Order deleted successfully.'); window.location.href='orderDetails.php';</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -15,14 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Request Management</title>
+  <title>Order Details</title>
   <link rel="stylesheet" href="adminFormat.css" />
 </head>
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
       <a href="adminHome.php" class="nav-item">HOME</a>
-      <a href="request_management.php" class="nav-item active">REQUEST<br>MANAGEMENT</a>
+      <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.php" class="nav-item">SCHEDULING</a>
     </div>
     <div class="nav-center">
@@ -47,8 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
           <th>Customer ID</th>
           <th>Service ID</th>
           <th>Premise ID</th>
-          <th>Quantity</th>
-          <th>Serial No.</th>
           <th>Location</th>
           <th>Preferred Date</th>
           <th>Additional Notes</th>
@@ -57,7 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
       </thead>
       <tbody>
         <?php
-        $orderResult = $conn->query("SELECT o.*, r.serviceID, r.premiseID, r.Location, r.preferredDate FROM orders o JOIN request r ON o.customerID = r.customerID");
+        $orderResult = $conn->query("
+          SELECT 
+            o.orderID, o.customerID, o.serviceID, o.premiseID, o.Additional_Notes, 
+            r.Location, r.preferredDate
+          FROM orders o
+          LEFT JOIN request r 
+            ON o.customerID = r.customerID 
+            AND o.serviceID = r.serviceID 
+            AND o.premiseID = r.premiseID
+        ");
+
         if ($orderResult && $orderResult->num_rows > 0) {
           while ($row = $orderResult->fetch_assoc()) {
             echo "<tr>
@@ -65,8 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
               <td>{$row['customerID']}</td>
               <td>{$row['serviceID']}</td>
               <td>{$row['premiseID']}</td>
-              <td>{$row['Quantity']}</td>
-              <td>{$row['serialNo']}</td>
               <td>{$row['Location']}</td>
               <td>{$row['preferredDate']}</td>
               <td>{$row['Additional_Notes']}</td>
@@ -79,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
             </tr>";
           }
         } else {
-          echo "<tr><td colspan='10'>No orders found.</td></tr>";
+          echo "<tr><td colspan='8'>No orders found.</td></tr>";
         }
         ?>
       </tbody>

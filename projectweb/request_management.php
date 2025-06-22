@@ -1,68 +1,67 @@
 <?php
 include 'connect.php';
 
-// Get available serials (not already used in orders)
+$successMessage = "";
+
+// Get available serials (not already used in schedule)
 $serialOptions = [];
 $serialQuery = $conn->query("
   SELECT serialNo 
   FROM fire_extinguisher 
-  WHERE serialNo NOT IN (SELECT serialNo FROM orders) 
+  WHERE serialNo NOT IN (SELECT serialNo FROM schedule) 
   ORDER BY serialNo ASC
 ");
 while ($row = $serialQuery->fetch_assoc()) {
   $serialOptions[] = $row['serialNo'];
 }
-$serialsJS = json_encode($serialOptions);
+
+// Fetch Service IDs
+$serviceOptions = [];
+$serviceQuery = $conn->query("SELECT serviceID FROM service");
+while ($row = $serviceQuery->fetch_assoc()) {
+  $serviceOptions[] = $row['serviceID'];
+}
+
+// Fetch Premise IDs
+$premiseOptions = [];
+$premiseQuery = $conn->query("SELECT premiseID FROM premise");
+while ($row = $premiseQuery->fetch_assoc()) {
+  $premiseOptions[] = $row['premiseID'];
+}
 
 // Handle Create Order
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $orderID = $_POST["orderID"];
   $customerID = $_POST["customerID"];
-  $quantity = isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0;
+  $premiseID = $_POST["premiseID"];
+  $serviceID = $_POST["serviceID"];
   $additionalNotes = $_POST["additionalNotes"] ?? '';
-  $serials = $_POST["serials"] ?? [];
 
-  if ($quantity > 0 && count($serials) !== $quantity) {
-    echo "<script>alert('Number of serials must match the quantity.');</script>";
+  $check = $conn->prepare("SELECT * FROM orders WHERE orderID = ?");
+  $check->bind_param("s", $orderID);
+  $check->execute();
+  $res = $check->get_result();
+
+  if ($res->num_rows > 0) {
+    echo "<script>alert('Order ID already exists.');</script>";
   } else {
-    $check = $conn->prepare("SELECT * FROM orders WHERE orderID = ?");
-    $check->bind_param("s", $orderID);
-    $check->execute();
-    $res = $check->get_result();
+    $stmt = $conn->prepare("INSERT INTO orders (orderID, customerID, premiseID, serviceID, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $orderID, $customerID, $premiseID, $serviceID, $additionalNotes);
+    $success = $stmt->execute();
 
-    if ($res->num_rows > 0) {
-      echo "<script>alert('Order ID already exists.');</script>";
-    } else {
-      $success = true;
-
-      if ($quantity == 0) {
-        $nullSerial = null;
-        $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Quantity, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssis", $orderID, $nullSerial, $customerID, $quantity, $additionalNotes);
-        $success = $stmt->execute();
-      } else {
-        foreach ($serials as $serialNo) {
-          $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Quantity, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
-          $stmt->bind_param("sssis", $orderID, $serialNo, $customerID, $quantity, $additionalNotes);
-          if (!$stmt->execute()) {
-            $success = false;
-            break;
-          }
-        }
-      }
-
-      echo $success
-        ? "<script>alert('Order created successfully.'); window.location.href='request_management.php';</script>"
-        : "<script>alert('Failed to create order.');</script>";
-    }
+    echo $success
+      ? "<script>alert('Order created successfully.'); window.location.href='request_management.php';</script>"
+      : "<script>alert('Failed to create order.');</script>";
   }
 }
 
 // Handle request deletion
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
   $customerID = $_POST["customerID"];
-  $stmt = $conn->prepare("DELETE FROM request WHERE customerID = ?");
-  $stmt->bind_param("s", $customerID);
+  $serviceID = $_POST["serviceID"];
+
+  $stmt = $conn->prepare("DELETE FROM request WHERE customerID = ? AND serviceID = ?");
+  $stmt->bind_param("ss", $customerID, $serviceID);
   $stmt->execute();
   echo "<script>alert('Request deleted.'); window.location.href='request_management.php';</script>";
 }
@@ -96,22 +95,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
   <div class="container">
     <form method="POST" class="create-order">
       <h3 class="sub-title">ORDER DETAILS</h3>
+
       <label>Order ID</label>
-      <input type="text" name="orderID" required />
+      <input type="text" name="orderID" value="<?= isset($_POST['orderID']) ? htmlspecialchars($_POST['orderID']) : '' ?>" required />
 
       <label>Customer ID</label>
-      <input type="text" name="customerID" required />
+      <input type="text" name="customerID" value="<?= isset($_POST['customerID']) ? htmlspecialchars($_POST['customerID']) : '' ?>" required />
 
-      <label>Quantity of Fire Extinguisher</label>
-      <input type="number" name="quantity" id="quantity" min="0" value="0" required />
+      <label>Premise ID</label>
+      <select name="premiseID" required>
+        <option value="">-- Select Premise ID --</option>
+        <?php foreach ($premiseOptions as $pid): ?>
+          <option value="<?= htmlspecialchars($pid) ?>" <?= (isset($_POST['premiseID']) && $_POST['premiseID'] === $pid) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($pid) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
 
-      <label>Serial No.</label>
-      <div id="serial-container">
-        <p style="font-style: italic; color: gray;">Select quantity to show serial number fields.</p>
-      </div>
+      <label>Service ID</label>
+      <select name="serviceID" required>
+        <option value="">-- Select Service ID --</option>
+        <?php foreach ($serviceOptions as $sid): ?>
+          <option value="<?= htmlspecialchars($sid) ?>" <?= (isset($_POST['serviceID']) && $_POST['serviceID'] === $sid) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($sid) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
 
       <label>Additional Notes</label>
-      <textarea name="additionalNotes"></textarea>
+      <textarea name="additionalNotes"><?= isset($_POST['additionalNotes']) ? htmlspecialchars($_POST['additionalNotes']) : '' ?></textarea>
 
       <button type="submit" name="create">CREATE</button>
     </form>
@@ -119,12 +131,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
     <a id="see-order-details" href="orderDetails.php">SEE ORDER DETAILS</a>
 
     <hr>
-    <h2 class="title">CUSTOMER REQUEST</h2>
+    <h2 class="title">CUSTOMER REQUESTS</h2>
     <p class="note">Click "DONE" once you've finished creating the order and schedule.</p>
 
     <?php
-    $result = $conn->query("SELECT * FROM request LIMIT 1");
-    if ($result && $row = $result->fetch_assoc()):
+    $result = $conn->query("SELECT * FROM request");
+    if ($result && $result->num_rows > 0):
+      while ($row = $result->fetch_assoc()):
     ?>
     <div class="customer-request">
       <p><strong>Customer ID:</strong> <?= $row['customerID'] ?></p>
@@ -137,72 +150,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
 
       <form method="POST" onsubmit="return confirm('Are you sure you want to delete this request?');">
         <input type="hidden" name="customerID" value="<?= $row['customerID'] ?>" />
+        <input type="hidden" name="serviceID" value="<?= $row['serviceID'] ?>" />
         <button type="submit" name="done">DONE</button>
       </form>
     </div>
-    <?php else: ?>
+    <?php endwhile; else: ?>
       <p>No customer request found.</p>
     <?php endif; ?>
 
     <p class="note">*WARNING: Once the “DONE” button is clicked, the customer request will be removed as a mark that you've created the order and schedule.</p>
   </div>
-
-  <script>
-    const serialOptions = <?= $serialsJS ?>;
-
-    function generateSerialDropdowns(quantity) {
-      const container = document.getElementById('serial-container');
-      container.innerHTML = '';
-
-      if (quantity === 0) {
-        container.innerHTML = '<p style="color: gray;">No fire extinguisher selected.</p>';
-        return;
-      }
-
-      if (serialOptions.length === 0) {
-        container.innerHTML = '<p style="color: red;">No serial numbers available in the database.</p>';
-        return;
-      }
-
-      if (quantity > serialOptions.length) {
-        container.innerHTML = '<p style="color: red;">Not enough available serial numbers for this order.</p>';
-        return;
-      }
-
-      for (let i = 1; i <= quantity; i++) {
-        const label = document.createElement('label');
-        label.textContent = `Serial No. ${i}`;
-
-        const select = document.createElement('select');
-        select.name = "serials[]";
-        select.required = true;
-
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = 'Select';
-        select.appendChild(defaultOption);
-
-        serialOptions.forEach(serial => {
-          const option = document.createElement('option');
-          option.value = serial;
-          option.textContent = serial;
-          select.appendChild(option);
-        });
-
-        label.appendChild(select);
-        container.appendChild(label);
-      }
-    }
-
-    document.getElementById('quantity').addEventListener('input', e => {
-      const qty = parseInt(e.target.value, 10) || 0;
-      generateSerialDropdowns(qty);
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const qty = parseInt(document.getElementById('quantity').value, 10);
-      if (qty >= 0) generateSerialDropdowns(qty);
-    });
-  </script>
 </body>
 </html>

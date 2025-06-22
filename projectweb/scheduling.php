@@ -3,21 +3,16 @@ include 'connect.php';
 
 $successMessage = "";
 
-// Fetch Premise IDs
-$premiseOptions = [];
-$premiseQuery = $conn->query("SELECT premiseID FROM premise");
-if ($premiseQuery) {
-  while ($row = $premiseQuery->fetch_assoc()) {
-    $premiseOptions[] = $row['premiseID'];
-  }
-}
-
-// Fetch Service IDs
-$serviceOptions = [];
-$serviceQuery = $conn->query("SELECT serviceID FROM service");
-if ($serviceQuery) {
-  while ($row = $serviceQuery->fetch_assoc()) {
-    $serviceOptions[] = $row['serviceID'];
+// Get available serials (not yet used in schedule)
+$serialOptions = [];
+$serialQuery = $conn->query("
+  SELECT serialNo FROM fire_extinguisher
+  WHERE serialNo NOT IN (SELECT serialNo FROM schedule)
+  ORDER BY serialNo ASC
+");
+if ($serialQuery) {
+  while ($row = $serialQuery->fetch_assoc()) {
+    $serialOptions[] = $row['serialNo'];
   }
 }
 
@@ -25,15 +20,14 @@ if ($serviceQuery) {
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $staffID = $_POST["staffID"];
   $orderID = $_POST["orderID"];
+  $serialNo = $_POST["serialNo"];
   $scheduleDate = $_POST["scheduleDate"];
   $location = $_POST["location"];
-  $serviceID = $_POST["serviceID"];
-  $premiseID = $_POST["premiseID"];
   $adminID = $_POST["adminID"];
 
-  if ($staffID && $orderID && $scheduleDate && $location && $serviceID && $premiseID && $adminID) {
-    $stmt = $conn->prepare("INSERT INTO schedule (staffID, orderID, scheduleDate, Location, serviceID, premiseID, adminID) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $staffID, $orderID, $scheduleDate, $location, $serviceID, $premiseID, $adminID);
+  if ($staffID && $orderID && $serialNo && $scheduleDate && $location && $adminID) {
+    $stmt = $conn->prepare("INSERT INTO schedule (orderID, serialNo, staffID, Location, scheduleDate, adminID) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $orderID, $serialNo, $staffID, $location, $scheduleDate, $adminID);
 
     if ($stmt->execute()) {
       $successMessage = "Schedule created successfully.";
@@ -42,10 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
 }
 
 // Handle Delete Schedule
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])) {
-  $deleteID = $_POST["delete_schedule_id"];
-  $stmt = $conn->prepare("DELETE FROM schedule WHERE staffID = ?");
-  $stmt->bind_param("s", $deleteID);
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_orderID"], $_POST["delete_serialNo"], $_POST["delete_adminID"])) {
+  $orderID = $_POST["delete_orderID"];
+  $serialNo = $_POST["delete_serialNo"];
+  $adminID = $_POST["delete_adminID"];
+
+  $stmt = $conn->prepare("DELETE FROM schedule WHERE orderID = ? AND serialNo = ? AND adminID = ?");
+  $stmt->bind_param("sss", $orderID, $serialNo, $adminID);
   $stmt->execute();
 }
 ?>
@@ -83,13 +80,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
     <form method="POST" class="schedule-form black-box">
       <div class="form-grid">
         <div class="form-group">
-          <label for="staffId">Staff ID</label>
-          <input type="text" name="staffID" id="staffId" required />
+          <label for="orderId">Order ID</label>
+          <input type="text" name="orderID" id="orderId" required />
         </div>
 
         <div class="form-group">
-          <label for="orderId">Order ID</label>
-          <input type="text" name="orderID" id="orderId" required />
+          <label for="serialNo">Serial No.</label>
+          <select name="serialNo" id="serialNo" required>
+            <option value="">-- Select Serial No. --</option>
+            <?php foreach ($serialOptions as $serial): ?>
+              <option value="<?= htmlspecialchars($serial) ?>"><?= htmlspecialchars($serial) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="staffId">Staff ID</label>
+          <input type="text" name="staffID" id="staffId" required />
         </div>
 
         <div class="form-group">
@@ -97,29 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
           <input type="date" name="scheduleDate" id="scheduleDate" required />
         </div>
 
-        <div class="form-group">
-          <label for="serviceId">Service ID</label>
-          <select name="serviceID" id="serviceId" required>
-            <option value="">-- Select Service --</option>
-            <?php foreach ($serviceOptions as $sid): ?>
-              <option value="<?= htmlspecialchars($sid) ?>"><?= htmlspecialchars($sid) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
         <div class="form-group full-width">
           <label for="location">Location</label>
           <textarea name="location" id="location" rows="3" required></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="premiseId">Premise ID</label>
-          <select name="premiseID" id="premiseId" required>
-            <option value="">-- Select Premise --</option>
-            <?php foreach ($premiseOptions as $pid): ?>
-              <option value="<?= htmlspecialchars($pid) ?>"><?= htmlspecialchars($pid) ?></option>
-            <?php endforeach; ?>
-          </select>
         </div>
 
         <div class="form-group">
@@ -147,12 +134,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
     <table class="schedule-table">
       <thead>
         <tr>
-          <th>Staff ID</th>
           <th>Order ID</th>
+          <th>Serial No.</th>
+          <th>Staff ID</th>
           <th>Schedule Date</th>
           <th>Location</th>
-          <th>Service ID</th>
-          <th>Premise ID</th>
           <th>Admin ID</th>
           <th>Action</th>
         </tr>
@@ -163,23 +149,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
         if ($result && $result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
             echo "<tr>
-              <td>{$row['staffID']}</td>
               <td>{$row['orderID']}</td>
+              <td>{$row['serialNo']}</td>
+              <td>{$row['staffID']}</td>
               <td>{$row['scheduleDate']}</td>
               <td>{$row['Location']}</td>
-              <td>{$row['serviceID']}</td>
-              <td>{$row['premiseID']}</td>
               <td>{$row['adminID']}</td>
               <td>
                 <form method='POST' onsubmit='return confirm(\"Delete this schedule?\");'>
-                  <input type='hidden' name='delete_schedule_id' value='{$row['staffID']}'>
+                  <input type='hidden' name='delete_orderID' value='{$row['orderID']}'>
+                  <input type='hidden' name='delete_serialNo' value='{$row['serialNo']}'>
+                  <input type='hidden' name='delete_adminID' value='{$row['adminID']}'>
                   <button type='submit' class='btn-delete'>DELETE</button>
                 </form>
               </td>
             </tr>";
           }
         } else {
-          echo "<tr><td colspan='8'>No schedule found.</td></tr>";
+          echo "<tr><td colspan='7'>No schedule found.</td></tr>";
         }
         ?>
       </tbody>
