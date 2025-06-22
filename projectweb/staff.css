@@ -116,6 +116,7 @@ body.staff-edit {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -137,8 +138,15 @@ body.staff-edit {
   padding: 10px;
 }
 
+.nav-item:hover {
+  text-decoration: underline;
+  color:#e3e2e2;
+}
+
 .nav-item.active {
-  border-bottom: 2px solid white;
+  color: black;
+  padding: 6px 10px;
+  border-radius: 5px;
 }
 
 /* ========== PROFILE PAGE CARD ========== */
@@ -448,4 +456,46 @@ form input[type="password"] {
 
 .done-btn:hover {
   background-color: #388e3c;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 20px 40px 0 0;
+  gap: 8px;
+}
+
+.search-label {
+  font-style: italic;
+  font-size: 14px;
+  color: white;
+  margin-right: 4px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.search-form input[type="text"] {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  width: 140px;
+  font-size: 14px;
+}
+
+.search-form .search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  padding: 0;
+  margin: 0;
+  transform: translateY(1px); /* aligns better */
 }
