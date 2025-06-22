@@ -26,8 +26,8 @@ $serviceResult = $conn->query("SELECT * FROM service");
 <nav class="navbar">
   <div class="nav-left">
     <a href="customerHome.php" class="nav-item">HOME</a>
-    <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE HUB</a>
-    <a href="requestService.php" class="nav-item active">REQUEST SERVICE</a>
+    <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
+    <a href="requestService.php" class="nav-item active">REQUEST<br>SERVICE</a>
   </div>
   <div class="nav-center">
     <img src="image/logo.png" class="logo" alt="Logo" />
@@ -35,7 +35,6 @@ $serviceResult = $conn->query("SELECT * FROM service");
   <div class="nav-right">
     <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
     <a href="custProfile.php" class="nav-item">PROFILE</a>
-    <a href="logout.php" class="nav-item">LOGOUT</a>
   </div>
 </nav>
 
