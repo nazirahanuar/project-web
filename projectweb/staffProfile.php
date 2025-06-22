@@ -24,18 +24,15 @@ $staff = $result->fetch_assoc();
 <body class="staff-profile">
 
   <nav class="navbar">
-    <div class="nav-left">
-      <img src="image/logo.PNG" class="logo" alt="Logo" />
-    </div>
-    <div class="nav-right">
-      <div class="nav-top-links">
-        <a href="staffHome.php" class="nav-item">HOME</a>
-        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-        <a href="staffProfile.php" class="nav-item active">PROFILE</a>
-      </div>
-      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
-    </div>
-  </nav>
+  <div class="nav-left">
+    <img src="image/logo.PNG" class="logo" alt="Logo" />
+  </div>
+  <div class="nav-links">
+    <a href="staffHome.php" class="nav-item">HOME</a>
+    <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+    <a href="staffProfile.php" class="nav-item active">PROFILE</a>
+  </div>
+</nav>
 
   <section class="profile-section">
     <h2 class="profile-title">YOUR PROFILE</h2>
