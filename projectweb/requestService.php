@@ -1,3 +1,15 @@
+<?php
+include 'connect.php';
+
+// Retrieve all premises
+$premiseQuery = "SELECT * FROM premise";
+$premiseResult = $conn->query($premiseQuery);
+
+// Retrieve all services
+$serviceQuery = "SELECT * FROM service";
+$serviceResult = $conn->query($serviceQuery);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +25,7 @@
     <div class="nav-left">
       <a href="customerHome.php" class="nav-item">HOME</a>
       <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
-      <a href="requestService.html" class="nav-item active">REQUEST<br>SERVICE</a>
+      <a href="requestService.php" class="nav-item active">REQUEST<br>SERVICE</a>
     </div>
     <div class="nav-center">
       <img src="image/logo.png" class="logo" alt="Logo" />
@@ -32,15 +44,18 @@
       <div class="form-row">
         <div class="form-group">
           <label for="customerId">Customer ID</label>
-          <input type="text" id="customerId" name="customerId" required>
+          <input type="text" id="customerId" name="customerID" required>
         </div>
+
         <div class="form-group">
           <label for="serviceId">Service Type</label>
-          <select id="serviceId" name="serviceId" required>
+          <select id="serviceId" name="serviceID" required>
             <option value="">Select Service</option>
-            <option value="MNT981">Maintenance</option>
-            <option value="INS854">Installation</option>
-            <option value="SEM632">Seminar/Training</option>
+            <?php while ($row = $serviceResult->fetch_assoc()): ?>
+              <option value="<?= htmlspecialchars($row['serviceID']) ?>">
+                <?= htmlspecialchars($row['serviceType']) ?>
+              </option>
+            <?php endwhile; ?>
           </select>
         </div>
       </div>
@@ -48,13 +63,16 @@
       <div class="form-row">
         <div class="form-group">
           <label for="premiseId">Premise Type</label>
-          <select id="premiseId" name="premiseId" required>
+          <select id="premiseId" name="premiseID" required>
             <option value="">Select Premise</option>
-            <option value="SCH632">School/Institution</option>
-            <option value="HME520">Home</option>
-            <option value="ORG785">Organization/Office</option>
+            <?php while ($row = $premiseResult->fetch_assoc()): ?>
+              <option value="<?= htmlspecialchars($row['premiseID']) ?>">
+                <?= htmlspecialchars($row['premiseType']) ?>
+              </option>
+            <?php endwhile; ?>
           </select>
         </div>
+
         <div class="form-group">
           <label for="preferredDate">Preferred Date</label>
           <input type="date" id="preferredDate" name="preferredDate" required>
@@ -83,35 +101,6 @@
   </div>
 
   <p class="note">*Note: We will assign the fire extinguishers based on the suitability of the premises. Please specify the types of fire extinguishers you require in the ‘Additional Notes’ section.</p>
-
-  <!-- Reference Section
-  <section class="reference-section">
-    <h2 class="sec-heading">[ FOR REFERENCE ]</h2>
-
-    <h3 class="subheading">PREMISE DETAILS</h3>
-    <table class="reference-table">
-      <thead>
-        <tr><th>Premise ID</th><th>Type</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>SCH632</td><td>School/Institution</td></tr>
-        <tr><td>HME520</td><td>Home</td></tr>
-        <tr><td>ORG785</td><td>Organization/Office</td></tr>
-      </tbody>
-    </table>
-
-    <h3 class="subheading">SERVICE DETAILS</h3>
-    <table class="reference-table">
-      <thead>
-        <tr><th>Service ID</th><th>Type</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>MNT981</td><td>Maintenance</td></tr>
-        <tr><td>INS854</td><td>Installation</td></tr>
-        <tr><td>SEM632</td><td>Seminar/Training Booking</td></tr>
-      </tbody>
-    </table>
-  </section> -->
 
 </body>
 </html>
