@@ -1,4 +1,5 @@
-/* STAFF HOME STYLES */
+/* STAFF HOME PAGE STYLES */
+
 body.staff {
   background: url("image/staffbg.jpg") no-repeat center center fixed;
   background-size: cover;
@@ -7,6 +8,7 @@ body.staff {
   color: white;
 }
 
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -15,22 +17,24 @@ body.staff {
   padding: 10px 30px;
 }
 
-.nav-left .logo {
+.nav-left img.logo {
   height: 60px;
   width: auto;
   border-radius: 50%;
   background-color: white;
 }
 
+/* Top-right nav links */
 .nav-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.nav-top-links {
+.nav-menu {
   display: flex;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
 .nav-item {
@@ -47,8 +51,8 @@ body.staff {
   border-radius: 5px;
 }
 
+/* LOG OUT BUTTON (under menu) */
 .logout-btn {
-  margin-top: 10px;
   padding: 10px 15px;
   background-color: #e53935;
   color: white;
@@ -64,7 +68,7 @@ body.staff {
   background-color: #c62828;
 }
 
-/* HEADER SECTION */
+/* HEADER CONTENT */
 .header {
   text-align: center;
   padding: 140px 20px;
@@ -82,7 +86,8 @@ body.staff {
   margin-bottom: 30px;
 }
 
-.cta-btn {
+/* CTA BUTTON */
+.btn-schedule {
   background-color: white;
   color: black;
   padding: 15px 25px;
@@ -93,6 +98,6 @@ body.staff {
   transition: transform 0.3s;
 }
 
-.cta-btn:hover {
+.btn-schedule:hover {
   transform: scale(1.05);
 }
