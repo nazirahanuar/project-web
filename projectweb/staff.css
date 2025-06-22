@@ -127,17 +127,6 @@ body.staff-edit {
   background: white;
 }
 
-.staff-home .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.staff-home .nav-links {
-  display: flex;
-  gap: 25px;
-}
-
 .nav-item {
   color: white;
   text-decoration: none;
