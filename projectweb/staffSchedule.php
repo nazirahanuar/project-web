@@ -69,11 +69,11 @@ $serviceRef = $conn->query("SELECT * FROM service");
     <p><em>View your schedule and click “DONE” as a sign that you’ve completed your task.</em></p>
   </div>
 
-  <div class="search-bar-container">
+  <!-- Search Order Section -->
+<div class="search-section">
   <form method="GET" class="search-form">
     <label class="search-label">Search</label>
     <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-    <button type="submit" class="search-icon">🔍</button>
   </form>
 </div>
 
