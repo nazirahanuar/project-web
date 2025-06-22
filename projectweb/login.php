@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'table' => 'staff',
             'id_col' => 'staffID',
             'pass_col' => 'staffPassword',
-            'redirect' => 'staffHome.html'
+            'redirect' => 'staffHome.php'
         ],
         'customer' => [
             'table' => 'customer',
