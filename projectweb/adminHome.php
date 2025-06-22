@@ -52,7 +52,7 @@ if ($pendingQuery) {
     </div>
 
     <div class="summary-box">
-      <h2>SUMMARY</h2>
+      <h2>TODAY'S UPDATE</h2>
       <div class="stats">
         <div class="stat-card">
           <div class="stat-number" id="pendingRequests"><?= $pendingCount ?></div>

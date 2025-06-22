@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 
-// Fetch serial numbers from fire_extinguisher
 $serialOptions = [];
 $serialQuery = $conn->query("SELECT serialNo FROM fire_extinguisher ORDER BY serialNo ASC");
 while ($row = $serialQuery->fetch_assoc()) {
@@ -56,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="adminHome.php" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item active">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.php" class="nav-item">SCHEDULING</a>
     </div>

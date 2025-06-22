@@ -1,7 +1,25 @@
 <?php
-include 'projectweb/connect.php';
+include 'connect.php';
 
 $successMessage = "";
+
+// Fetch Premise IDs
+$premiseOptions = [];
+$premiseQuery = $conn->query("SELECT premiseID FROM premise");
+if ($premiseQuery) {
+  while ($row = $premiseQuery->fetch_assoc()) {
+    $premiseOptions[] = $row['premiseID'];
+  }
+}
+
+// Fetch Service IDs
+$serviceOptions = [];
+$serviceQuery = $conn->query("SELECT serviceID FROM service");
+if ($serviceQuery) {
+  while ($row = $serviceQuery->fetch_assoc()) {
+    $serviceOptions[] = $row['serviceID'];
+  }
+}
 
 // Handle Create Schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
@@ -43,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
 <body class="admin">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="adminHome.html" class="nav-item">HOME</a>
+      <a href="adminHome.php" class="nav-item">HOME</a>
       <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
       <a href="scheduling.php" class="nav-item active">SCHEDULING</a>
     </div>
@@ -83,8 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
           <label for="serviceId">Service ID</label>
           <select name="serviceID" id="serviceId" required>
             <option value="">-- Select Service --</option>
-            <option value="MNT981">MNT981</option>
-            <option value="SEM225">SEM225</option>
+            <?php foreach ($serviceOptions as $sid): ?>
+              <option value="<?= htmlspecialchars($sid) ?>"><?= htmlspecialchars($sid) ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
 
@@ -97,8 +116,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
           <label for="premiseId">Premise ID</label>
           <select name="premiseID" id="premiseId" required>
             <option value="">-- Select Premise --</option>
-            <option value="P001">P001</option>
-            <option value="P002">P002</option>
+            <?php foreach ($premiseOptions as $pid): ?>
+              <option value="<?= htmlspecialchars($pid) ?>"><?= htmlspecialchars($pid) ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
 
