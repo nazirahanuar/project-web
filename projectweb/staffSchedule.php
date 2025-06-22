@@ -99,12 +99,12 @@ $serviceRef = $conn->query("SELECT * FROM service");
 
   <!-- Search Order Section -->
 <div class="search-bar-container">
-    <div class="search-label">
+  <div class="search-label">
     <em>Search</em>
   </div>
   <form method="GET" class="search-form">
     <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-    <button type="submit">🔍</button>
+    <button type="submit" class="search-icon">🔍</button>
   </form>
 </div>
 

@@ -463,12 +463,12 @@ form input[type="password"] {
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  margin: 20px 40px 10px 0;
+  margin: 10px 40px 0 0;
 }
 
 .search-label {
   font-style: italic;
-  color: #fff;
+  color: white;
   font-size: 14px;
 }
 
@@ -478,20 +478,19 @@ form input[type="password"] {
 }
 
 .search-form input[type="text"] {
-  padding: 5px 10px;
+  padding: 6px 10px;
   border: none;
   border-radius: 4px;
+  width: 140px;
   background-color: white;
   color: black;
-  width: 120px;
 }
 
-.search-form button {
+.search-form .search-icon {
   background: none;
   border: none;
-  cursor: pointer;
   font-size: 16px;
-  margin-left: 5px;
+  margin-left: 6px;
+  cursor: pointer;
   color: white;
 }
-
