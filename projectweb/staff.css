@@ -11,6 +11,7 @@ body.staff-home {
   color: white;
 }
 
+/* Navbar 
 .staff-home .navbar {
   background-color: #a52828;
   display: flex;
@@ -18,6 +19,8 @@ body.staff-home {
   align-items: center;
   padding: 10px 30px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .staff-home .nav-left img.logo {
@@ -26,16 +29,9 @@ body.staff-home {
   background: white;
 }
 
-.staff-home .nav-right {
+.staff-home .nav-links {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-
-.staff-home .nav-top-links {
-  display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
 .staff-home .nav-item {
@@ -49,22 +45,27 @@ body.staff-home {
 
 .staff-home .nav-item:hover,
 .staff-home .nav-item.active {
-  background-color: #7b1e1e;
-}
+  background: #0000;
+}*/
 
-.staff-home .logout-btn {
-  padding: 10px 15px;
+/* ✅ LOG OUT button placed OUTSIDE the navbar */
+.logout-outside {
+  position: absolute;
+  top: 100px;
+  right: 30px;
   background-color: #e53935;
   color: white;
+  padding: 10px 15px;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  z-index: 2;
   transition: background-color 0.3s ease;
 }
 
-.staff-home .logout-btn:hover {
+.logout-outside:hover {
   background-color: #c62828;
 }
 
@@ -124,11 +125,6 @@ body.staff-edit {
   width: 60px;
   border-radius: 50%;
   background: white;
-}
-
-.nav-links, .nav-right {
-  display: flex;
-  gap: 20px;
 }
 
 .nav-item {

@@ -30,14 +30,14 @@ $staffName = $row['staffName'];
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-      <div class="nav-top-links">
+      <div class="nav-menu">
         <a href="staffHome.php" class="nav-item active">HOME</a>
         <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
         <a href="staffProfile.php" class="nav-item">PROFILE</a>
       </div>
-      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
     </div>
   </nav>
+<button class="logout-btn logout-outside" onclick="handleLogout()">LOG OUT</button>
 
   <div class="header">
     <h1>HAPPY WORKING,<br><?php echo strtoupper($staffName); ?>!</h1>
