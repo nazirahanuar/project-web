@@ -11,6 +11,7 @@ body.staff-home {
   color: white;
 }
 
+/* Navbar */
 .staff-home .navbar {
   background-color: #a52828;
   display: flex;
@@ -18,6 +19,8 @@ body.staff-home {
   align-items: center;
   padding: 10px 30px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .staff-home .nav-left img.logo {
@@ -26,9 +29,9 @@ body.staff-home {
   background: white;
 }
 
-.staff-home .nav-top-links {
+.staff-home .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
 .staff-home .nav-item {
@@ -45,36 +48,21 @@ body.staff-home {
   background-color: #7b1e1e;
 }
 
-.staff-home .logout-btn {
-  padding: 10px 15px;
-  background-color: #e53935;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.staff-home .logout-btn:hover {
-  background-color: #c62828;
-}
-
+/* ✅ LOG OUT button placed OUTSIDE the navbar */
 .logout-outside {
   position: absolute;
   top: 20px;
-  right: 40px;
-  padding: 10px 15px;
+  right: 30px;
   background-color: #e53935;
   color: white;
+  padding: 10px 15px;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  z-index: 2;
   transition: background-color 0.3s ease;
-  z-index: 1000;
 }
 
 .logout-outside:hover {

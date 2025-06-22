@@ -8,65 +8,42 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
 }
 
 $staffID = $_SESSION['userID'];
-$query = $conn->prepare("SELECT * FROM staff WHERE staffID = ?");
+$query = $conn->prepare("SELECT staffName FROM staff WHERE staffID = ?");
 $query->bind_param("s", $staffID);
 $query->execute();
 $result = $query->get_result();
-$staff = $result->fetch_assoc();
+$row = $result->fetch_assoc();
+$staffName = $row['staffName'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Staff Profile</title>
-  <link rel="stylesheet" href="staff.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Home</title>
+  <link rel="stylesheet" href="staff.css" />
 </head>
-<body class="staff-profile">
-
+<body class="staff-home">
   <nav class="navbar">
-  <div class="nav-left">
-    <img src="image/logo.PNG" class="logo" alt="Logo" />
-  </div>
-  <div class="nav-links">
-    <a href="staffHome.php" class="nav-item">HOME</a>
-    <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-    <a href="staffProfile.php" class="nav-item active">PROFILE</a>
-  </div>
-</nav>
-
-  <section class="profile-section">
-    <h2 class="profile-title">YOUR PROFILE</h2>
-
-    <div class="profile-card">
-      <div class="profile-header">
-        <div class="profile-pic">
-          <?php if (!empty($staff['profilePic'])): ?>
-            <img src="<?php echo htmlspecialchars($staff['profilePic']); ?>" alt="Profile Picture"
-            style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
-          <?php else: ?>
-            <div style="width: 80px; height: 80px; background: #ccc; border-radius: 50%;"></div>
-          <?php endif; ?>
-        </div>
-        <div class="profile-info">
-          <p><strong>Staff ID: <?php echo $staff['staffID']; ?></strong></p>
-          <p>Staff Name: <?php echo $staff['staffName']; ?></p>
-        </div>
-      </div>
-
-      <div class="profile-button">
-        <a href="editStaffProfile.php" class="edit-btn">Edit Profile</a>
-      </div>
-
-      <hr>
-
-      <div class="profile-details">
-        <p><strong>STAFF DETAILS:</strong></p>
-        <p><strong>Gender:</strong> <?php echo $staff['Gender']; ?></p>
-        <p><strong>No. Tel:</strong> <?php echo $staff['noTel']; ?></p>
-        <p><strong>Email:</strong> <?php echo $staff['Email']; ?></p>
+    <div class="nav-left">
+      <img src="image/logo.PNG" class="logo" alt="Logo" />
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="staffHome.php" class="nav-item active">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item">PROFILE</a>
       </div>
     </div>
-  </section>
+  </nav>
+
+  <button class="logout-btn logout-outside" onclick="handleLogout()">LOG OUT</button>
+
+  <div class="header">
+    <h1>HAPPY WORKING,<br><?php echo strtoupper($staffName); ?>!</h1>
+    <p class="subtext">View your schedule today.</p>
+    <a href="staffSchedule.php" class="cta-btn">GO TO SERVICE SCHEDULE</a>
+  </div>
 
   <script>
     function handleLogout() {
