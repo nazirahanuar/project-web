@@ -2,7 +2,6 @@
 session_start();
 include 'connect.php';
 
-// Redirect if not logged in or not staff
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
     header("Location: login.php");
     exit();
@@ -38,7 +37,9 @@ $staffName = $row['staffName'];
         <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
         <a href="staffProfile.php" class="nav-item">PROFILE</a>
       </div>
-      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
+      <div class="logout-wrapper">
+        <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
+      </div>
     </div>
   </nav>
 

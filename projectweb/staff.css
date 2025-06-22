@@ -23,16 +23,17 @@ body.staff {
   background-color: white;
 }
 
+/* New structure */
 .nav-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 8px;
 }
 
 .nav-links {
   display: flex;
   gap: 20px;
+  margin-bottom: 5px;
 }
 
 .nav-item {
@@ -47,6 +48,11 @@ body.staff {
 .nav-item.active {
   background-color: #7b1e1e;
   border-radius: 5px;
+}
+
+.logout-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .logout-btn {
