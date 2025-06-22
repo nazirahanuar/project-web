@@ -116,6 +116,7 @@ body.staff-edit {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -137,8 +138,15 @@ body.staff-edit {
   padding: 10px;
 }
 
+.nav-item:hover {
+  text-decoration: underline;
+  color:#e3e2e2;
+}
+
 .nav-item.active {
-  border-bottom: 2px solid white;
+  color: black;
+  padding: 6px 10px;
+  border-radius: 5px;
 }
 
 /* ========== PROFILE PAGE CARD ========== */
