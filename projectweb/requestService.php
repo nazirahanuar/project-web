@@ -97,5 +97,7 @@ $serviceResult = $conn->query("SELECT * FROM service");
   </form>
 </div>
 
+<p class="note">*Note: We will assign the fire extinguishers based on the suitability of the premises. Please specify the types of fire extinguishers you require in the 'Additional Notes' section.</p>
+
 </body>
 </html>
