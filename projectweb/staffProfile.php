@@ -40,7 +40,15 @@ $staff = $result->fetch_assoc();
 
     <div class="profile-card">
       <div class="profile-header">
-        <div class="profile-pic"></div>
+        <div class="profile-pic">
+            <?php if (!empty($staff['profilePic'])): ?>
+            <img src="<?php echo htmlspecialchars($staff['profilePic']); ?>" alt="Profile Picture"
+            style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
+        <?php else: ?>
+    <div style="width: 80px; height: 80px; background: #ccc; border-radius: 50%;"></div>
+  <?php endif; ?>
+</div>
+
         <div class="profile-info">
           <p><strong>Staff ID: <?php echo $staff['staffID']; ?></strong></p>
           <p>Staff Name: <?php echo $staff['staffName']; ?></p>

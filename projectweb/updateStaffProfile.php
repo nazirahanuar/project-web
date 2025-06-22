@@ -5,9 +5,9 @@ include 'connect.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $staffID = $_POST['staffID'];
     $name = trim($_POST['staffName']);
-    $gender = $_POST['Gender'];
-    $tel = trim($_POST['noTel']);
-    $email = trim($_POST['Email']);
+    $gender = $_POST['gender'];
+    $tel = trim($_POST['tel']);
+    $email = trim($_POST['email']);
     $newPass = $_POST['password'];
 
     // Get current picture
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Handle password update
+    // Update query
     if (!empty($newPass)) {
         $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("UPDATE staff SET staffName=?, Gender=?, noTel=?, Email=?, profilePic=?, staffPassword=? WHERE staffID=?");
