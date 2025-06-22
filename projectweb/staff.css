@@ -12,9 +12,10 @@ body.staff {
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center; /* Changed from flex-start for better vertical centering */
   background-color: #a52828;
   padding: 10px 30px;
+  flex-wrap: wrap; /* Makes navbar responsive */
 }
 
 .nav-left img.logo {
@@ -29,12 +30,14 @@ body.staff {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 10px;
 }
 
+/* Menu links */
 .nav-menu {
   display: flex;
   gap: 20px;
-  margin-bottom: 10px;
+  flex-wrap: wrap; /* Makes it responsive on smaller screens */
 }
 
 .nav-item {
@@ -42,13 +45,13 @@ body.staff {
   text-decoration: none;
   font-weight: bold;
   padding: 10px 15px;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
+  border-radius: 5px; /* Consistent with :hover and .active states */
 }
 
 .nav-item:hover,
 .nav-item.active {
   background-color: #7b1e1e;
-  border-radius: 5px;
 }
 
 /* LOG OUT BUTTON (under menu) */
@@ -61,7 +64,7 @@ body.staff {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .logout-btn:hover {
@@ -95,9 +98,11 @@ body.staff {
   font-weight: bold;
   border-radius: 8px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block; /* Ensures proper button spacing */
 }
 
 .btn-schedule:hover {
   transform: scale(1.05);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);
 }
