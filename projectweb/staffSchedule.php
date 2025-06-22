@@ -64,10 +64,18 @@ $serviceRef = $conn->query("SELECT * FROM service");
   </nav>
 
   <!-- Title -->
-  <div class="header">
+  <div class="header-service">
     <h1>SERVICE SCHEDULE</h1>
     <p><em>View your schedule and click “DONE” as a sign that you’ve completed your task.</em></p>
   </div>
+
+  <!-- Search Order Section -->
+<div class="search-section">
+  <form method="GET" class="search-form">
+    <label class="search-label">Search</label>
+    <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
+  </form>
+</div>
 
   <!-- Schedule Table -->
   <div class="schedule-table">
@@ -95,15 +103,6 @@ $serviceRef = $conn->query("SELECT * FROM service");
       </tr>
       <?php endwhile; ?>
     </table>
-  </div>
-
-  <!-- Search Order Section -->
-  <div class="search-section">
-    <form method="GET">
-      <label>Check customer's fire extinguisher(s) order by searching the Order ID.</label><br>
-      <input type="text" name="search" placeholder="Search Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-      <button type="submit">🔍</button>
-    </form>
   </div>
 
   <?php if ($orderDetails): ?>

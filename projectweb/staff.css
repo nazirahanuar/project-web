@@ -325,6 +325,14 @@ form input[type="password"] {
   margin: 0;
 }
 
+.header-service h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: white;
+}
+
 .schedule-table {
   margin: 30px auto;
   width: 95%;
@@ -456,4 +464,63 @@ form input[type="password"] {
 
 .done-btn:hover {
   background-color: #388e3c;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 40px 0 0;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.search-label {
+  font-style: italic;
+  font-size: 14px;
+  color: white;
+}
+
+.search-form input[type="text"] {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  width: 150px;
+  font-size: 14px;
+}
+
+.search-form .search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  align-self: flex-end;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 20px 30px;
+}
+
+.search-label {
+  color: white;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.search-form input[type="text"] {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  width: 180px;
+  background: #f0f0f0;
 }
