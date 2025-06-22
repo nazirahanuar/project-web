@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Correct column names based on your database tables
     $roleTables = [
         'admin' => [
             'table' => 'admin',
@@ -43,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $row[$info['pass_col']])) {
                 $_SESSION['userID'] = $userID;
                 $_SESSION['role'] = $role;
-                echo "<script>alert('Logged in as " . ucfirst($role) . "'); window.location.href='{$info['redirect']}';</script>";
+                header("Location: {$info['redirect']}");
                 exit();
             }
         }
     }
 
     echo "<script>alert('Invalid ID or Password.'); window.location.href='login.php';</script>";
-    exit();
 }
 ?>
 
+<!-- login form -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="user-box">
     <h2>LOG IN</h2>
-    <form id="loginForm" method="POST" action="">
+    <form method="POST">
       <label for="userID">ID</label>
       <input type="text" id="userID" name="userID" required />
 
@@ -80,10 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <button type="submit">LOG IN</button>
     </form>
-    <p class="signup-text">
-      Don't have an account?
-      <a href="signup.html" id="signupLink">Sign Up</a>
-    </p>
+    <p class="signup-text">Don't have an account? <a href="signup.html">Sign Up</a></p>
   </div>
 </body>
 </html>
