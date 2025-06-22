@@ -14,6 +14,7 @@ body.admin {
   margin-top: 0;
   padding-top: 0;
   background-color: #e3e2e2;
+  box-sizing: border-box;
 }
 
 .navbar {
@@ -539,15 +540,21 @@ textarea {
   margin: 20px auto;
 }
 
-.create-premise delete-btn {
-  background-color: #ff2b2b;
+.delete-btn {
+  background-color: #e74c3c;
   color: white;
-  font-weight: bold;
+  padding: 6px 14px;
   border: none;
-  padding: 6px 12px;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 13px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
 }
 
 .service-box {
@@ -611,21 +618,6 @@ table th {
 table tr:last-child td {
   border-bottom: none;
 }
-
-.delete-btn {
-  background-color: #b30000;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background-color: #800000;
-}
-
 
 .error {
   color: #ff8080;

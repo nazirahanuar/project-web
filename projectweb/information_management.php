@@ -1,4 +1,68 @@
-<?php include 'connect.php'; ?>
+<?php include 'connect.php';
+
+$premiseError = "";
+$premiseSuccess = "";
+$serviceError = "";
+$serviceSuccess = "";
+
+// Add Premise
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_premise'])) {
+  $pid = $_POST['premise_id'];
+  $ptype = $_POST['premise_type'];
+
+  $check = $conn->prepare("SELECT * FROM premise WHERE premiseID = ?");
+  $check->bind_param("s", $pid);
+  $check->execute();
+  $result = $check->get_result();
+
+  if ($result->num_rows > 0) {
+    $premiseError = "Premise ID already exists.";
+  } else {
+    $stmt = $conn->prepare("INSERT INTO premise (premiseID, premiseType) VALUES (?, ?)");
+    $stmt->bind_param("ss", $pid, $ptype);
+    if ($stmt->execute()) {
+      $premiseSuccess = "Premise added successfully.";
+    }
+  }
+}
+
+// Delete Premise
+if (isset($_POST['delete_premise'])) {
+  $deleteID = $_POST['delete_premise'];
+  $stmt = $conn->prepare("DELETE FROM premise WHERE premiseID = ?");
+  $stmt->bind_param("s", $deleteID);
+  $stmt->execute();
+}
+
+// Add Service
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_service'])) {
+  $sid = $_POST['service_id'];
+  $stype = $_POST['service_type'];
+
+  $check = $conn->prepare("SELECT * FROM service WHERE serviceID = ?");
+  $check->bind_param("s", $sid);
+  $check->execute();
+  $result = $check->get_result();
+
+  if ($result->num_rows > 0) {
+    $serviceError = "Service ID already exists.";
+  } else {
+    $stmt = $conn->prepare("INSERT INTO service (serviceID, serviceType) VALUES (?, ?)");
+    $stmt->bind_param("ss", $sid, $stype);
+    if ($stmt->execute()) {
+      $serviceSuccess = "Service added successfully.";
+    }
+  }
+}
+
+// Delete Service
+if (isset($_POST['delete_service'])) {
+  $deleteID = $_POST['delete_service'];
+  $stmt = $conn->prepare("DELETE FROM service WHERE serviceID = ?");
+  $stmt->bind_param("s", $deleteID);
+  $stmt->execute();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,62 +88,17 @@
     </div>
   </nav>
 
-<?php
-// Add Premise
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_premise'])) {
-  $pid = $_POST['premise_id'];
-  $ptype = $_POST['premise_type'];
-
-  $check = $conn->prepare("SELECT * FROM premise WHERE premiseID = ?");
-  $check->bind_param("s", $pid);
-  $check->execute();
-  $result = $check->get_result();
-
-  if ($result->num_rows === 0) {
-    $stmt = $conn->prepare("INSERT INTO premise (premiseID, premiseType) VALUES (?, ?)");
-    $stmt->bind_param("ss", $pid, $ptype);
-    $stmt->execute();
-  }
-}
-
-// Delete Premise
-if (isset($_POST['delete_premise'])) {
-  $deleteID = $_POST['delete_premise'];
-  $stmt = $conn->prepare("DELETE FROM premise WHERE premiseID = ?");
-  $stmt->bind_param("s", $deleteID);
-  $stmt->execute();
-}
-
-// Add Service
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_service'])) {
-  $sid = $_POST['service_id'];
-  $stype = $_POST['service_type'];
-
-  $check = $conn->prepare("SELECT * FROM service WHERE serviceID = ?");
-  $check->bind_param("s", $sid);
-  $check->execute();
-  $result = $check->get_result();
-
-  if ($result->num_rows === 0) {
-    $stmt = $conn->prepare("INSERT INTO service (serviceID, serviceType) VALUES (?, ?)");
-    $stmt->bind_param("ss", $sid, $stype);
-    $stmt->execute();
-  }
-}
-
-// Delete Service
-if (isset($_POST['delete_service'])) {
-  $deleteID = $_POST['delete_service'];
-  $stmt = $conn->prepare("DELETE FROM service WHERE serviceID = ?");
-  $stmt->bind_param("s", $deleteID);
-  $stmt->execute();
-}
-?>
-
 <h2 class="title">VIEW AND CREATE PREMISE</h2>
 <div class="container">
   <div class="create-premise">
     <h3 class="sub-title">PREMISE DETAILS</h3>
+
+    <?php if ($premiseError): ?>
+      <p style="color: red;"><?php echo $premiseError; ?></p>
+    <?php elseif ($premiseSuccess): ?>
+      <p style="color: green;"><?php echo $premiseSuccess; ?></p>
+    <?php endif; ?>
+
     <form method="POST">
       <label>Premise ID</label>
       <input type="text" name="premise_id" required />
@@ -124,6 +143,13 @@ if (isset($_POST['delete_service'])) {
 <div class="container">
   <div class="create-service">
     <h3 class="sub-title">SERVICE DETAILS</h3>
+
+    <?php if ($serviceError): ?>
+      <p style="color: red;"><?php echo $serviceError; ?></p>
+    <?php elseif ($serviceSuccess): ?>
+      <p style="color: green;"><?php echo $serviceSuccess; ?></p>
+    <?php endif; ?>
+
     <form method="POST">
       <label>Service ID</label>
       <input type="text" name="service_id" required />

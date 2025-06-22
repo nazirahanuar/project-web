@@ -31,12 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_schedule_id"])
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Scheduling</title>
   <link rel="stylesheet" href="adminFormat.css" />
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
-  </style>
 </head>
 <body class="admin">
   <nav class="navbar">
