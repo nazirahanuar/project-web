@@ -18,7 +18,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
 </head>
 <style>
   body {
-    background: url("image/custbg.jpg");
+    background: url("image/customerbg-new.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
