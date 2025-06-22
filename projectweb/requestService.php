@@ -1,13 +1,16 @@
 <?php
+session_start();
 include 'connect.php';
 
-// Retrieve all premises
-$premiseQuery = "SELECT * FROM premise";
-$premiseResult = $conn->query($premiseQuery);
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
+    echo "<script>alert('You must log in as customer first.'); window.location.href='login.php';</script>";
+    exit;
+}
 
-// Retrieve all services
-$serviceQuery = "SELECT * FROM service";
-$serviceResult = $conn->query($serviceQuery);
+$customerID = $_SESSION['userID'];
+
+$premiseResult = $conn->query("SELECT * FROM premise");
+$serviceResult = $conn->query("SELECT * FROM service");
 ?>
 
 <!DOCTYPE html>
@@ -18,89 +21,82 @@ $serviceResult = $conn->query($serviceQuery);
   <title>Request Service</title>
   <link rel="stylesheet" href="customer.css">
 </head>
-<body id="top" class="customer">
+<body class="customer">
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="customerHome.php" class="nav-item">HOME</a>
-      <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE<br>HUB</a>
-      <a href="requestService.php" class="nav-item active">REQUEST<br>SERVICE</a>
-    </div>
-    <div class="nav-center">
-      <img src="image/logo.png" class="logo" alt="Logo" />
-    </div>
-    <div class="nav-right">
-      <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
-      <a href="custProfile.php" class="nav-item">PROFILE</a>
-    </div>
-  </nav>
-
-  <h1 class="sec-title">REQUEST SERVICE</h1>
-
-  <!-- Request Form -->
-  <div class="request-form">
-    <form action="submitRequest.php" method="POST">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="customerId">Customer ID</label>
-          <input type="text" id="customerId" name="customerID" required>
-        </div>
-
-        <div class="form-group">
-          <label for="serviceId">Service Type</label>
-          <select id="serviceId" name="serviceID" required>
-            <option value="">Select Service</option>
-            <?php while ($row = $serviceResult->fetch_assoc()): ?>
-              <option value="<?= htmlspecialchars($row['serviceID']) ?>">
-                <?= htmlspecialchars($row['serviceType']) ?>
-              </option>
-            <?php endwhile; ?>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="premiseId">Premise Type</label>
-          <select id="premiseId" name="premiseID" required>
-            <option value="">Select Premise</option>
-            <?php while ($row = $premiseResult->fetch_assoc()): ?>
-              <option value="<?= htmlspecialchars($row['premiseID']) ?>">
-                <?= htmlspecialchars($row['premiseType']) ?>
-              </option>
-            <?php endwhile; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="preferredDate">Preferred Date</label>
-          <input type="date" id="preferredDate" name="preferredDate" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="quantity">Quantity of Fire Extinguisher</label>
-          <input type="number" id="quantity" name="quantity" min="0" max="200" value="0" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input type="text" id="location" name="location" required>
-      </div>
-
-      <div class="form-group">
-        <label for="notes">Additional Notes</label>
-        <textarea id="notes" name="notes" placeholder="e.g. ABC Fire Extinguisher"></textarea>
-      </div>
-
-      <button type="submit" class="submit-btn">SUBMIT</button>
-    </form>
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="customerHome.php" class="nav-item">HOME</a>
+    <a href="knowledgeHub.html" class="nav-item">KNOWLEDGE HUB</a>
+    <a href="requestService.php" class="nav-item active">REQUEST SERVICE</a>
   </div>
+  <div class="nav-center">
+    <img src="image/logo.png" class="logo" alt="Logo" />
+  </div>
+  <div class="nav-right">
+    <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
+    <a href="custProfile.php" class="nav-item">PROFILE</a>
+    <a href="logout.php" class="nav-item">LOGOUT</a>
+  </div>
+</nav>
 
-  <p class="note">*Note: We will assign the fire extinguishers based on the suitability of the premises. Please specify the types of fire extinguishers you require in the ‘Additional Notes’ section.</p>
+<h1 class="sec-title">REQUEST SERVICE</h1>
+
+<div class="request-form">
+  <form action="submitRequest.php" method="POST">
+    <input type="hidden" name="customerID" value="<?= htmlspecialchars($customerID) ?>">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Customer ID</label>
+        <input type="text" value="<?= htmlspecialchars($customerID) ?>" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceId">Service Type</label>
+        <select name="serviceID" required>
+          <option value="">Select Service</option>
+          <?php while ($row = $serviceResult->fetch_assoc()): ?>
+            <option value="<?= htmlspecialchars($row['serviceID']) ?>"><?= htmlspecialchars($row['serviceType']) ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="premiseId">Premise Type</label>
+        <select name="premiseID" required>
+          <option value="">Select Premise</option>
+          <?php while ($row = $premiseResult->fetch_assoc()): ?>
+            <option value="<?= htmlspecialchars($row['premiseID']) ?>"><?= htmlspecialchars($row['premiseType']) ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="preferredDate">Preferred Date</label>
+        <input type="date" name="preferredDate" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" name="quantity" min="0" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" name="location" required>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Additional Notes</label>
+      <textarea name="notes"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">SUBMIT</button>
+  </form>
+</div>
 
 </body>
 </html>
