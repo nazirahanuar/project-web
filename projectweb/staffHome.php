@@ -30,11 +30,11 @@ $staffName = $row['staffName'];
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-      <div class="nav-top-links">
-        <a href="staffHome.php" class="nav-item active">HOME</a>
-        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-        <a href="staffProfile.php" class="nav-item">PROFILE</a>
-      </div>
+    <div class="nav-links">
+      <a href="staffHome.php" class="nav-item active">HOME</a>
+      <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+      <a href="staffProfile.php" class="nav-item">PROFILE</a>
+    </div>
       <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
     </div>
   </nav>
