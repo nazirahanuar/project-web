@@ -14,13 +14,12 @@ $query->execute();
 $result = $query->get_result();
 $staff = $result->fetch_assoc();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Staff Profile</title>
-  <link rel="stylesheet" href="staffProfile.css">
+  <link rel="stylesheet" href="staff.css">
 </head>
 <body class="staff">
 
@@ -29,9 +28,12 @@ $staff = $result->fetch_assoc();
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-      <a href="staffHome.php" class="nav-item">HOME</a>
-      <a href="staffSchedule.html" class="nav-item">SERVICE SCHEDULE</a>
-      <a href="staffProfile.php" class="nav-item active">PROFILE</a>
+      <div class="nav-top-links">
+        <a href="staffHome.php" class="nav-item">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item active">PROFILE</a>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
     </div>
   </nav>
 
@@ -41,14 +43,13 @@ $staff = $result->fetch_assoc();
     <div class="profile-card">
       <div class="profile-header">
         <div class="profile-pic">
-            <?php if (!empty($staff['profilePic'])): ?>
+          <?php if (!empty($staff['profilePic'])): ?>
             <img src="<?php echo htmlspecialchars($staff['profilePic']); ?>" alt="Profile Picture"
             style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
-        <?php else: ?>
-    <div style="width: 80px; height: 80px; background: #ccc; border-radius: 50%;"></div>
-  <?php endif; ?>
-</div>
-
+          <?php else: ?>
+            <div style="width: 80px; height: 80px; background: #ccc; border-radius: 50%;"></div>
+          <?php endif; ?>
+        </div>
         <div class="profile-info">
           <p><strong>Staff ID: <?php echo $staff['staffID']; ?></strong></p>
           <p>Staff Name: <?php echo $staff['staffName']; ?></p>
@@ -70,5 +71,12 @@ $staff = $result->fetch_assoc();
     </div>
   </section>
 
+  <script>
+    function handleLogout() {
+      if (confirm("Are you sure you want to log out?")) {
+        window.location.href = "logout.php";
+      }
+    }
+  </script>
 </body>
 </html>

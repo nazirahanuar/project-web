@@ -3,30 +3,31 @@ session_start();
 include 'connect.php';
 
 $staffID = $_SESSION['userID'] ?? '';
-
-// Fetch staff info
 $stmt = $conn->prepare("SELECT * FROM staff WHERE staffID = ?");
 $stmt->bind_param("s", $staffID);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edit Profile</title>
-  <link rel="stylesheet" href="editStaffProfile.css" />
+  <link rel="stylesheet" href="staff.css" />
 </head>
-<body>
+<body class="staff">
+
   <nav class="navbar">
     <img src="image/logo.PNG" class="logo" alt="logo">
-    <div class="nav-links">
-      <a href="staffHome.php">HOME</a>
-      <a href="staffSchedule.html">SERVICE SCHEDULE</a>
-      <a href="staffProfile.php" class="active">PROFILE</a>
+    <div class="nav-right">
+      <div class="nav-top-links">
+        <a href="staffHome.php" class="nav-item">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item active">PROFILE</a>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
     </div>
   </nav>
 
@@ -65,5 +66,13 @@ $data = $result->fetch_assoc();
       </div>
     </form>
   </div>
+
+  <script>
+    function handleLogout() {
+      if (confirm("Are you sure you want to log out?")) {
+        window.location.href = "logout.php";
+      }
+    }
+  </script>
 </body>
 </html>

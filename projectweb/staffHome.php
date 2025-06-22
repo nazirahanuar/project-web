@@ -25,23 +25,20 @@ $staffName = $row['staffName'];
 </head>
 <body class="staff">
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
       <img src="image/logo.PNG" class="logo" alt="Logo" />
     </div>
-
     <div class="nav-right">
-  <div class="nav-top-links">
-    <a href="staffHome.php" class="nav-item active">HOME</a>
-    <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
-    <a href="staffProfile.php" class="nav-item">PROFILE</a>
-  </div>
-  <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
-</div>
+      <div class="nav-top-links">
+        <a href="staffHome.php" class="nav-item active">HOME</a>
+        <a href="staffSchedule.php" class="nav-item">SERVICE SCHEDULE</a>
+        <a href="staffProfile.php" class="nav-item">PROFILE</a>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">LOG OUT</button>
+    </div>
   </nav>
 
-  <!-- Header Content -->
   <div class="header">
     <h1>HAPPY WORKING,<br><?php echo strtoupper($staffName); ?>!</h1>
     <p class="subtext">View your schedule today.</p>
@@ -50,8 +47,7 @@ $staffName = $row['staffName'];
 
   <script>
     function handleLogout() {
-      const confirmLogout = confirm("Are you sure you want to log out?");
-      if (confirmLogout) {
+      if (confirm("Are you sure you want to log out?")) {
         window.location.href = "logout.php";
       }
     }
