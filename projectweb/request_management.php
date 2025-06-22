@@ -1,8 +1,14 @@
 <?php
 include 'connect.php';
 
+// Get available serials (not already used in orders)
 $serialOptions = [];
-$serialQuery = $conn->query("SELECT serialNo FROM fire_extinguisher ORDER BY serialNo ASC");
+$serialQuery = $conn->query("
+  SELECT serialNo 
+  FROM fire_extinguisher 
+  WHERE serialNo NOT IN (SELECT serialNo FROM orders) 
+  ORDER BY serialNo ASC
+");
 while ($row = $serialQuery->fetch_assoc()) {
   $serialOptions[] = $row['serialNo'];
 }
@@ -12,36 +18,53 @@ $serialsJS = json_encode($serialOptions);
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $orderID = $_POST["orderID"];
   $customerID = $_POST["customerID"];
-  $quantity = isset($_POST["quantity"]) && $_POST["quantity"] !== '' ? intval($_POST["quantity"]) : 0;
+  $quantity = isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0;
   $additionalNotes = $_POST["additionalNotes"] ?? '';
-  $serials = isset($_POST["serials"]) ? implode(", ", $_POST["serials"]) : "";
+  $serials = $_POST["serials"] ?? [];
 
-  // Check for duplicate Order ID
-  $check = $conn->prepare("SELECT * FROM orders WHERE orderID = ?");
-  $check->bind_param("s", $orderID);
-  $check->execute();
-  $result = $check->get_result();
-
-  if ($result->num_rows > 0) {
-    echo "<script>alert('Order ID already exists in the database.');</script>";
+  if ($quantity > 0 && count($serials) !== $quantity) {
+    echo "<script>alert('Number of serials must match the quantity.');</script>";
   } else {
-    $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Quantity, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssis", $orderID, $serials, $customerID, $quantity, $additionalNotes);
-    if ($stmt->execute()) {
-      echo "<script>alert('Order is created successfully.');</script>";
+    $check = $conn->prepare("SELECT * FROM orders WHERE orderID = ?");
+    $check->bind_param("s", $orderID);
+    $check->execute();
+    $res = $check->get_result();
+
+    if ($res->num_rows > 0) {
+      echo "<script>alert('Order ID already exists.');</script>";
     } else {
-      echo "<script>alert('Failed to create order.');</script>";
+      $success = true;
+
+      if ($quantity == 0) {
+        $nullSerial = null;
+        $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Quantity, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssis", $orderID, $nullSerial, $customerID, $quantity, $additionalNotes);
+        $success = $stmt->execute();
+      } else {
+        foreach ($serials as $serialNo) {
+          $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Quantity, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
+          $stmt->bind_param("sssis", $orderID, $serialNo, $customerID, $quantity, $additionalNotes);
+          if (!$stmt->execute()) {
+            $success = false;
+            break;
+          }
+        }
+      }
+
+      echo $success
+        ? "<script>alert('Order created successfully.'); window.location.href='request_management.php';</script>"
+        : "<script>alert('Failed to create order.');</script>";
     }
   }
 }
 
-// Handle Delete Request
+// Handle request deletion
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
   $customerID = $_POST["customerID"];
   $stmt = $conn->prepare("DELETE FROM request WHERE customerID = ?");
   $stmt->bind_param("s", $customerID);
   $stmt->execute();
-  echo "<script>alert('Request deleted successfully.');</script>";
+  echo "<script>alert('Request deleted.'); window.location.href='request_management.php';</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -74,21 +97,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
     <form method="POST" class="create-order">
       <h3 class="sub-title">ORDER DETAILS</h3>
       <label>Order ID</label>
-      <input type="text" name="orderID" id="order-id" required />
+      <input type="text" name="orderID" required />
 
       <label>Customer ID</label>
-      <input type="text" name="customerID" id="customer-id" required />
+      <input type="text" name="customerID" required />
 
       <label>Quantity of Fire Extinguisher</label>
-      <input type="number" name="quantity" id="quantity" value="0" min="0" />
+      <input type="number" name="quantity" id="quantity" min="0" value="0" required />
 
       <label>Serial No.</label>
-      <div id="serial-container"></div>
+      <div id="serial-container">
+        <p style="font-style: italic; color: gray;">Select quantity to show serial number fields.</p>
+      </div>
 
       <label>Additional Notes</label>
-      <textarea name="additionalNotes" id="additional-notes"></textarea>
+      <textarea name="additionalNotes"></textarea>
 
-      <button type="submit" name="create" id="create-btn">CREATE</button>
+      <button type="submit" name="create">CREATE</button>
     </form>
 
     <a id="see-order-details" href="orderDetails.php">SEE ORDER DETAILS</a>
@@ -101,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
     $result = $conn->query("SELECT * FROM request LIMIT 1");
     if ($result && $row = $result->fetch_assoc()):
     ?>
-    <div id="customer-request" class="customer-request">
+    <div class="customer-request">
       <p><strong>Customer ID:</strong> <?= $row['customerID'] ?></p>
       <p><strong>Service ID:</strong> <?= $row['serviceID'] ?></p>
       <p><strong>Premise ID:</strong> <?= $row['premiseID'] ?></p>
@@ -112,16 +137,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
 
       <form method="POST" onsubmit="return confirm('Are you sure you want to delete this request?');">
         <input type="hidden" name="customerID" value="<?= $row['customerID'] ?>" />
-        <button type="submit" name="done" id="done-btn">DONE</button>
+        <button type="submit" name="done">DONE</button>
       </form>
     </div>
     <?php else: ?>
       <p>No customer request found.</p>
     <?php endif; ?>
 
-    <p class="note">*WARNING: Once the “DONE” button is clicked, the customer request details
-    will be removed from this page as a mark that you’ve created an order and
-    schedule.</p>
+    <p class="note">*WARNING: Once the “DONE” button is clicked, the customer request will be removed as a mark that you've created the order and schedule.</p>
   </div>
 
   <script>
@@ -131,7 +154,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
       const container = document.getElementById('serial-container');
       container.innerHTML = '';
 
-      if (quantity < 1) return;
+      if (quantity === 0) {
+        container.innerHTML = '<p style="color: gray;">No fire extinguisher selected.</p>';
+        return;
+      }
+
+      if (serialOptions.length === 0) {
+        container.innerHTML = '<p style="color: red;">No serial numbers available in the database.</p>';
+        return;
+      }
+
+      if (quantity > serialOptions.length) {
+        container.innerHTML = '<p style="color: red;">Not enough available serial numbers for this order.</p>';
+        return;
+      }
 
       for (let i = 1; i <= quantity; i++) {
         const label = document.createElement('label');
@@ -164,10 +200,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-      const initialQty = parseInt(document.getElementById('quantity').value, 10);
-      if (initialQty > 0) {
-        generateSerialDropdowns(initialQty);
-      }
+      const qty = parseInt(document.getElementById('quantity').value, 10);
+      if (qty >= 0) generateSerialDropdowns(qty);
     });
   </script>
 </body>

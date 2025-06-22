@@ -2,13 +2,21 @@
 include 'connect.php';
 
 $pendingCount = 0;
-$pendingQuery = $conn->query("SELECT COUNT(*) AS total FROM request");
+$fireExtinguisherCount = 0;
 
+$pendingQuery = $conn->query("SELECT COUNT(*) AS total FROM request");
 if ($pendingQuery) {
   $row = $pendingQuery->fetch_assoc();
   $pendingCount = isset($row['total']) ? (int)$row['total'] : 0;
 }
+
+$fireExtinguisherQuery = $conn->query("SELECT COUNT(*) AS totalFire FROM fire_extinguisher");
+if ($fireExtinguisherQuery) {
+  $row = $fireExtinguisherQuery->fetch_assoc();
+  $fireExtinguisherCount = isset($row['totalFire']) ? (int)$row['totalFire'] : 0;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,6 +65,11 @@ if ($pendingQuery) {
         <div class="stat-card">
           <div class="stat-number" id="pendingRequests"><?= $pendingCount ?></div>
           <div class="stat-label">Pending<br>Requests</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="totalFireExtinguishers"><?= $fireExtinguisherCount ?></div>
+          <div class="stat-label">Total Fire<br>Extinguishers</div>
         </div>
       </div>
     </div>
