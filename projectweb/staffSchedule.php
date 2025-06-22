@@ -98,13 +98,15 @@ $serviceRef = $conn->query("SELECT * FROM service");
   </div>
 
   <!-- Search Order Section -->
-  <div class="search-section">
-    <form method="GET">
-      <label>Check customer's fire extinguisher(s) order by searching the Order ID.</label><br>
-      <input type="text" name="search" placeholder="Search Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-      <button type="submit">🔍</button>
-    </form>
+<div class="search-bar-container">
+    <div class="search-label">
+    <em>Search</em>
   </div>
+  <form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
+    <button type="submit">🔍</button>
+  </form>
+</div>
 
   <?php if ($orderDetails): ?>
   <div class="order-details-box">

@@ -457,3 +457,41 @@ form input[type="password"] {
 .done-btn:hover {
   background-color: #388e3c;
 }
+
+.search-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 40px 10px 0;
+}
+
+.search-label {
+  font-style: italic;
+  color: #fff;
+  font-size: 14px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input[type="text"] {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  width: 120px;
+}
+
+.search-form button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+  color: white;
+}
+
