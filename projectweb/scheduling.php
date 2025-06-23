@@ -41,9 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
   $stmt->close();
 }
 
-// Get updated requests
-$requestResult = $conn->query("SELECT * FROM request ORDER BY preferredDate ASC");
-
 // Create schedule
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $staffID = $_POST["staffID"];
@@ -77,16 +74,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   }
 }
 
-// Delete schedule
+// Delete schedule and related order
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_orderID"], $_POST["delete_staffID"])) {
   $orderID = $_POST["delete_orderID"];
   $staffID = $_POST["delete_staffID"];
 
+  // First delete the schedule
   $stmt = $conn->prepare("DELETE FROM schedule WHERE orderID = ? AND staffID = ?");
   $stmt->bind_param("ss", $orderID, $staffID);
   $stmt->execute();
   $stmt->close();
+
+  // Then delete the related order
+  $deleteOrderStmt = $conn->prepare("DELETE FROM orders WHERE orderID = ?");
+  $deleteOrderStmt->bind_param("s", $orderID);
+  $deleteOrderStmt->execute();
+  $deleteOrderStmt->close();
+
+  $successMessage = "<span style='color:orange;'>Schedule and related order deleted successfully.</span>";
 }
+
+// Load schedule table
+$scheduleResult = $conn->query("SELECT * FROM schedule ORDER BY scheduleDate ASC");
+
+// Load customer requests
+$requestResult = $conn->query("SELECT * FROM request ORDER BY preferredDate ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,184 +110,181 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_orderID"], $_P
 </head>
 <body class="admin">
 
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="adminHome.php" class="nav-item">HOME</a>
-      <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
-      <a href="scheduling.php" class="nav-item active">SCHEDULING</a>
-    </div>
-    <div class="nav-center">
-      <img src="image/logo.png" class="logo" alt="Logo" />
-    </div>
-    <div class="nav-right">
-      <a href="fireExtinguisher_information.php" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
-      <a href="information_management.php" class="nav-item">INFORMATION<br>MANAGEMENT</a>
-    </div>
-  </nav>
-
-  <section class="schedule-form-section">
-    <h2 class="title">CREATE SCHEDULE</h2>
-    <p class="note">Create schedules for our committed staff and customers to view.</p>
-    <?php if (!empty($successMessage)) echo "<p style='text-align:center;font-weight:bold;'>$successMessage</p>"; ?>
-
-    <form method="POST" class="schedule-form black-box">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Order ID</label>
-          <select name="orderID" required>
-            <option value="">-- Select Order ID --</option>
-            <?php foreach ($orderIDs as $orderID): ?>
-              <option value="<?= htmlspecialchars($orderID) ?>"><?= htmlspecialchars($orderID) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Staff ID</label>
-          <select name="staffID" required>
-            <option value="">-- Select Staff ID --</option>
-            <?php foreach ($staffIDs as $staffID): ?>
-              <option value="<?= htmlspecialchars($staffID) ?>"><?= htmlspecialchars($staffID) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Schedule Date</label>
-          <input type="date" name="scheduleDate" required />
-        </div>
-
-        <div class="form-group full-width">
-          <label>Location</label>
-          <textarea name="location" rows="3" required></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Service ID</label>
-          <select name="serviceID" required>
-            <option value="">-- Select Service ID --</option>
-            <?php foreach ($serviceIDs as $serviceID): ?>
-              <option value="<?= htmlspecialchars($serviceID) ?>"><?= htmlspecialchars($serviceID) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Premise ID</label>
-          <select name="premiseID" required>
-            <option value="">-- Select Premise ID --</option>
-            <?php foreach ($premiseIDs as $premiseID): ?>
-              <option value="<?= htmlspecialchars($premiseID) ?>"><?= htmlspecialchars($premiseID) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Admin ID</label>
-          <select name="adminID" required>
-            <option value="">-- Select Admin ID --</option>
-            <?php foreach ($adminIDs as $adminID): ?>
-              <option value="<?= htmlspecialchars($adminID) ?>"><?= htmlspecialchars($adminID) ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-submit-center">
-        <button type="submit" name="create" class="btn-create">CREATE</button>
-      </div>
-    </form>
-  </section>
-
-  <hr>
-  <h2 class="title">SCHEDULE DETAILS</h2>
-
-  <div class="search-bar" style="text-align: center; margin-bottom: 15px;">
-    <input type="text" id="searchInput" placeholder="Search">
-    <button class="search-icon" onclick="searchTable()" type="button">🔍</button>
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="adminHome.php" class="nav-item">HOME</a>
+    <a href="request_management.php" class="nav-item">REQUEST<br>MANAGEMENT</a>
+    <a href="scheduling.php" class="nav-item active">SCHEDULING</a>
   </div>
+  <div class="nav-center">
+    <img src="image/logo.png" class="logo" alt="Logo" />
+  </div>
+  <div class="nav-right">
+    <a href="fireExtinguisher_information.php" class="nav-item">FIRE EXTINGUISHER<br>INFORMATION</a>
+    <a href="information_management.php" class="nav-item">INFORMATION<br>MANAGEMENT</a>
+  </div>
+</nav>
 
-  <div class="table-wrapper">
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Staff ID</th>
-          <th>Order ID</th>
-          <th>Schedule Date</th>
-          <th>Location</th>
-          <th>Service ID</th>
-          <th>Premise ID</th>
-          <th>Admin ID</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $result = $conn->query("SELECT * FROM schedule ORDER BY scheduleDate ASC");
-        if ($result && $result->num_rows > 0):
-          while ($row = $result->fetch_assoc()):
-        ?>
+<section class="schedule-form-section">
+  <h2 class="title">CREATE SCHEDULE</h2>
+  <p class="note">Create schedules for our committed staff and customers to view.</p>
+  <?php if (!empty($successMessage)) echo "<p style='text-align:center;font-weight:bold;'>$successMessage</p>"; ?>
+
+  <form method="POST" class="schedule-form black-box">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Order ID</label>
+        <select name="orderID" required>
+          <option value="">-- Select Order ID --</option>
+          <?php foreach ($orderIDs as $orderID): ?>
+            <option value="<?= htmlspecialchars($orderID) ?>"><?= htmlspecialchars($orderID) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Staff ID</label>
+        <select name="staffID" required>
+          <option value="">-- Select Staff ID --</option>
+          <?php foreach ($staffIDs as $staffID): ?>
+            <option value="<?= htmlspecialchars($staffID) ?>"><?= htmlspecialchars($staffID) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Schedule Date</label>
+        <input type="date" name="scheduleDate" required />
+      </div>
+
+      <div class="form-group full-width">
+        <label>Location</label>
+        <textarea name="location" rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Service ID</label>
+        <select name="serviceID" required>
+          <option value="">-- Select Service ID --</option>
+          <?php foreach ($serviceIDs as $serviceID): ?>
+            <option value="<?= htmlspecialchars($serviceID) ?>"><?= htmlspecialchars($serviceID) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Premise ID</label>
+        <select name="premiseID" required>
+          <option value="">-- Select Premise ID --</option>
+          <?php foreach ($premiseIDs as $premiseID): ?>
+            <option value="<?= htmlspecialchars($premiseID) ?>"><?= htmlspecialchars($premiseID) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Admin ID</label>
+        <select name="adminID" required>
+          <option value="">-- Select Admin ID --</option>
+          <?php foreach ($adminIDs as $adminID): ?>
+            <option value="<?= htmlspecialchars($adminID) ?>"><?= htmlspecialchars($adminID) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-submit-center">
+      <button type="submit" name="create" class="btn-create">CREATE</button>
+    </div>
+  </form>
+</section>
+
+<hr>
+<h2 class="title">SCHEDULE DETAILS</h2>
+
+<div class="search-bar" style="text-align: center; margin-bottom: 15px;">
+  <input type="text" id="searchInput" placeholder="Search">
+  <button class="search-icon" onclick="searchTable()" type="button">🔍</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Staff ID</th>
+        <th>Order ID</th>
+        <th>Schedule Date</th>
+        <th>Location</th>
+        <th>Service ID</th>
+        <th>Premise ID</th>
+        <th>Admin ID</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if ($scheduleResult && $scheduleResult->num_rows > 0): ?>
+        <?php while ($row = $scheduleResult->fetch_assoc()): ?>
           <tr>
-            <td><?= $row['staffID'] ?></td>
-            <td><?= $row['orderID'] ?></td>
-            <td><?= $row['scheduleDate'] ?></td>
-            <td><?= $row['Location'] ?></td>
-            <td><?= $row['serviceID'] ?></td>
-            <td><?= $row['premiseID'] ?></td>
-            <td><?= $row['adminID'] ?></td>
+            <td><?= htmlspecialchars($row['staffID']) ?></td>
+            <td><?= htmlspecialchars($row['orderID']) ?></td>
+            <td><?= htmlspecialchars($row['scheduleDate']) ?></td>
+            <td><?= htmlspecialchars($row['Location']) ?></td>
+            <td><?= htmlspecialchars($row['serviceID']) ?></td>
+            <td><?= htmlspecialchars($row['premiseID']) ?></td>
+            <td><?= htmlspecialchars($row['adminID']) ?></td>
             <td>
-              <form method="POST" onsubmit="return confirm('Delete this schedule?');">
+              <form method="POST" onsubmit="return confirm('Delete this schedule and order?');">
                 <input type="hidden" name="delete_orderID" value="<?= $row['orderID'] ?>">
                 <input type="hidden" name="delete_staffID" value="<?= $row['staffID'] ?>">
                 <button type="submit" class="btn-delete">DELETE</button>
               </form>
             </td>
           </tr>
-        <?php endwhile; else: ?>
-          <tr><td colspan="8">No schedule found.</td></tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <tr><td colspan="8">No schedule found.</td></tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
 
-  <hr>
-  <h2 class="title">CUSTOMER REQUESTS</h2>
-  <p class="note">These customer requests are awaiting orders and schedules.</p>
+<hr>
+<h2 class="title">CUSTOMER REQUESTS</h2>
+<p class="note">These customer requests are awaiting orders and schedules.</p>
 
-  <?php if ($requestResult && $requestResult->num_rows > 0): ?>
-    <?php while ($row = $requestResult->fetch_assoc()): ?>
-      <div class="customer-request">
-        <p><strong>Customer ID:</strong> <?= $row['customerID'] ?></p>
-        <p><strong>Service ID:</strong> <?= $row['serviceID'] ?></p>
-        <p><strong>Premise ID:</strong> <?= $row['premiseID'] ?></p>
-        <p><strong>Quantity:</strong> <?= $row['Quantity'] ?></p>
-        <p><strong>Location:</strong> <?= $row['Location'] ?></p>
-        <p><strong>Preferred Date:</strong> <?= $row['preferredDate'] ?></p>
-        <p><strong>Additional Notes:</strong> <?= $row['Additional_Notes'] ?></p>
+<?php if ($requestResult && $requestResult->num_rows > 0): ?>
+  <?php while ($row = $requestResult->fetch_assoc()): ?>
+    <div class="customer-request">
+      <p><strong>Customer ID:</strong> <?= htmlspecialchars($row['customerID']) ?></p>
+      <p><strong>Service ID:</strong> <?= htmlspecialchars($row['serviceID']) ?></p>
+      <p><strong>Premise ID:</strong> <?= htmlspecialchars($row['premiseID']) ?></p>
+      <p><strong>Quantity:</strong> <?= htmlspecialchars($row['Quantity']) ?></p>
+      <p><strong>Location:</strong> <?= htmlspecialchars($row['Location']) ?></p>
+      <p><strong>Preferred Date:</strong> <?= htmlspecialchars($row['preferredDate']) ?></p>
+      <p><strong>Additional Notes:</strong> <?= htmlspecialchars($row['Additional_Notes']) ?></p>
 
-        <form method="POST" onsubmit="return confirm('Mark this request as done?');">
-          <input type="hidden" name="customerID" value="<?= $row['customerID'] ?>" />
-          <input type="hidden" name="serviceID" value="<?= $row['serviceID'] ?>" />
-          <button type="submit" name="done" class="btn-done">DONE</button>
-        </form>
-      </div>
-    <?php endwhile; ?>
-  <?php else: ?>
-    <p>No pending customer requests.</p>
-  <?php endif; ?>
+      <form method="POST" onsubmit="return confirm('Mark this request as done?');">
+        <input type="hidden" name="customerID" value="<?= $row['customerID'] ?>" />
+        <input type="hidden" name="serviceID" value="<?= $row['serviceID'] ?>" />
+        <button type="submit" name="done" class="btn-done">DONE</button>
+      </form>
+    </div>
+  <?php endwhile; ?>
+<?php else: ?>
+  <p>No pending customer requests.</p>
+<?php endif; ?>
 
-  <p class="note">*WARNING: Once the “DONE” button is clicked, the customer request will be removed as a mark that you've created the order and schedule.</p>
+<p class="note">*WARNING: When “DELETE” is clicked, both the schedule and order will be deleted.</p>
 
-  <script>
-    function searchTable() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.querySelectorAll(".schedule-table tbody tr");
-
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
-      });
-    }
-  </script>
+<script>
+function searchTable() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const rows = document.querySelectorAll(".schedule-table tbody tr");
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(input) ? "" : "none";
+  });
+}
+</script>
 </body>
 </html>

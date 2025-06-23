@@ -9,18 +9,21 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
 
 if (isset($_GET['orderID'])) {
     $orderID = $_GET['orderID'];
-    $staffID = $_SESSION['userID'];
 
-    $stmt = $conn->prepare("DELETE FROM schedule WHERE orderID = ? AND staffID = ?");
-    $stmt->bind_param("ss", $orderID, $staffID);
+    // First: delete from schedule
+    $deleteSchedule = $conn->prepare("DELETE FROM schedule WHERE orderID = ?");
+    $deleteSchedule->bind_param("s", $orderID);
+    $deleteSchedule->execute();
+    $deleteSchedule->close();
 
-    if ($stmt->execute()) {
-        header("Location: staffSchedule.php?msg=done");
-        exit();
-    } else {
-        echo "Error deleting schedule.";
-    }
-} else {
-    echo "Invalid request.";
+    // Then: delete from orders
+    $deleteOrder = $conn->prepare("DELETE FROM orders WHERE orderID = ?");
+    $deleteOrder->bind_param("s", $orderID);
+    $deleteOrder->execute();
+    $deleteOrder->close();
 }
+
+// Redirect back
+header("Location: staffSchedule.php");
+exit();
 ?>
