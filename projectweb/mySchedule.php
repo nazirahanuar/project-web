@@ -1,10 +1,20 @@
+<?php
+include 'connect.php';
+
+// Fetch premise data
+$premises = $conn->query("SELECT premiseID, premiseType FROM premise");
+
+// Fetch service data
+$services = $conn->query("SELECT serviceID, serviceType FROM service");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Request Service</title>
-  <link rel="stylesheet" href="customer.css">
+  <link rel="stylesheet" href="customer.css" />
 </head>
 <body id="top" class="customer">
   <nav class="navbar">
@@ -73,7 +83,6 @@
   <!-- Reference Section -->
   <section class="reference-section">
     <h2 class="sec-heading">[ FOR REFERENCE ]</h2>
-
     <div class="reference-grids">
       <div>
         <h3 class="subheading">PREMISE DETAILS</h3>
@@ -85,9 +94,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>SCH632</td><td>School/Institution</td></tr>
-            <tr><td>HME520</td><td>Home</td></tr>
-            <tr><td>ORG785</td><td>Organization/Office</td></tr>
+            <?php while ($row = $premises->fetch_assoc()): ?>
+              <tr>
+                <td><?= htmlspecialchars($row['premiseID']) ?></td>
+                <td><?= htmlspecialchars($row['premiseType']) ?></td>
+              </tr>
+            <?php endwhile; ?>
           </tbody>
         </table>
       </div>
@@ -102,9 +114,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>MNT0981</td><td>Maintenance</td></tr>
-            <tr><td>INS854</td><td>Installation</td></tr>
-            <tr><td>SEM632</td><td>Seminar/Training Booking</td></tr>
+            <?php while ($row = $services->fetch_assoc()): ?>
+              <tr>
+                <td><?= htmlspecialchars($row['serviceID']) ?></td>
+                <td><?= htmlspecialchars($row['serviceType']) ?></td>
+              </tr>
+            <?php endwhile; ?>
           </tbody>
         </table>
       </div>
@@ -130,6 +145,5 @@
       }
     }
   </script>
-
 </body>
 </html>
