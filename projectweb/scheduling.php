@@ -30,7 +30,7 @@ while ($row = $serviceQuery->fetch_assoc()) $serviceIDs[] = $row['serviceID'];
 $premiseQuery = $conn->query("SELECT premiseID FROM premise ORDER BY premiseID ASC");
 while ($row = $premiseQuery->fetch_assoc()) $premiseIDs[] = $row['premiseID'];
 
-// Delete request
+// Delete customer request
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
   $customerID = $_POST["customerID"];
   $serviceID = $_POST["serviceID"];
@@ -74,32 +74,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   }
 }
 
-// Delete schedule and related order
+// DELETE schedule + order + fire extinguisher
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_orderID"], $_POST["delete_staffID"])) {
   $orderID = $_POST["delete_orderID"];
   $staffID = $_POST["delete_staffID"];
 
-  // First delete the schedule
+  // Step 1: Get serialNo
+  $serialQuery = $conn->prepare("SELECT serialNo FROM orders WHERE orderID = ?");
+  $serialQuery->bind_param("s", $orderID);
+  $serialQuery->execute();
+  $serialQuery->bind_result($serialNo);
+  $serialQuery->fetch();
+  $serialQuery->close();
+
+  // Step 2: Delete schedule
   $stmt = $conn->prepare("DELETE FROM schedule WHERE orderID = ? AND staffID = ?");
   $stmt->bind_param("ss", $orderID, $staffID);
   $stmt->execute();
   $stmt->close();
 
-  // Then delete the related order
+  // Step 3: Delete order
   $deleteOrderStmt = $conn->prepare("DELETE FROM orders WHERE orderID = ?");
   $deleteOrderStmt->bind_param("s", $orderID);
   $deleteOrderStmt->execute();
   $deleteOrderStmt->close();
 
-  $successMessage = "<span style='color:orange;'>Schedule and related order deleted successfully.</span>";
+  // Step 4: Delete fire extinguisher
+  if (!empty($serialNo)) {
+    $deleteFE = $conn->prepare("DELETE FROM fire_extinguisher WHERE serialNo = ?");
+    $deleteFE->bind_param("s", $serialNo);
+    $deleteFE->execute();
+    $deleteFE->close();
+  }
+
+  $successMessage = "<span style='color:orange;'>Schedule, order, and extinguisher deleted successfully.</span>";
 }
 
-// Load schedule table
+// Get updated schedule
 $scheduleResult = $conn->query("SELECT * FROM schedule ORDER BY scheduleDate ASC");
 
-// Load customer requests
+// Get updated requests
 $requestResult = $conn->query("SELECT * FROM request ORDER BY preferredDate ASC");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
