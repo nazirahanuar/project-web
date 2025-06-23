@@ -40,7 +40,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
       </div>
 
       <div class="nav-right">
-        <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
+        <a href="mySchedule.php" class="nav-item">MY SCHEDULE</a>
         <a href="custProfile.php" class="nav-item">PROFILE</a>
 
       </div>

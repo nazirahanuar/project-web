@@ -27,7 +27,7 @@ $services = $conn->query("SELECT serviceID, serviceType FROM service");
       <img src="image/logo.png" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-      <a href="mySchedule.html" class="nav-item active">MY SCHEDULE</a>
+      <a href="mySchedule.php" class="nav-item active">MY SCHEDULE</a>
       <a href="custProfile.php#profile" class="nav-item">PROFILE</a>
     </div>
   </nav>

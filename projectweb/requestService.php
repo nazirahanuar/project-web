@@ -33,7 +33,7 @@ $serviceResult = $conn->query("SELECT * FROM service");
     <img src="image/logo.png" class="logo" alt="Logo" />
   </div>
   <div class="nav-right">
-    <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
+    <a href="mySchedule.php" class="nav-item">MY SCHEDULE</a>
     <a href="custProfile.php" class="nav-item">PROFILE</a>
   </div>
 </nav>

@@ -43,7 +43,7 @@ $orderResult = $orderStmt->get_result();
         <img src="image/logo.png" class="logo" alt="Logo" />
     </div>
     <div class="nav-right">
-        <a href="mySchedule.html" class="nav-item">MY SCHEDULE</a>
+        <a href="mySchedule.php" class="nav-item">MY SCHEDULE</a>
         <a href="custProfile.php" class="nav-item active">PROFILE</a>
     </div>
 </nav>
