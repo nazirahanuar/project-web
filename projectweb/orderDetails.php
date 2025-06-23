@@ -45,36 +45,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
         <tr>
           <th>Order ID</th>
           <th>Customer ID</th>
-          <th>Service ID</th>
-          <th>Premise ID</th>
-          <th>Location</th>
-          <th>Preferred Date</th>
+          <th>Serial No</th>
           <th>Additional Notes</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <?php
-        $orderResult = $conn->query("
-          SELECT 
-            o.orderID, o.customerID, o.serviceID, o.premiseID, o.Additional_Notes, 
-            r.Location, r.preferredDate
-          FROM orders o
-          LEFT JOIN request r 
-            ON o.customerID = r.customerID 
-            AND o.serviceID = r.serviceID 
-            AND o.premiseID = r.premiseID
-        ");
+        $orderResult = $conn->query("SELECT * FROM orders");
 
         if ($orderResult && $orderResult->num_rows > 0) {
           while ($row = $orderResult->fetch_assoc()) {
             echo "<tr>
               <td>{$row['orderID']}</td>
               <td>{$row['customerID']}</td>
-              <td>{$row['serviceID']}</td>
-              <td>{$row['premiseID']}</td>
-              <td>{$row['Location']}</td>
-              <td>{$row['preferredDate']}</td>
+              <td>" . ($row['serialNo'] ? $row['serialNo'] : '-') . "</td>
               <td>{$row['Additional_Notes']}</td>
               <td>
                 <form method='POST' onsubmit='return confirm(\"Are you sure you want to delete this order?\");'>
@@ -85,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_order_id'])) {
             </tr>";
           }
         } else {
-          echo "<tr><td colspan='8'>No orders found.</td></tr>";
+          echo "<tr><td colspan='5'>No orders found.</td></tr>";
         }
         ?>
       </tbody>

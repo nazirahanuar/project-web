@@ -6,8 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add'])) {
   $serialNo = $_POST['serialNo'];
   $type = $_POST['fireExtinguisherType'];
   $expiredDate = $_POST['expiredDate'];
+  $status = $_POST['status'];
 
-  if ($serialNo && $type && $expiredDate) {
+  if ($serialNo && $type && $expiredDate && $status) {
     $check = $conn->prepare("SELECT * FROM FIRE_EXTINGUISHER WHERE serialNo = ?");
     $check->bind_param("s", $serialNo);
     $check->execute();
@@ -16,12 +17,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add'])) {
     if ($res->num_rows > 0) {
       echo "<script>alert('Serial number already exists.');</script>";
     } else {
-      $insert = $conn->prepare("INSERT INTO FIRE_EXTINGUISHER (serialNo, fireExtinguisherType, expiredDate) VALUES (?, ?, ?)");
-      $insert->bind_param("sss", $serialNo, $type, $expiredDate);
+      $insert = $conn->prepare("INSERT INTO FIRE_EXTINGUISHER (serialNo, fireExtinguisherType, expiredDate, status) VALUES (?, ?, ?, ?)");
+      $insert->bind_param("ssss", $serialNo, $type, $expiredDate, $status);
       $insert->execute();
       echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
     }
   }
+}
+
+// UPDATE STATUS
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
+  $serialNo = $_POST['serialNo'];
+  $status = $_POST['status'];
+
+  $stmt = $conn->prepare("UPDATE FIRE_EXTINGUISHER SET status = ? WHERE serialNo = ?");
+  $stmt->bind_param("ss", $status, $serialNo);
+  $stmt->execute();
+  echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
 }
 
 // DELETE EXTINGUISHER
@@ -62,7 +74,7 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
   </nav>
 
   <h2 class="title">FIRE EXTINGUISHER INFORMATION</h2>
-  <p class="note">Add and view the fire extinguishers.</p>
+  <p class="note">View and manage the fire extinguishers.</p>
 
   <div class="extinguisher-container">
     <div class="form-container">
@@ -76,6 +88,15 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
 
         <label>Expiration Date</label>
         <input type="date" name="expiredDate" required />
+
+        <div class="form-group">
+        <label>Status</label>
+        <select name="status" required>
+          <option value="">-- Select Status --</option>
+          <option value="Available">Available</option>
+          <option value="Unavailable">Unavailable</option>
+        </select>
+        </div>
 
         <button type="submit" name="add">ADD</button>
       </form>
@@ -95,6 +116,7 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
         <th>Serial No.</th>
         <th>Type</th>
         <th>Expiration Date</th>
+        <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -104,6 +126,18 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
           <td><?= htmlspecialchars($row['serialNo']) ?></td>
           <td><?= htmlspecialchars($row['fireExtinguisherType']) ?></td>
           <td><?= htmlspecialchars($row['expiredDate']) ?></td>
+          <td>
+            <form method="POST" style="display: flex; gap: 5px;">
+              <input type="hidden" name="serialNo" value="<?= $row['serialNo'] ?>" />
+              <div class="form-group">
+              <select name="status" required>
+                <option value="Available" <?= $row['status'] === 'Available' ? 'selected' : '' ?>>Available</option>
+                <option value="Unavailable" <?= $row['status'] === 'Unavailable' ? 'selected' : '' ?>>Unavailable</option>
+              </select>
+              </div>
+              <button type="submit" name="update_status" class="update-btn">Update</button>
+            </form>
+          </td>
           <td>
             <a href="?delete=<?= urlencode($row['serialNo']) ?>" onclick="return confirm('Delete this extinguisher?')">
               <button class="delete-btn">DELETE</button>

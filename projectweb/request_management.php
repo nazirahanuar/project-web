@@ -3,38 +3,26 @@ include 'connect.php';
 
 $successMessage = "";
 
-// Get available serials (not already used in schedule)
+// Get available serials (not already used in orders)
 $serialOptions = [];
 $serialQuery = $conn->query("
   SELECT serialNo 
   FROM fire_extinguisher 
-  WHERE serialNo NOT IN (SELECT serialNo FROM schedule) 
+  WHERE serialNo NOT IN (SELECT serialNo FROM orders WHERE serialNo IS NOT NULL) 
   ORDER BY serialNo ASC
 ");
 while ($row = $serialQuery->fetch_assoc()) {
   $serialOptions[] = $row['serialNo'];
 }
 
-// Fetch Service IDs
-$serviceOptions = [];
-$serviceQuery = $conn->query("SELECT serviceID FROM service");
-while ($row = $serviceQuery->fetch_assoc()) {
-  $serviceOptions[] = $row['serviceID'];
-}
-
-// Fetch Premise IDs
-$premiseOptions = [];
-$premiseQuery = $conn->query("SELECT premiseID FROM premise");
-while ($row = $premiseQuery->fetch_assoc()) {
-  $premiseOptions[] = $row['premiseID'];
-}
+// Fetch Customer Requests
+$requestResult = $conn->query("SELECT * FROM request");
 
 // Handle Create Order
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   $orderID = $_POST["orderID"];
   $customerID = $_POST["customerID"];
-  $premiseID = $_POST["premiseID"];
-  $serviceID = $_POST["serviceID"];
+  $serialNo = empty($_POST["serialNo"]) ? NULL : $_POST["serialNo"]; // Optional
   $additionalNotes = $_POST["additionalNotes"] ?? '';
 
   $check = $conn->prepare("SELECT * FROM orders WHERE orderID = ?");
@@ -45,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
   if ($res->num_rows > 0) {
     echo "<script>alert('Order ID already exists.');</script>";
   } else {
-    $stmt = $conn->prepare("INSERT INTO orders (orderID, customerID, premiseID, serviceID, Additional_Notes) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $orderID, $customerID, $premiseID, $serviceID, $additionalNotes);
+    $stmt = $conn->prepare("INSERT INTO orders (orderID, serialNo, customerID, Additional_Notes) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $orderID, $serialNo, $customerID, $additionalNotes);
     $success = $stmt->execute();
 
     echo $success
@@ -102,25 +90,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
       <label>Customer ID</label>
       <input type="text" name="customerID" value="<?= isset($_POST['customerID']) ? htmlspecialchars($_POST['customerID']) : '' ?>" required />
 
-      <label>Premise ID</label>
-      <select name="premiseID" required>
-        <option value="">-- Select Premise ID --</option>
-        <?php foreach ($premiseOptions as $pid): ?>
-          <option value="<?= htmlspecialchars($pid) ?>" <?= (isset($_POST['premiseID']) && $_POST['premiseID'] === $pid) ? 'selected' : '' ?>>
-            <?= htmlspecialchars($pid) ?>
+      <div class="form-group">
+      <label>Serial No (Optional)</label>
+      <select name="serialNo">
+        <option value="">-- Select Serial No (Optional) --</option>
+        <?php foreach ($serialOptions as $serial): ?>
+          <option value="<?= htmlspecialchars($serial) ?>" <?= (isset($_POST['serialNo']) && $_POST['serialNo'] === $serial) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($serial) ?>
           </option>
         <?php endforeach; ?>
       </select>
-
-      <label>Service ID</label>
-      <select name="serviceID" required>
-        <option value="">-- Select Service ID --</option>
-        <?php foreach ($serviceOptions as $sid): ?>
-          <option value="<?= htmlspecialchars($sid) ?>" <?= (isset($_POST['serviceID']) && $_POST['serviceID'] === $sid) ? 'selected' : '' ?>>
-            <?= htmlspecialchars($sid) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
+      </div>
 
       <label>Additional Notes</label>
       <textarea name="additionalNotes"><?= isset($_POST['additionalNotes']) ? htmlspecialchars($_POST['additionalNotes']) : '' ?></textarea>
@@ -132,12 +112,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["done"])) {
 
     <hr>
     <h2 class="title">CUSTOMER REQUESTS</h2>
-    <p class="note">Click "DONE" once you've finished creating the order and schedule.</p>
+    <p class="note">These customer requests are awaiting orders and schedules.</p>
 
     <?php
-    $result = $conn->query("SELECT * FROM request");
-    if ($result && $result->num_rows > 0):
-      while ($row = $result->fetch_assoc()):
+    if ($requestResult && $requestResult->num_rows > 0):
+      while ($row = $requestResult->fetch_assoc()):
     ?>
     <div class="customer-request">
       <p><strong>Customer ID:</strong> <?= $row['customerID'] ?></p>
