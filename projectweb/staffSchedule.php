@@ -23,11 +23,13 @@ $schedules = $scheduleQuery->get_result();
 $orderDetails = null;
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
+
+    // LEFT JOIN so even if no matching extinguisher, show order
     $orderStmt = $conn->prepare("
-        SELECT o.orderID, o.serialNo, o.customerID, o.Quantity, o.Additional_Notes,
+        SELECT o.orderID, o.serialNo, o.customerID, o.Additional_Notes,
                f.fireExtinguisherType
         FROM orders o
-        JOIN fire_extinguisher f ON o.serialNo = f.serialNo
+        LEFT JOIN fire_extinguisher f ON o.serialNo = f.serialNo
         WHERE o.orderID = ?
     ");
     $orderStmt->bind_param("s", $search);
@@ -70,12 +72,12 @@ $serviceRef = $conn->query("SELECT * FROM service");
   </div>
 
   <!-- Search Order Section -->
-<div class="search-section">
-  <form method="GET" class="search-form">
-    <label class="search-label">Search</label>
-    <input type="text" name="search" placeholder="Order ID" value="<?= $_GET['search'] ?? '' ?>" />
-  </form>
-</div>
+  <div class="search-section">
+    <form method="GET" class="search-form">
+      <label class="search-label">Search</label>
+      <input type="text" name="search" placeholder="Order ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" />
+    </form>
+  </div>
 
   <!-- Schedule Table -->
   <div class="schedule-table">
@@ -92,26 +94,28 @@ $serviceRef = $conn->query("SELECT * FROM service");
       </tr>
       <?php while ($row = $schedules->fetch_assoc()): ?>
       <tr>
-        <td><?= $row['staffID'] ?></td>
-        <td><?= $row['orderID'] ?></td>
-        <td><?= $row['scheduleDate'] ?></td>
-        <td><?= $row['Location'] ?></td>
-        <td><?= $row['serviceID'] ?></td>
-        <td><?= $row['premiseID'] ?></td>
-        <td><?= $row['adminID'] ?></td>
+        <td><?= htmlspecialchars($row['staffID']) ?></td>
+        <td><?= htmlspecialchars($row['orderID']) ?></td>
+        <td><?= htmlspecialchars($row['scheduleDate']) ?></td>
+        <td><?= htmlspecialchars($row['Location']) ?></td>
+        <td><?= htmlspecialchars($row['serviceID']) ?></td>
+        <td><?= htmlspecialchars($row['premiseID']) ?></td>
+        <td><?= htmlspecialchars($row['adminID']) ?></td>
         <td><button class="done-btn" onclick="confirmDone('<?= $row['orderID'] ?>')">DONE</button></td>
       </tr>
       <?php endwhile; ?>
     </table>
   </div>
 
+  <!-- Order Lookup Result -->
   <?php if ($orderDetails): ?>
   <div class="order-details-box">
-    <p><strong>Order ID:</strong> <?= $orderDetails['orderID'] ?></p>
-    <p><strong>Serial No.:</strong> <?= $orderDetails['serialNo'] ?></p>
-    <p><strong>Customer ID:</strong> <?= $orderDetails['customerID'] ?></p>
-    <p><strong>Quantity of Fire Extinguisher:</strong> <?= $orderDetails['Quantity'] ?></p>
-    <p><strong>Additional Notes:</strong> <?= $orderDetails['Additional_Notes'] ?></p>
+    <h2>ORDER DETAILS</h2>
+    <p><strong>Order ID:</strong> <?= htmlspecialchars($orderDetails['orderID'] ?? '-') ?></p>
+    <p><strong>Serial No.:</strong> <?= htmlspecialchars($orderDetails['serialNo'] ?? '-') ?></p>
+    <p><strong>Fire Extinguisher Type:</strong> <?= htmlspecialchars($orderDetails['fireExtinguisherType'] ?? '-') ?></p>
+    <p><strong>Customer ID:</strong> <?= htmlspecialchars($orderDetails['customerID'] ?? '-') ?></p>
+    <p><strong>Additional Notes:</strong> <?= htmlspecialchars($orderDetails['Additional_Notes'] ?? '-') ?></p>
   </div>
   <?php endif; ?>
 
@@ -124,7 +128,7 @@ $serviceRef = $conn->query("SELECT * FROM service");
         <table border="1">
           <tr><th>Premise ID</th><th>Type</th></tr>
           <?php while ($p = $premiseRef->fetch_assoc()): ?>
-          <tr><td><?= $p['premiseID'] ?></td><td><?= $p['premiseType'] ?></td></tr>
+          <tr><td><?= htmlspecialchars($p['premiseID']) ?></td><td><?= htmlspecialchars($p['premiseType']) ?></td></tr>
           <?php endwhile; ?>
         </table>
       </div>
@@ -133,7 +137,7 @@ $serviceRef = $conn->query("SELECT * FROM service");
         <table border="1">
           <tr><th>Service ID</th><th>Type</th></tr>
           <?php while ($s = $serviceRef->fetch_assoc()): ?>
-          <tr><td><?= $s['serviceID'] ?></td><td><?= $s['serviceType'] ?></td></tr>
+          <tr><td><?= htmlspecialchars($s['serviceID']) ?></td><td><?= htmlspecialchars($s['serviceType']) ?></td></tr>
           <?php endwhile; ?>
         </table>
       </div>
@@ -143,29 +147,31 @@ $serviceRef = $conn->query("SELECT * FROM service");
   <!-- DONE Confirmation Popup -->
   <div class="popup-overlay" id="popup">
     <div class="popup-box">
-      <p>Are you done with this task?</p>
-      <button class="popup-yes" onclick="markDone()">YES</button>
-      <button class="popup-no" onclick="closePopup()">NO</button>
+      <p class="popup-question">Are you done with this task?</p>
+      <div class="popup-buttons">
+        <button class="popup-yes" onclick="markDone()">YES</button>
+        <button class="popup-no" onclick="closePopup()">NO</button>
+      </div>
     </div>
   </div>
 
-  <script>
-    let selectedOrderID = "";
+<script>
+  let selectedOrderID = "";
 
-    function confirmDone(orderID) {
-      selectedOrderID = orderID;
-      document.getElementById("popup").style.display = "flex";
-    }
+  function confirmDone(orderID) {
+    selectedOrderID = orderID;
+    document.getElementById("popup").style.display = "flex";
+  }
 
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
-      selectedOrderID = "";
-    }
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    selectedOrderID = "";
+  }
 
-    function markDone() {
-      window.location.href = "markDone.php?orderID=" + selectedOrderID;
-    }
-  </script>
+  function markDone() {
+    window.location.href = "markDone.php?orderID=" + selectedOrderID;
+  }
+</script>
 
 </body>
 </html>
