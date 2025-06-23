@@ -2,17 +2,25 @@
 session_start();
 include 'connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $staffID = $_POST['staffID'];
-    $orderID = $_POST['orderID'];
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'staff') {
+    header("Location: login.php");
+    exit();
+}
 
-    $stmt = $conn->prepare("UPDATE schedule SET status = 'Done' WHERE staffID = ? AND orderID = ?");
-    $stmt->bind_param("ss", $staffID, $orderID);
+if (isset($_GET['orderID'])) {
+    $orderID = $_GET['orderID'];
+    $staffID = $_SESSION['userID'];
+
+    $stmt = $conn->prepare("DELETE FROM schedule WHERE orderID = ? AND staffID = ?");
+    $stmt->bind_param("ss", $orderID, $staffID);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Task marked as done.'); window.location.href='staffSchedule.php';</script>";
+        header("Location: staffSchedule.php?msg=done");
+        exit();
     } else {
-        echo "<script>alert('Failed to mark task as done.'); window.history.back();</script>";
+        echo "Error deleting schedule.";
     }
+} else {
+    echo "Invalid request.";
 }
 ?>

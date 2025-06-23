@@ -149,23 +149,34 @@ $serviceRef = $conn->query("SELECT * FROM service");
     </div>
   </div>
 
-  <script>
-    let selectedOrderID = "";
+  <!-- Confirmation Popup -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <p class="popup-question">Are you done with this task?</p>
+    <div class="popup-buttons">
+      <button class="popup-yes" onclick="markDone()">YES</button>
+      <button class="popup-no" onclick="closePopup()">NO</button>
+    </div>
+  </div>
+</div>
 
-    function confirmDone(orderID) {
-      selectedOrderID = orderID;
-      document.getElementById("popup").style.display = "flex";
-    }
+<script>
+  let selectedOrderID = "";
 
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
-      selectedOrderID = "";
-    }
+  function confirmDone(orderID) {
+    selectedOrderID = orderID;
+    document.getElementById("popup").style.display = "flex";
+  }
 
-    function markDone() {
-      window.location.href = "markDone.php?orderID=" + selectedOrderID;
-    }
-  </script>
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    selectedOrderID = "";
+  }
+
+  function markDone() {
+    window.location.href = "markDone.php?orderID=" + selectedOrderID;
+  }
+</script>
 
 </body>
 </html>
