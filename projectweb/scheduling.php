@@ -291,7 +291,7 @@ $requestResult = $conn->query("SELECT * FROM request ORDER BY preferredDate ASC"
   <p>No pending customer requests.</p>
 <?php endif; ?>
 
-<p class="note">*WARNING: When “DELETE” is clicked, both the schedule and order will be deleted.</p>
+<p class="note">*WARNING: Once the “DONE” button is clicked, the customer request will be removed as a mark that you've created the order and schedule.</p>
 
 <script>
 function searchTable() {
