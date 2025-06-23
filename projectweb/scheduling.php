@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create"])) {
       if ($stmt->execute()) {
         $successMessage = "<span style='color:green;'>Schedule created successfully.</span>";
       } else {
-        $successMessage = "<span style='color:pink;'>Failed to create schedule.</span>";
+        $successMessage = "<span style='color:red;'>Failed to create schedule.</span>";
       }
       $stmt->close();
     }
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_orderID"], $_P
     $deleteFE->close();
   }
 
-  $successMessage = "<span style='color:orange;'>Schedule, order, and extinguisher deleted successfully.</span>";
+  $successMessage = "<span style='color:green;'>Schedule, order and extinguisher deleted successfully.</span>";
 }
 
 // Get updated schedule
