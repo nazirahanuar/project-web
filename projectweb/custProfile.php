@@ -9,14 +9,18 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'customer') {
 
 $customerID = $_SESSION['userID'];
 
+// Get customer details
 $stmt = $conn->prepare("SELECT * FROM customer WHERE customerID = ?");
 $stmt->bind_param("s", $customerID);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-$orderResult = $conn->query("SELECT * FROM orders WHERE customerID = '$customerID' ORDER BY orderID DESC LIMIT 1");
-$order = $orderResult->fetch_assoc();
+// Get all orders for this customer
+$orderStmt = $conn->prepare("SELECT * FROM orders WHERE customerID = ? ORDER BY orderID DESC");
+$orderStmt->bind_param("s", $customerID);
+$orderStmt->execute();
+$orderResult = $orderStmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -128,18 +132,23 @@ $order = $orderResult->fetch_assoc();
         </section>
 
         <section class="order-section">
-            <h2 class="sec-title">YOUR ORDER</h2>
-            <div class="order-box">
-                <?php if ($order): ?>
-                    <p><strong>Order ID:</strong> <?= htmlspecialchars($order['orderID']) ?></p>
-                    <p><strong>Serial No.:</strong> <?= htmlspecialchars($order['serialNo'] ?? '-') ?></p>
-                    <p><strong>Customer ID:</strong> <?= htmlspecialchars($user['customerID']) ?></p>
-                    <p><strong>Quantity of Fire Extinguisher:</strong> <?= htmlspecialchars($order['quantity']) ?></p>
-                    <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['notes'] ?? '-') ?></p>
-                <?php else: ?>
+            <h2 class="sec-title">YOUR ORDERS</h2>
+
+            <?php if ($orderResult->num_rows > 0): ?>
+                <?php while ($order = $orderResult->fetch_assoc()): ?>
+                    <div class="order-box">
+                        <p><strong>Order ID:</strong> <?= htmlspecialchars($order['orderID']) ?></p>
+                        <p><strong>Serial No.:</strong> <?= htmlspecialchars($order['serialNo'] ?? '-') ?></p>
+                        <p><strong>Customer ID:</strong> <?= htmlspecialchars($order['customerID']) ?></p>
+                        <p><strong>Additional Notes:</strong> <?= htmlspecialchars($order['Additional_Notes'] ?? '-') ?></p>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <div class="order-box">
                     <p>No orders found.</p>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
+
             <p class="schedule-hint">Ready to track your schedule? Go to <a href="mySchedule.html#schedule-section"><strong>MY SCHEDULE</strong></a></p>
         </section>
     <?php endif; ?>
