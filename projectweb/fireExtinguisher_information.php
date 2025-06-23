@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add'])) {
       $insert = $conn->prepare("INSERT INTO FIRE_EXTINGUISHER (serialNo, fireExtinguisherType, expiredDate, status) VALUES (?, ?, ?, ?)");
       $insert->bind_param("ssss", $serialNo, $type, $expiredDate, $status);
       $insert->execute();
-      echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
+      echo "<script>alert('Fire extinguisher added successfully.'); window.location.href='fireExtinguisher_information.php';</script>";
     }
   }
 }
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
   $stmt = $conn->prepare("UPDATE FIRE_EXTINGUISHER SET status = ? WHERE serialNo = ?");
   $stmt->bind_param("ss", $status, $serialNo);
   $stmt->execute();
-  echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
+  echo "<script>alert('Update successfully.'); window.location.href='fireExtinguisher_information.php';</script>";
 }
 
 // DELETE EXTINGUISHER
@@ -42,7 +42,7 @@ if (isset($_GET['delete'])) {
   $delete = $conn->prepare("DELETE FROM FIRE_EXTINGUISHER WHERE serialNo = ?");
   $delete->bind_param("s", $deleteID);
   $delete->execute();
-  echo "<script>window.location.href='fireExtinguisher_information.php';</script>";
+  echo "<script>alert('Fire extinguisher deleted successfully.'); window.location.href='fireExtinguisher_information.php';</script>";
 }
 
 // FETCH ALL EXTINGUISHERS
@@ -90,12 +90,12 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
         <input type="date" name="expiredDate" required />
 
         <div class="form-group">
-        <label>Status</label>
-        <select name="status" required>
-          <option value="">-- Select Status --</option>
-          <option value="Available">Available</option>
-          <option value="Unavailable">Unavailable</option>
-        </select>
+          <label>Status</label>
+          <select name="status" required>
+            <option value="">-- Select Status --</option>
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+          </select>
         </div>
 
         <button type="submit" name="add">ADD</button>
@@ -130,18 +130,19 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
             <form method="POST" style="display: flex; gap: 5px;">
               <input type="hidden" name="serialNo" value="<?= $row['serialNo'] ?>" />
               <div class="form-group">
-              <select name="status" required>
-                <option value="Available" <?= $row['status'] === 'Available' ? 'selected' : '' ?>>Available</option>
-                <option value="Unavailable" <?= $row['status'] === 'Unavailable' ? 'selected' : '' ?>>Unavailable</option>
-              </select>
+                <select name="status" required>
+                  <option value="Available" <?= $row['status'] === 'Available' ? 'selected' : '' ?>>Available</option>
+                  <option value="Unavailable" <?= $row['status'] === 'Unavailable' ? 'selected' : '' ?>>Unavailable</option>
+                </select>
               </div>
               <button type="submit" name="update_status" class="update-btn">Update</button>
             </form>
           </td>
           <td>
-            <a href="?delete=<?= urlencode($row['serialNo']) ?>" onclick="return confirm('Delete this extinguisher?')">
-              <button class="delete-btn">DELETE</button>
-            </a>
+            <form method="GET" onsubmit="return confirmDelete();">
+              <input type="hidden" name="delete" value="<?= htmlspecialchars($row['serialNo']) ?>">
+              <button type="submit" class="delete-btn">DELETE</button>
+            </form>
           </td>
         </tr>
       <?php endwhile; ?>
@@ -164,6 +165,10 @@ $data = $conn->query("SELECT * FROM FIRE_EXTINGUISHER");
         }
         row.style.display = match ? "" : "none";
       }
+    }
+
+    function confirmDelete() {
+      return confirm("Are you sure you want to delete this details?");
     }
   </script>
 </body>
