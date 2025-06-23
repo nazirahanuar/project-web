@@ -221,8 +221,8 @@ input[disabled] {
 
 .product-grid div {
   display: flex;
-  flex-direction: column; /* stack image, name, and description vertically */
-  align-items: center;    /* center image and text horizontally */
+  flex-direction: column; 
+  align-items: center;
   background-color: #f4f4f4;
   border-radius: 5px;
   padding: 15px;
@@ -701,8 +701,6 @@ textarea {
 }
 
 /*edit form*/
-/* === EDIT PROFILE FORM FIX: Horizontal Label/Input Layout === */
-
 .edit-form {
   max-width: 520px;
   margin: 0 auto 40px;
@@ -729,7 +727,7 @@ textarea {
   margin-bottom: 10px;
 }
 
-/* Original .edit-form .customer-id rule - Keeping for reference */
+/* Original .edit-form .customer-id rule */
 /* .edit-form .customer-id {
   font-style: italic;
   font-weight: bold;
@@ -883,40 +881,27 @@ textarea {
   color: #555;
 }
 
-/* --- START OF CHANGES FOR CUSTOMER ID ALIGNMENT --- */
-/*
-  This rule for .edit-center-header is crucial.
-  It's a flex container for the Customer ID and needs to align its items to the start (left).
-*/
+/*customer id*/
 .edit-center-header {
-  display: flex; /* Ensure it's a flex container */
-  flex-direction: column; /* Stacks children vertically */
-  align-items: flex-start; /* ALIGNS CHILDREN (like .customer-id) TO THE LEFT */
-  justify-content: center; /* Keeps existing vertical centering if desired */
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+  justify-content: center;
   gap: 30px;
   margin: 15px 0 30px;
-  /* Removed text-align: left here as align-items handles the block-level alignment */
 }
 
-/*
-  This rule targets the specific 'Customer ID' text within the edit form.
-  align-self: flex-start ensures the paragraph itself aligns left within its flex parent.
-  text-align: left ensures the text *inside* the paragraph is left-aligned.
-*/
 .edit-form .customer-id {
   font-style: italic;
   font-weight: bold;
-  text-align: left; /* Keep this for text within the p tag */
-  align-self: flex-start; /* Essential for aligning the p tag itself in a flex column */
+  text-align: left;
+  align-self: flex-start;
   margin-bottom: 25px;
   font-size: 15px;
-  /* Removed temporary diagnostic styles (border, !important, padding/margin resets) */
   border: none;
   padding-left: initial;
   margin-left: initial;
 }
-/* --- END OF CHANGES FOR CUSTOMER ID ALIGNMENT --- */
-
 
 .edit-row {
     display: flex;

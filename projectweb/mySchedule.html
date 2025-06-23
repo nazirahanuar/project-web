@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="customer.css">
 </head>
 <body id="top" class="customer">
-
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-left">
       <a href="customerHome.php" class="nav-item">HOME</a>
@@ -35,7 +33,6 @@
       </p>
     </div>
 
-    <!-- Error message moved here -->
     <p id="errorMsg" style="color: red; font-weight: bold; margin-left: 10px;"></p>
 
     <div class="schedule-table-box" id="scheduleBox" style="display: none;">
@@ -114,11 +111,10 @@
     </div>
   </section>
 
-  <!-- JavaScript for real-time checking -->
   <script>
     function checkOrderID() {
       const inputID = document.getElementById("orderID").value.trim().toUpperCase();
-      const validID = "OR965"; // Add more 
+      const validID = "OR965";
       const errorMsg = document.getElementById("errorMsg");
       const scheduleBox = document.getElementById("scheduleBox");
 
