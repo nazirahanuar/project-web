@@ -149,7 +149,7 @@ $orderResult = $orderStmt->get_result();
                 </div>
             <?php endif; ?>
 
-            <p class="schedule-hint">Ready to track your schedule? Go to <a href="mySchedule.html#schedule-section"><strong>MY SCHEDULE</strong></a></p>
+            <p class="schedule-hint">Ready to track your schedule? Go to <a href="mySchedule.php#schedule-section"><strong>MY SCHEDULE</strong></a></p>
         </section>
     <?php endif; ?>
 </main>
