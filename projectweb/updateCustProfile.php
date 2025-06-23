@@ -14,7 +14,7 @@ $noTel = $_POST['NoTel'];
 $email = $_POST['Email'];
 $password = $_POST['password'];
 
-// === Handle profile picture upload ===
+//Handle profile picture upload
 $profilePicPath = null;
 if (isset($_FILES['profilePic']) && $_FILES['profilePic']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = 'uploads/';
@@ -31,7 +31,6 @@ if (isset($_FILES['profilePic']) && $_FILES['profilePic']['error'] === UPLOAD_ER
     }
 }
 
-// === Build update query ===
 if (!empty($password)) {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -50,7 +49,6 @@ if (!empty($password)) {
     $stmt->bind_param("ssssss", $customerName, $gender, $noTel, $email, $profilePicPath, $customerID);
 }
 
-// === Execute and redirect ===
 if ($stmt->execute()) {
     header("Location: custProfile.php");
     exit();
