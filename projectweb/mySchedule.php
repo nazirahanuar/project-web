@@ -58,17 +58,6 @@ $services = $conn->query("SELECT serviceID, serviceType FROM service");
             <th>Admin ID</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>C2RY9265</td>
-            <td>OR965</td>
-            <td>10/06/2025</td>
-            <td>Universiti Teknikal Malaysia Melaka (UTeM), Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</td>
-            <td>MNT0981</td>
-            <td>SCH632</td>
-            <td>A2RY002</td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
@@ -126,24 +115,58 @@ $services = $conn->query("SELECT serviceID, serviceType FROM service");
     </div>
   </section>
 
-  <script>
-    function checkOrderID() {
-      const inputID = document.getElementById("orderID").value.trim().toUpperCase();
-      const validID = "OR965";
-      const errorMsg = document.getElementById("errorMsg");
-      const scheduleBox = document.getElementById("scheduleBox");
+<script>
+  function checkOrderID() {
+    const orderID = document.getElementById("orderID").value.trim().toUpperCase();
+    const errorMsg = document.getElementById("errorMsg");
+    const scheduleBox = document.getElementById("scheduleBox");
+    const table = document.querySelector(".schedule-table");
 
-      if (inputID === "") {
-        errorMsg.textContent = "";
-        scheduleBox.style.display = "none";
-      } else if (inputID !== validID) {
-        errorMsg.textContent = "Order ID does not exist.";
-        scheduleBox.style.display = "none";
-      } else {
+    if (orderID === "") {
+      errorMsg.textContent = "";
+      scheduleBox.style.display = "none";
+      return;
+    }
+
+    fetch('checkOrder.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'orderID=' + encodeURIComponent(orderID)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
         errorMsg.textContent = "";
         scheduleBox.style.display = "block";
+
+        // Remove old rows
+        const oldRows = table.querySelectorAll("tbody tr");
+        oldRows.forEach(row => row.remove());
+
+        let tbody = table.querySelector("tbody");
+        if (!tbody) {
+          tbody = document.createElement("tbody");
+          table.appendChild(tbody);
+        }
+
+        const s = data.data;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${s.staffID}</td>
+          <td>${s.orderID}</td>
+          <td>${s.scheduleDate}</td>
+          <td>${s.Location}</td>
+          <td>${s.serviceID}</td>
+          <td>${s.premiseID}</td>
+          <td>${s.adminID}</td>
+        `;
+        tbody.appendChild(row);
+      } else {
+        errorMsg.textContent = data.message;
+        scheduleBox.style.display = "none";
       }
-    }
-  </script>
+    });
+  }
+</script>
 </body>
 </html>
