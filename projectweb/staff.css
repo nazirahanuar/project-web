@@ -574,3 +574,25 @@ form input[type="password"] {
   background-color: #ddd;
   color: black;
 }
+
+.order-details-box {
+  background-color: #000;
+  color: white;
+  padding: 20px 25px;
+  border-radius: 6px;
+  margin: 40px auto;
+  max-width: 800px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+.order-details-box p {
+  margin: 8px 0;
+}
+
+.order-details-box p:first-child {
+  font-weight: bold;
+  font-size: 18px;
+}
+
